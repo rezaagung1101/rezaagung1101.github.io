@@ -266,7 +266,7 @@ header {
 }
 
 nav {
-  box-shadow: 0 2px 4px rgba(20, 20, 20, 0.1);
+  box-shadow: 0 2px 4px rgba(17, 17, 17, 0.1);
   padding: 0.5em 1em;
   height: 60px;
 }
@@ -292,7 +292,6 @@ nav {
   background-color: #6fe0e7;
 }
 
-
 .nav-menu a:link {
   text-decoration: none;
 }
@@ -317,6 +316,7 @@ nav {
 
 .hamburger {
   display: none;
+  cursor: pointer;
 }
 
 .bar {
@@ -333,9 +333,14 @@ section {
 }
 
 .wrapper {
-  height: 100%;
+  /* height: 100%;
   width: 75%;
   max-width: 1024px;
+  padding: 70px 0 70px; */
+  width: 100%;
+  height: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
   padding: 70px 0 70px;
 }
 
@@ -607,7 +612,7 @@ footer {
   }
 
   .nav-list {
-    /* position: fixed;
+    position: fixed;
     left: -100%;
     top: 60px;
     gap: 0;
@@ -615,22 +620,22 @@ footer {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-color: black;
+    background-color: white;
     transition: 0.3s;
-    height: auto; */
-    position: fixed;
+    height: auto;
+    /* position: fixed;
     left: 0;
     top: 60px;
     width: 100%;
-    background-color: black;
+    background-color: rgb(255, 253, 253);
     padding: 1em 0;
     transition: transform 0.3s ease-in-out;
-    transform: translateY(-100%);
+    transform: translateY(-100%); */
   }
 
   .nav-list.active {
-    /* left: 0; */
-    transform: translateY(0%);
+    left: 0;
+    /* transform: translateY(0%); */
   }
 
   .nav-menu {
@@ -715,13 +720,12 @@ new add
   .nav-list.active {
     transform: translateY(-10%);
   }
-}
+} 
 
 /* Adjust card width for even smaller screens */
 @media screen and (max-width: 479px) {
   .card {
     flex: 0 1 100%;
-    /* Make cards full width on smaller screens */
     max-width: 100%;
   }
-}
+} 
