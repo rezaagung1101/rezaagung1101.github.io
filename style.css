@@ -14,13 +14,17 @@
 /* Padding */
 
 .px-6 {
-  padding-left: 0.375rem; /* 6px */
-  padding-right: 0.375rem; /* 6px */
+  padding-left: 0.375rem;
+  /* 6px */
+  padding-right: 0.375rem;
+  /* 6px */
 }
 
 .py-6 {
-  padding-top: 0.375rem; /* 6px */
-  padding-bottom: 0.375rem; /* 6px */
+  padding-top: 0.375rem;
+  /* 6px */
+  padding-bottom: 0.375rem;
+  /* 6px */
 }
 
 /* === Typography === */
@@ -56,33 +60,46 @@
 /* Font Size */
 
 .text-lg-italic {
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.75rem; /* 28px */
+  font-size: 1.125rem;
+  /* 18px */
+  line-height: 1.75rem;
+  /* 28px */
   font-style: italic;
 }
 
 .text-lg {
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.75rem; /* 28px */
+  font-size: 1.125rem;
+  /* 18px */
+  line-height: 1.75rem;
+  /* 28px */
 }
+
 .text-extra-lg {
-  font-size: 1.0rem; /* 18px */
-  line-height: 1.75rem; /* 28px */
+  font-size: 1.0rem;
+  /* 18px */
+  line-height: 1.75rem;
+  /* 28px */
 }
 
 .text-xl {
-  font-size: 1.25rem; /* 20px */
-  line-height: 1.75rem; /* 28px */
+  font-size: 1.25rem;
+  /* 20px */
+  line-height: 1.75rem;
+  /* 28px */
 }
 
 .text-2xl {
-  font-size: 1.5rem; /* 24px */
-  line-height: 2rem; /* 32px */
+  font-size: 1.5rem;
+  /* 24px */
+  line-height: 2rem;
+  /* 32px */
 }
 
 .text-4xl {
-  font-size: 2.25rem; /* 36px */
-  line-height: 2.5rem; /* 40px */
+  font-size: 2.25rem;
+  /* 36px */
+  line-height: 2.5rem;
+  /* 40px */
 }
 
 /* Text Color */
@@ -106,11 +123,9 @@
 /* Custom Text Gradient */
 
 .text-gradient {
-  background: linear-gradient(
-    180deg,
-    rgb(34, 35, 36) 0%,
-    #4a5052 100%
-  );
+  background: linear-gradient(180deg,
+      rgb(34, 35, 36) 0%,
+      #4a5052 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -251,7 +266,7 @@ header {
 }
 
 nav {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(20, 20, 20, 0.1);
   padding: 0.5em 1em;
   height: 60px;
 }
@@ -277,6 +292,7 @@ nav {
   background-color: #6fe0e7;
 }
 
+
 .nav-menu a:link {
   text-decoration: none;
 }
@@ -301,7 +317,6 @@ nav {
 
 .hamburger {
   display: none;
-  cursor: pointer;
 }
 
 .bar {
@@ -432,17 +447,25 @@ section#projects {
 }
 
 .card-list {
-  margin: 1.5em 0 0;
+  /* margin: 1.5em 0 0;
   width: 130%;
   max-width: 130%;
-  gap: 1em;
+  gap: 1em; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1.5em;
 }
 
 .card-list .card {
   width: 350px;
-  height: 500px;
+  height: 400px;
   border-radius: 15px;
   border: 1px solid #bdcfd3;
+  flex: 0 1 calc(50% - 0.75em);
+  /* Adjust card width for smaller screens */
+  max-width: calc(50% - 0.75em);
+  /* Adjust max-width for smaller screens */
 }
 
 .card .card-content-wrapper {
@@ -530,28 +553,35 @@ footer {
     padding-left: 5%;
     padding-right: 5%;
   }
+
   .card-list {
     flex-flow: row wrap;
     overflow-y: auto;
   }
+
   .card {
     max-width: 45%;
   }
+
   .card .project-image-container {
     height: 40%;
     max-height: 40%;
   }
+
   .project-image-container img {
     height: 100%;
     max-height: 100%;
   }
+
   .card .project-description-container {
     height: 60%;
     max-height: 60%;
   }
+
   .contact-box {
     flex-wrap: wrap;
   }
+
   .contact-invitation {
     padding: 0;
   }
@@ -577,7 +607,7 @@ footer {
   }
 
   .nav-list {
-    position: fixed;
+    /* position: fixed;
     left: -100%;
     top: 60px;
     gap: 0;
@@ -587,11 +617,20 @@ footer {
     width: 100%;
     background-color: black;
     transition: 0.3s;
-    height: auto;
+    height: auto; */
+    position: fixed;
+    left: 0;
+    top: 60px;
+    width: 100%;
+    background-color: black;
+    padding: 1em 0;
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(-100%);
   }
 
   .nav-list.active {
-    left: 0;
+    /* left: 0; */
+    transform: translateY(0%);
   }
 
   .nav-menu {
@@ -604,27 +643,38 @@ footer {
   section#projects {
     height: auto;
   }
+
   .card-list {
     flex-direction: column;
     flex-wrap: wrap;
     height: auto;
   }
+
   .card-list .card {
     width: 100%;
     max-width: 100%;
     height: auto;
   }
+
   .card .project-image-container {
-    height: 60%;
-    max-height: 60%;
-  }
-  .project-image-container img {
-    max-height: 100%;
-  }
-  .card .project-description-container {
+    /* height: 60%; */
+    /* max-height: 60%; */
     height: 40%;
-    max-height: 40%;
   }
+
+  .project-image-container img {
+    /* max-height: 100%; */
+    height: 100%;
+    width: auto;
+    /* Ensure image aspect ratio is maintained */
+  }
+
+  .card .project-description-container {
+    /* height: 40%;
+    max-height: 40%; */
+    height: 60%;
+  }
+
   .contact-box {
     flex-flow: wrap;
   }
@@ -635,8 +685,43 @@ footer {
     flex-flow: column wrap;
     overflow-y: auto;
   }
+
   .card {
     width: 100%;
+    max-width: 100%;
+  }
+}
+
+/**
+new add
+*/
+/* Adjust nav-list styles for smaller screens */
+@media screen and (max-width: 599px) {
+  .nav-menu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-menu a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-list {
+    top: 60px;
+    padding: 1em 0;
+  }
+
+  .nav-list.active {
+    transform: translateY(-10%);
+  }
+}
+
+/* Adjust card width for even smaller screens */
+@media screen and (max-width: 479px) {
+  .card {
+    flex: 0 1 100%;
+    /* Make cards full width on smaller screens */
     max-width: 100%;
   }
 }
