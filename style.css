@@ -692,6 +692,10 @@ section#about {
   transition: border-color 0.2s ease;
 }
 
+.skill-group-wide {
+  grid-column: 1 / -1;
+}
+
 .skill-group:hover {
   border-color: var(--purple);
 }
@@ -1084,8 +1088,14 @@ footer {
   mix-blend-mode: normal;
 }
 
+/* To light: the new (light) view grows from the toggle, so it sits on top.
+   To dark: the old (light) view shrinks into the toggle, so it sits on top. */
 ::view-transition-new(root) {
   z-index: 2;
+}
+
+.theme-to-dark::view-transition-old(root) {
+  z-index: 3;
 }
 
 /* Freeze colour transitions while the reveal snapshot animates */

@@ -69,15 +69,27 @@ themeToggle.addEventListener("click", () => {
     Math.max(y, window.innerHeight - y)
   );
 
+  // Light expands out of the icon; dark is revealed as the light page
+  // shrinks back into the icon.
+  const toDark = next === "dark";
+  const small = `circle(0px at ${x}px ${y}px)`;
+  const full = `circle(${radius}px at ${x}px ${y}px)`;
+
   root.classList.add("theme-switching");
+  root.classList.toggle("theme-to-dark", toDark);
   const transition = document.startViewTransition(() => applyTheme(next));
   transition.ready.then(() => {
     root.animate(
-      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-      { duration: 550, easing: "cubic-bezier(0.4, 0, 0.2, 1)", pseudoElement: "::view-transition-new(root)" }
+      { clipPath: toDark ? [full, small] : [small, full] },
+      {
+        duration: 550,
+        easing: toDark ? "cubic-bezier(0.4, 0, 1, 1)" : "cubic-bezier(0, 0, 0.2, 1)",
+        fill: "forwards",
+        pseudoElement: toDark ? "::view-transition-old(root)" : "::view-transition-new(root)",
+      }
     );
   });
-  transition.finished.finally(() => root.classList.remove("theme-switching"));
+  transition.finished.finally(() => root.classList.remove("theme-switching", "theme-to-dark"));
 });
 
 darkQuery.addEventListener?.("change", renderToggle);

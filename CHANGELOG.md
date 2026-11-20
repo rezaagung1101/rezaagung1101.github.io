@@ -26,9 +26,12 @@
 - **Skills section** (`03_skills.kt`): four groups (Android UI, Architecture, Async & Data, Backend & Tools), with the main skills highlighted. It only lists tech verified in the project repos or confirmed by Reza.
 - **Kotlin code card in the hero**: an editor-style `Reza.kt` snippet with IntelliJ-style syntax colours. It overlaps the photo on desktop and sits under the intro text on mobile.
 - **Circular reveal theme switch**: the new theme grows as a circle from the toggle button, like Android's `createCircularReveal` (View Transitions API, with an instant switch as the fallback).
+- **Direction-aware theme animation**: switching to light grows the light page out of the toggle icon (decelerating), and switching to dark shrinks the light page back into the icon (accelerating) to reveal the dark theme underneath.
 - **Scroll progress bar**: a thin purple → orange bar under the navbar.
 - **Staggered reveal**: cards in the Skills, Projects, and Certification grids appear one after another.
 - Navbar: removed **Home** (the `reza.kt` logo already links to the top) to make room for **Skills**. No menu item is highlighted while the hero is on screen.
+- Skills: added **Health Connect** and **Auth0**, plus a full-width **Firebase** group (Crashlytics, Remote Config, Cloud Messaging, Analytics, Performance Monitoring, App Distribution, A/B Testing, Authentication, Firestore, Cloud Storage), confirmed by Reza.
+- U by Prodia card and Prodia experience: added the Health Connect, Auth0, and Firebase integrations.
 - Section labels renumbered: `03_skills.kt`, `04_projects.kt`, `05_certification.kt`.
 - Fix: revealed elements now drop the reveal classes, so card hover effects use their own fast transitions instead of the slow reveal timing.
 
