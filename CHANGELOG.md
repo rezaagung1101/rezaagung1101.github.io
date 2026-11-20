@@ -22,6 +22,13 @@
 - Decorative icons marked `aria-hidden="true"`.
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
+### "Ship It!" mini game
+- **An original endless runner** (`game.js`, canvas, no libraries) starring the `.kt` block. Jump over build errors (`NPE`, `OOM`, `Lint`, `Gradle ✗`, `R8 ✗`) and duck under flying `ANR` and `Crash` errors. The score counts "builds shipped", speed ramps up, and the best score is saved in the browser. A crash shows "BUILD FAILED: <error>".
+- Plays inside a **landscape phone frame** and follows the light/dark theme. Controls: Space, ↑, or W to jump, ↓ or S to duck, or tap the canvas and the Jump/Duck buttons on touch screens. Phones get a shorter track so everything stays readable.
+- **Easter egg**: `reza.play() // try me` in the hero's `Reza.kt` card opens the game in a dialog. `game.js` only downloads on that click. Esc, ✕, or clicking outside closes it, the game pauses, and focus returns to the button.
+- **Custom 404 page** (`404.html`, absolute paths so it works at any URL depth) with the game, plus links back home and to projects. It's marked `noindex`.
+- The game pauses when the tab is hidden or the game scrolls off screen.
+
 ### Impact strip and case study header
 - **Impact strip under the hero**: 1M+ downloads, 4.5★ on Google Play, Top 68 of 700+ Bangkit teams, and GPA 3.88. The last three count up once (≈0.9 s, ease-out) when they come into view. 1M+ stays static, because counting from 0 to 1 looks like a flicker. The final values are in the HTML, with screen-reader text, so search engines, screen readers, no-JS visitors, and *reduce motion* users always see the right numbers. It's a 2×2 grid on phones.
 - **Case study header swap**: once the hero title scrolls away, the `reza.kt` logo becomes the project name, and on Qurbanku and Tips n Trip "← All projects" becomes a "Watch demo" pill. Xporter keeps "← All projects" because it has no demo video. Both items share one grid cell, so nothing shifts. Only the visible item can be focused or announced.

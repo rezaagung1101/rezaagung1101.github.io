@@ -365,6 +365,58 @@ if (caseTitle && siteHeader && "IntersectionObserver" in window) {
   ).observe(caseTitle);
 }
 
+// ============ "Ship It!" mini game: loaded only when someone asks for it ============
+let gameScript = null;
+
+function loadGame(src) {
+  if (window.KtRunner) return Promise.resolve(window.KtRunner);
+  if (!gameScript) {
+    gameScript = new Promise((resolve, reject) => {
+      const el = document.createElement("script");
+      el.src = src;
+      el.onload = () => resolve(window.KtRunner);
+      el.onerror = reject;
+      document.head.appendChild(el);
+    });
+  }
+  return gameScript;
+}
+
+// Easter egg: reza.play() in the hero code card opens the game in a dialog.
+const playButton = document.getElementById("playGame");
+const gameDialog = document.getElementById("gameDialog");
+
+if (playButton && gameDialog && typeof gameDialog.showModal === "function") {
+  let game = null;
+  playButton.addEventListener("click", () => {
+    gameDialog.showModal();
+    loadGame("game.js").then((KtRunner) => {
+      if (!game) game = KtRunner.mount(document.getElementById("gameMount"));
+      game.focus();
+    });
+  });
+  document.getElementById("gameClose").addEventListener("click", () => gameDialog.close());
+  // Clicking the dimmed backdrop closes it too.
+  gameDialog.addEventListener("click", (e) => {
+    if (e.target !== gameDialog) return;
+    const r = gameDialog.getBoundingClientRect();
+    const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    if (outside) gameDialog.close();
+  });
+  gameDialog.addEventListener("close", () => {
+    if (game) game.pause();
+    playButton.focus({ preventScroll: true });
+  });
+} else if (playButton) {
+  playButton.hidden = true; // very old browsers without <dialog>
+}
+
+// The 404 page mounts the game straight away.
+const notFoundGame = document.getElementById("notFoundGame");
+if (notFoundGame) {
+  loadGame("/game.js").then((KtRunner) => KtRunner.mount(notFoundGame));
+}
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();

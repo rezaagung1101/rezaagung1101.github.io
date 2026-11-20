@@ -2449,7 +2449,7 @@ footer {
 
 .case-nav-title,
 .case-nav-cta,
-header.is-condensed .brand,
+header.is-condensed .nav-swap .brand,
 header.is-condensed .nav-swap-end .back-link {
   opacity: 0;
   transform: translateY(6px);
@@ -2479,5 +2479,216 @@ header.is-condensed .case-nav-cta {
 @media screen and (max-width: 700px) {
   .impact-strip li:nth-child(3) {
     padding-left: 0;
+  }
+}
+
+/* ============ "Ship It!" mini game in a landscape phone ============ */
+.phone-landscape {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 14px 26px;
+  border-radius: 36px;
+  background: #0d0d0d;
+  box-shadow: 0 0 0 1px var(--line), 0 30px 60px -32px var(--card-shadow);
+}
+
+/* front camera on the left edge, side button on top */
+.phone-landscape::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2a2b31;
+  transform: translateY(-50%);
+}
+
+.phone-landscape::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  right: 22%;
+  width: 54px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: #2a2b31;
+}
+
+.phone-screen {
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.kt-runner canvas {
+  display: block;
+  width: 100%;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline: none;
+}
+
+.kt-runner-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 14px 12px;
+  background: var(--surface);
+}
+
+.kt-btn {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.kt-btn-primary {
+  color: #ffffff;
+  background: var(--purple);
+  border-color: var(--purple);
+}
+
+.kt-btn:active {
+  transform: translateY(1px);
+}
+
+.game-hint {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin-top: 14px;
+}
+
+/* Easter egg line in the hero code card */
+.code-play {
+  font: inherit;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  border-radius: 5px;
+  padding: 0 5px;
+  margin-left: -6px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.code-play:hover,
+.code-play:focus-visible {
+  background: rgba(255, 138, 107, 0.16);
+  border-color: var(--orange);
+}
+
+.code-body .c {
+  color: #7a7e85;
+  font-style: italic;
+}
+
+/* Game dialog */
+.game-dialog {
+  margin: auto; /* the global margin reset would otherwise pin it to the top-left */
+  width: min(760px, calc(100vw - 24px));
+  max-width: none;
+  border: none;
+  border-radius: 22px;
+  padding: 18px 18px 20px;
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.5);
+}
+
+.game-dialog::backdrop {
+  background: rgba(10, 10, 12, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.game-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.game-dialog-title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.game-dialog-title strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin-right: 6px;
+}
+
+.game-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.game-close:hover {
+  border-color: var(--purple);
+  color: var(--purple-deep);
+}
+
+@media screen and (max-width: 620px) {
+  .phone-landscape {
+    padding: 10px 16px;
+    border-radius: 26px;
+  }
+
+  .phone-landscape::before {
+    left: 5px;
+    width: 5px;
+    height: 5px;
+  }
+
+  .phone-screen {
+    border-radius: 14px;
+  }
+
+  .game-dialog {
+    padding: 14px 12px 16px;
+  }
+}
+
+/* ============ 404 page ============ */
+.notfound {
+  padding: 130px 0 90px;
+  border-top: none;
+}
+
+.notfound .case-title {
+  margin-top: 12px;
+}
+
+.notfound-links {
+  margin-top: 30px;
+}
+
+@media screen and (max-width: 620px) {
+  .notfound {
+    padding-top: 108px;
   }
 }
