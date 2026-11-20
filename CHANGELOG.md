@@ -22,6 +22,13 @@
 - Decorative icons marked `aria-hidden="true"`.
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
+### Projects section
+- Every project card now has a **context line** (production / thesis / team project, plus the year), **3 highlight bullets** on what was built, and tech tags checked against each repository's `build.gradle` and source code.
+- **Qurbanku**: describes the two role-based flows (committee and congregants), CameraX, and Google Maps + Fused Location. Removed the **Espresso** tag, because the repo only has the default example tests.
+- **Tips n Trip**: removed the **GCP** and **Maps SDK** tags, which the Android app does not use. Added Retrofit, OkHttp, Paging 3, Navigation, and Glide, which it does use.
+- **U by Prodia**: added Hilt (as stated in the Experience section) and split the features into bullets.
+- Project names use `<h3>` and cards use `<article>` for a better heading structure.
+
 ### Performance
 - `assets/profile_image.jpg` resized from 2179×2179 to 640×640 — **436 KB → 40 KB**.
 - Project screenshots use `loading="lazy"`; all images have `width`/`height` to prevent layout shift.

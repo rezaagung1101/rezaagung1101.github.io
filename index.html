@@ -177,86 +177,108 @@
           <h2 class="section-heading reveal">Projects</h2>
 
           <div class="project-grid">
-            <div class="project-card reveal">
+            <article class="project-card reveal">
               <div class="project-media placeholder">
                 <span class="mark" aria-hidden="true">U by Prodia</span>
               </div>
               <div class="project-body">
                 <div class="project-top">
-                  <span class="project-name">U by Prodia</span>
+                  <h3 class="project-name">U by Prodia</h3>
                   <div class="project-links">
                     <a href="https://play.google.com/store/apps/details?id=com.prodiadigital.patient&hl=id" target="_blank" rel="noopener noreferrer">Play Store</a>
                     <a href="https://prodiadigital.com/en" target="_blank" rel="noopener noreferrer">Website</a>
                   </div>
                 </div>
-                <p class="project-stat">1M+ downloads · 4.5★ rating</p>
+                <p class="project-meta">Production app · Prodia Digital · 2024–now</p>
+                <p class="project-stat">1M+ downloads · 4.5★ on Google Play</p>
                 <p class="project-desc">
-                  Digital health app for PT Prodia Digital Indonesia. Shipped Sub Account
-                  Management, letting users manage family members' accounts and book lab
-                  tests together, and Met-U, a metabolic health tracker covering BMI,
-                  blood pressure, and blood sugar.
+                  Prodia's patient app for booking lab tests and keeping track of
+                  personal health, used by over a million people.
                 </p>
+                <ul class="project-points">
+                  <li><strong>Sub Account Management</strong>: lets users manage family members' accounts and book lab tests for them together.</li>
+                  <li><strong>Met-U</strong>: a metabolic health tracker covering BMI, blood pressure, and blood sugar.</li>
+                  <li>Built in Jetpack Compose with Hilt, following Clean Architecture alongside iOS, Backend, and QA teams.</li>
+                </ul>
                 <div class="tag-row">
                   <span class="tag">Kotlin</span>
                   <span class="tag">Jetpack Compose</span>
+                  <span class="tag">Hilt</span>
                   <span class="tag">MVVM</span>
                   <span class="tag">Clean Architecture</span>
                   <span class="tag">Firebase</span>
                 </div>
               </div>
-            </div>
+            </article>
 
-            <div class="project-card reveal">
+            <article class="project-card reveal">
               <div class="project-media">
                 <img src="assets/qurbanku1.jpg" alt="Qurbanku app screenshot" width="1080" height="925" loading="lazy" decoding="async" />
               </div>
               <div class="project-body">
                 <div class="project-top">
-                  <span class="project-name">Qurbanku</span>
+                  <h3 class="project-name">Qurbanku</h3>
                   <div class="project-links">
                     <a href="https://github.com/rezaagung1101/QURBANKU_APPS_SKRIPSI" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://youtu.be/70XUhdvDiKU" target="_blank" rel="noopener noreferrer">Demo</a>
                   </div>
                 </div>
+                <p class="project-meta">Undergraduate thesis · Solo project · 2024</p>
                 <p class="project-desc">
-                  Android app that lets communities organize and jointly fund qurbani
-                  animal purchases with their local mosque, built for the qurbani
-                  committee at Masjid Al Huda, Malang.
+                  Android app that lets a mosque's qurbani committee and its congregation
+                  organize and jointly fund qurbani animals, built for Masjid Al Huda, Malang.
                 </p>
+                <ul class="project-points">
+                  <li><strong>Two role-based flows.</strong> Committee members list animals and approve or reject payments. Congregants find a mosque, join a shared animal, and upload proof of transfer.</li>
+                  <li>In-app camera built with <strong>CameraX</strong> for animal photos and payment proofs, stored in Firebase Storage.</li>
+                  <li>Mosque discovery and location picking with <strong>Google Maps SDK</strong> and Fused Location.</li>
+                </ul>
                 <div class="tag-row">
                   <span class="tag">Kotlin</span>
                   <span class="tag">MVVM</span>
-                  <span class="tag">Firebase</span>
-                  <span class="tag">Maps SDK</span>
-                  <span class="tag">Espresso</span>
+                  <span class="tag">LiveData</span>
+                  <span class="tag">Firebase Auth</span>
+                  <span class="tag">Firestore</span>
+                  <span class="tag">CameraX</span>
+                  <span class="tag">Google Maps SDK</span>
+                  <span class="tag">Navigation</span>
                 </div>
               </div>
-            </div>
+            </article>
 
-            <div class="project-card reveal">
+            <article class="project-card reveal">
               <div class="project-media">
                 <img src="assets/tipsntrip.jpg" alt="Tips n Trip app screenshot" width="1080" height="695" loading="lazy" decoding="async" />
               </div>
               <div class="project-body">
                 <div class="project-top">
-                  <span class="project-name">Tips n Trip</span>
+                  <h3 class="project-name">Tips n Trip</h3>
                   <div class="project-links">
                     <a href="https://github.com/Tips-n-Trip/Mobile-App" target="_blank" rel="noopener noreferrer">GitHub</a>
                   </div>
                 </div>
+                <p class="project-meta">Bangkit capstone · Team project · 2023</p>
+                <p class="project-stat">Top 68 of 700+ capstone teams</p>
                 <p class="project-desc">
-                  Bangkit Academy capstone app that helps travelers plan trips and
-                  itineraries with Machine Learning–powered recommendations —
-                  Top 68 out of 700+ teams.
+                  Travel-planning app that builds day-by-day itineraries from a Machine
+                  Learning recommendation model.
                 </p>
+                <ul class="project-points">
+                  <li>Built the Android client with a cross-functional team of Machine Learning and Backend developers, consuming the team's REST API.</li>
+                  <li>Infinite-scrolling destination, attraction, and souvenir catalogs with <strong>Paging 3</strong>.</li>
+                  <li>Itinerary generation, saving, and history, with token-based auth handled by an OkHttp interceptor.</li>
+                </ul>
                 <div class="tag-row">
                   <span class="tag">Kotlin</span>
                   <span class="tag">MVVM</span>
-                  <span class="tag">GCP</span>
-                  <span class="tag">Maps SDK</span>
+                  <span class="tag">Retrofit</span>
+                  <span class="tag">OkHttp</span>
+                  <span class="tag">Paging 3</span>
+                  <span class="tag">Navigation</span>
+                  <span class="tag">Glide</span>
                 </div>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </section>

@@ -699,7 +699,45 @@ section#about {
   font-size: 0.92rem;
   color: var(--muted);
   line-height: 1.6;
+}
+
+.project-points {
   flex: 1;
+}
+
+.project-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--faint);
+  margin-top: -4px;
+}
+
+.project-points {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.project-points li {
+  position: relative;
+  padding-left: 16px;
+}
+
+.project-points li::before {
+  content: "\25B8";
+  position: absolute;
+  left: 0;
+  color: var(--purple);
+  font-size: 0.8em;
+  top: 0.15em;
+}
+
+.project-points strong {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .project-stat {
