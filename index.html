@@ -211,6 +211,8 @@
                 <li class="chip">XML Views &amp; ViewBinding</li>
                 <li class="chip">Material Design</li>
                 <li class="chip">Navigation Component</li>
+                <li class="chip">Navigation 3</li>
+                <li class="chip">USB Host · PTP/IP</li>
                 <li class="chip">CameraX</li>
                 <li class="chip">Google Maps SDK</li>
               </ul>
@@ -221,7 +223,9 @@
                 <li class="chip chip-strong">MVVM</li>
                 <li class="chip chip-strong">Clean Architecture</li>
                 <li class="chip chip-strong">Hilt</li>
+                <li class="chip chip-strong">Multi-module</li>
                 <li class="chip">Repository Pattern</li>
+                <li class="chip">Gradle Convention Plugins</li>
               </ul>
             </div>
             <div class="skill-group reveal">
@@ -231,8 +235,11 @@
                 <li class="chip chip-strong">Flow</li>
                 <li class="chip chip-strong">Retrofit</li>
                 <li class="chip">OkHttp</li>
+                <li class="chip chip-strong">Room</li>
+                <li class="chip">DataStore</li>
                 <li class="chip">LiveData</li>
                 <li class="chip">Paging 3</li>
+                <li class="chip">Coil</li>
                 <li class="chip">Glide</li>
               </ul>
             </div>
@@ -242,6 +249,10 @@
                 <li class="chip chip-strong">Health Connect</li>
                 <li class="chip chip-strong">Auth0</li>
                 <li class="chip">Git &amp; GitHub</li>
+                <li class="chip chip-strong">GitHub Actions CI</li>
+                <li class="chip">JUnit · Turbine</li>
+                <li class="chip">Spotless · ktlint</li>
+                <li class="chip">LeakCanary</li>
                 <li class="chip">Android Studio</li>
               </ul>
             </div>
@@ -305,6 +316,41 @@
                   <span class="tag">Health Connect</span>
                   <span class="tag">Auth0</span>
                   <span class="tag">Firebase</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card reveal">
+              <div class="project-media placeholder">
+                <span class="mark" aria-hidden="true">Xporter Camera</span>
+              </div>
+              <div class="project-body">
+                <div class="project-top">
+                  <h3 class="project-name">Xporter Camera</h3>
+                  <div class="project-links">
+                    <a class="link-case" href="projects/xporter.html">Case study →</a>
+                  </div>
+                </div>
+                <p class="project-meta">Personal project · Solo · 2026</p>
+                <p class="project-stat">Built and tested on a real Fujifilm X-T3</p>
+                <p class="project-desc">
+                  Android app that copies photos from a Fujifilm camera to the phone over USB
+                  or Wi-Fi, then shares them with their film simulation recipe.
+                </p>
+                <ul class="project-points">
+                  <li>Implemented <strong>PTP over USB</strong> and Fujifilm's <strong>PTP/IP Wi-Fi protocol</strong> in Kotlin, researched from open-source documentation and verified on the camera.</li>
+                  <li><strong>Safe by design</strong>: every camera command passes a read-only allowlist, and the only writes are session settings that are restored when the session ends.</li>
+                  <li>Multi-module Clean Architecture with convention plugins, and CI that runs formatting, lint, and unit tests on every pull request.</li>
+                </ul>
+                <div class="tag-row">
+                  <span class="tag">Kotlin</span>
+                  <span class="tag">Jetpack Compose</span>
+                  <span class="tag">Coroutines/Flow</span>
+                  <span class="tag">Hilt</span>
+                  <span class="tag">Room</span>
+                  <span class="tag">Multi-module</span>
+                  <span class="tag">PTP/IP</span>
+                  <span class="tag">GitHub Actions</span>
                 </div>
               </div>
             </article>

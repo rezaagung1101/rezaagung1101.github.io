@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xporter Camera — Case Study · Reza Agung Nugraha</title>
+    <meta
+      name="description"
+      content="Case study: Xporter Camera, an Android app that copies photos from a Fujifilm camera over USB or Wi-Fi using PTP and PTP/IP written in Kotlin. Compose, Hilt, Room, multi-module, CI."
+    />
+    <link rel="canonical" href="https://rezaagung1101.github.io/projects/xporter.html" />
+    <meta name="theme-color" content="#faf9f6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://rezaagung1101.github.io/projects/xporter.html" />
+    <meta property="og:title" content="Xporter Camera — Case Study" />
+    <meta
+      property="og:description"
+      content="How I implemented PTP over USB and Fujifilm's PTP/IP Wi-Fi protocol in Kotlin, made the app read-only by design, and structured it as a tested multi-module codebase."
+    />
+    <meta property="og:image" content="https://rezaagung1101.github.io/assets/profile_image.jpg" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="case-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header>
+      <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+      <nav aria-label="Main">
+        <a class="brand" href="../index.html#about">reza<span class="brand-ext">.kt</span></a>
+        <div class="nav-tools">
+          <a class="back-link" href="../index.html#projects">← All projects</a>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- ============ Intro ============ -->
+      <section class="case-hero">
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>case_study/xporter_camera.kt</span>
+          <h1 class="case-title reveal">Xporter Camera</h1>
+          <p class="case-lede reveal">
+            An Android app that copies photos from a Fujifilm camera to the phone over USB or
+            Wi-Fi, keeps each photo's film simulation recipe, and makes it easy to share. I wrote
+            the camera protocols myself, in Kotlin.
+          </p>
+
+          <dl class="case-meta reveal">
+            <div>
+              <dt>Role</dt>
+              <dd>Solo: research, architecture, and development</dd>
+            </div>
+            <div>
+              <dt>Timeline</dt>
+              <dd>Sep 2026 — present</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>Testing with users via Firebase App Distribution</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Kotlin · Compose · Hilt · Room · PTP/IP</dd>
+            </div>
+          </dl>
+
+          <div class="stat-strip reveal">
+            <div><span class="stat-num">20.6 MB/s</span><span class="stat-label">USB transfer, measured</span></div>
+            <div><span class="stat-num">16</span><span class="stat-label">Gradle modules</span></div>
+            <div><span class="stat-num">32</span><span class="stat-label">unit test files</span></div>
+            <div><span class="stat-num">38</span><span class="stat-label">pull requests, each through CI</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Problem ============ -->
+      <section>
+        <div class="wrap case-prose">
+          <span class="tab-label reveal"><span class="dot"></span>01_problem.kt</span>
+          <h2 class="section-heading reveal">The problem</h2>
+          <div class="reveal">
+            <p>
+              Getting photos off a Fujifilm camera and onto a phone usually means a card reader
+              or the camera's Wi-Fi link. Wi-Fi is convenient but slow, and it only moves JPEG and
+              video, not RAW. The film simulation recipe that gives a Fujifilm photo its look is
+              buried in the file's metadata.
+            </p>
+            <p>I wanted one app that:</p>
+            <ul class="case-list">
+              <li><strong>Copies fast over a USB cable</strong>, including RAW, and still works over Wi-Fi when there's no cable.</li>
+              <li><strong>Offers new photos automatically</strong> as soon as the camera connects.</li>
+              <li><strong>Reads the recipe</strong> from each photo and makes it easy to save and share.</li>
+              <li><strong>Can never damage the card</strong> or change a camera setting.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Flow ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>02_solution.kt</span>
+          <h2 class="section-heading reveal">How it works</h2>
+          <p class="section-sub reveal">
+            One flow, whether the camera is plugged in or on Wi-Fi. The app is available in English and Indonesian.
+          </p>
+
+          <ol class="flow">
+            <li class="flow-step reveal">
+              <span class="flow-who who-both">USB or Wi-Fi</span>
+              <p class="flow-title">Connect</p>
+              <p class="flow-desc">Plug in a cable, or join the camera's Wi-Fi from inside the app. The app shows the model, firmware, and card space.</p>
+            </li>
+            <li class="flow-step reveal">
+              <span class="flow-who who-panitia">Gallery</span>
+              <p class="flow-title">Browse</p>
+              <p class="flow-desc">Photos grouped by day, newest first. Filter by rating, film simulation, date, folder, or card slot, and open RAW and JPG pairs.</p>
+            </li>
+            <li class="flow-step reveal">
+              <span class="flow-who who-jemaah">Export</span>
+              <p class="flow-title">Copy to the phone</p>
+              <p class="flow-desc">Pick the size, name files from a template, export new photos automatically, and add GPS from the phone's location.</p>
+            </li>
+            <li class="flow-step reveal">
+              <span class="flow-who who-panitia">Share</span>
+              <p class="flow-title">Share the recipe</p>
+              <p class="flow-desc">Save recipes to a collection, then share them as text, a QR code, a story card, a polaroid, or an exposure frame.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ Research ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>03_research.kt</span>
+          <h2 class="section-heading reveal">Research before code</h2>
+          <div class="case-prose reveal">
+            <p>
+              Fujifilm doesn't publish how its cameras talk over Wi-Fi. Before building that part,
+              I wrote a research note on the protocol from open-source references, then ran a
+              time-boxed spike on a real X-T3 with a clear go or no-go question. The camera speaks a
+              Fujifilm flavour of <strong>PTP/IP</strong>: a PTP/IP handshake, then USB-style PTP
+              containers sent over TCP. That meant the PTP session I had already built for USB
+              could be reused, with only a new transport and handshake on top.
+            </p>
+            <p>The spike measured what each link can actually do:</p>
+          </div>
+
+          <div class="table-wrap reveal">
+            <table class="spec-table">
+              <thead>
+                <tr><th scope="col">Measured on an X-T3</th><th scope="col">USB</th><th scope="col">Wi-Fi</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Full-size download</th><td>20.6 MB/s</td><td>0.71 MB/s</td></tr>
+                <tr><th scope="row">Reading one photo's info</th><td>~25 ms</td><td>0.6–0.9 s</td></tr>
+                <tr><th scope="row">RAW files</th><td>Yes</td><td>No (camera limit)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note reveal">
+            Those numbers shaped the design: the Wi-Fi gallery reads photo details lazily instead
+            of up front, and the app estimates how long a Wi-Fi export will take before it starts.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ Architecture ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>04_architecture.kt</span>
+          <h2 class="section-heading reveal">Architecture</h2>
+          <p class="section-sub reveal">
+            Multi-module Clean Architecture. Shared build setup lives in convention plugins under
+            <code>build-logic</code>.
+          </p>
+
+          <div class="arch reveal" role="img" aria-label="Architecture: the app module hosts feature modules for connect, gallery, export, recipes and settings. Features depend on core domain, which is pure Kotlin. Core data implements the repositories using the database plus the PTP, USB, Wi-Fi and metadata modules.">
+            <div class="arch-layer">
+              <p class="arch-name">app</p>
+              <div class="arch-boxes">
+                <span>Navigation 3</span>
+                <span>Hilt</span>
+                <span>Splash · theming · locales</span>
+              </div>
+            </div>
+            <p class="arch-arrow" aria-hidden="true">↓</p>
+            <div class="arch-layer">
+              <p class="arch-name">feature</p>
+              <div class="arch-boxes">
+                <span>:connect</span>
+                <span>:gallery</span>
+                <span>:export</span>
+                <span>:recipes</span>
+                <span>:settings</span>
+              </div>
+            </div>
+            <p class="arch-arrow" aria-hidden="true">Compose UI + ViewModels ↓</p>
+            <div class="arch-layer">
+              <p class="arch-name">domain</p>
+              <div class="arch-boxes">
+                <span>:core:domain · pure Kotlin, no Android</span>
+                <span>Use cases · repository interfaces</span>
+              </div>
+            </div>
+            <p class="arch-arrow" aria-hidden="true">implemented by ↓</p>
+            <div class="arch-layer">
+              <p class="arch-name">data</p>
+              <div class="arch-boxes">
+                <span>:core:data</span>
+                <span>:core:database · Room</span>
+                <span>DataStore</span>
+                <span>MediaStore</span>
+              </div>
+            </div>
+            <p class="arch-arrow" aria-hidden="true">↓</p>
+            <div class="arch-layer arch-backend">
+              <p class="arch-name">camera</p>
+              <div class="arch-boxes">
+                <span>:core:ptp · PtpSession</span>
+                <span>:core:usb · USB host</span>
+                <span>:core:wifi · PTP/IP</span>
+                <span>:core:metadata · EXIF, MakerNote</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Decisions ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>05_decisions.kt</span>
+          <h2 class="section-heading reveal">Key decisions</h2>
+
+          <div class="decision-grid">
+            <article class="decision reveal">
+              <p class="decision-num">01</p>
+              <h3>Read-only by design, enforced in one place</h3>
+              <p>
+                Every PTP operation must be on a <code>READ_ONLY</code> allowlist, and the check runs
+                inside <code>PtpSession</code>, so no code path can skip it. Wi-Fi browsing needs a
+                few session properties written. Those writes go through a separate allowlist of 8
+                properties that never touch the card or a shooting setting. Every write is logged,
+                and the original values are restored when the session closes.
+              </p>
+            </article>
+            <article class="decision reveal">
+              <p class="decision-num">02</p>
+              <h3>One repository for USB and Wi-Fi</h3>
+              <p>
+                USB and Wi-Fi share the same <code>PtpSession</code> and sit behind the same
+                repository, so the gallery, filters, and export screens never know which link is in
+                use. Ratings and image caches are keyed by the photo's identity rather than the
+                camera's handle, and a file is matched across both links.
+              </p>
+            </article>
+            <article class="decision reveal">
+              <p class="decision-num">03</p>
+              <h3>Geotag while downloading, never break a file</h3>
+              <p>
+                The camera has no GPS, so the app records the phone's location and matches it to
+                each photo's shot time. A streaming <code>GpsTaggingSink</code> holds back only the
+                start of the file until the EXIF header is complete, adds the GPS tags, and passes
+                the rest straight through. If anything looks unexpected, the file is left as it
+                came: a photo without a location beats a broken one.
+              </p>
+            </article>
+            <article class="decision reveal">
+              <p class="decision-num">04</p>
+              <h3>Exports that survive a dropped connection</h3>
+              <p>
+                Exports run in a foreground service, and Wi-Fi copies each file 1&nbsp;MB at a
+                time. The offset is kept outside the camera session, so when the link drops
+                mid-file, the next attempt on a reopened session carries on from the last chunk
+                instead of starting over.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Process ============ -->
+      <section>
+        <div class="wrap case-prose">
+          <span class="tab-label reveal"><span class="dot"></span>06_process.kt</span>
+          <h2 class="section-heading reveal">How I worked</h2>
+          <div class="reveal">
+            <p>
+              It's a solo project, but I ran it like a team project:
+            </p>
+            <ul class="case-list">
+              <li><strong>Tickets and research notes.</strong> Work is split into <code>XPORT</code> tickets, and risky ones start with a written note or a spike before any feature code.</li>
+              <li><strong>Feature branches and pull requests</strong>, grouped into epics: 38 pull requests so far.</li>
+              <li><strong>CI on every pull request</strong> with GitHub Actions: Spotless and ktlint formatting, Android lint, unit tests, and a debug build.</li>
+              <li><strong>Tests where the logic is.</strong> PTP containers and sessions, the PTP/IP transport, EXIF and GPS splicing, filters, and ViewModels are covered with JUnit, coroutines-test, and Turbine.</li>
+              <li><strong>Release tooling.</strong> Firebase Crashlytics for crash reports and App Distribution to get builds to testers.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Limits ============ -->
+      <section>
+        <div class="wrap case-prose">
+          <span class="tab-label reveal"><span class="dot"></span>07_limits.kt</span>
+          <h2 class="section-heading reveal">Known limits</h2>
+          <div class="reveal">
+            <ul class="case-list">
+              <li><strong>Tested on one camera.</strong> Everything is verified on an X-T3. Other Fujifilm bodies share the protocol family but may need their own checks.</li>
+              <li><strong>RAW needs the cable.</strong> The camera only offers JPEG and video over Wi-Fi.</li>
+              <li><strong>Wi-Fi speed is set by the camera.</strong> The bottleneck is the camera's 2.4 GHz link, not the app.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Next ============ -->
+      <section class="case-next">
+        <div class="wrap">
+          <p class="contact-eyebrow reveal">&gt; cd ../projects</p>
+          <h2 class="contact-heading reveal">Want to see more?</h2>
+          <div class="case-links case-links-center reveal">
+            <a class="btn btn-primary" href="qurbanku.html">Read the Qurbanku case study</a>
+            <a class="btn btn-ghost" href="../index.html#projects">Back to all projects</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap footer-row">
+        <span>&copy; <span id="year">2026</span> Reza Agung Nugraha</span>
+        <span>Built with Kotlin in mind.</span>
+      </div>
+    </footer>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

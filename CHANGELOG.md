@@ -22,6 +22,13 @@
 - Decorative icons marked `aria-hidden="true"`.
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
+### Xporter Camera
+- New **Xporter Camera** project card (second, after U by Prodia): a Fujifilm photo transfer app over USB and Wi-Fi with PTP/PTP-IP written in Kotlin, read-only by design, multi-module with CI. Uses a placeholder image until screenshots are added. No GitHub link, because the repository is private.
+- New case study `projects/xporter.html`: problem, 4-step flow, the protocol research and measured USB vs Wi-Fi numbers from the X-T3 spike, a module architecture diagram, 4 key decisions (read-only allowlist, one repository for USB and Wi-Fi, streaming geotag, resumable Wi-Fi exports), the engineering process, and known limits.
+- Every number and claim was checked against the repository (16 modules, 32 test files, 38 pull requests, allowlists in `PtpSession` and `FujiProperty`, `GpsTaggingSink`, foreground `ExportService`).
+- Skills: added Multi-module, Gradle convention plugins, Room, DataStore, Coil, Navigation 3, USB Host and PTP/IP, GitHub Actions CI, JUnit and Turbine, Spotless and ktlint, and LeakCanary.
+- Case studies now link in a loop: Xporter → Qurbanku → Tips n Trip → Xporter.
+
 ### Tips n Trip case study
 - New page `projects/tipsntrip.html`: problem, guest vs signed-in flow, architecture from the Android client to the team's API and ML model, 4 key decisions (generic `ExplorePagingSource<V>`, OkHttp auth interceptor with debug-only logging, guest-first explore, on-device validation of budget and trip length), the cross-disciplinary teamwork, and a retrospective.
 - Claims checked against the Tips n Trip source and history (Reza authored the initial ~8,200-line app commit).
