@@ -272,6 +272,149 @@
               </ul>
             </div>
           </div>
+
+          <div class="stack-evolution reveal">
+            <h3 class="evo-title">How my stack evolved</h3>
+            <p class="evo-sub">
+              From XML, LiveData, and callbacks in 2023 to Compose, Flow, Hilt, and a tested
+              multi-module codebase today. Hover or tap a dot for details.
+            </p>
+            <div class="matrix-wrap">
+              <table class="stack-matrix">
+                <caption class="sr-only">Technologies used in each project, oldest project first</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" class="matrix-corner">Tech</th>
+                    <th scope="col" data-col="0"><span class="col-name">Tips n Trip</span><span class="col-year">2023</span></th>
+                    <th scope="col" data-col="1"><span class="col-name">Qurbanku</span><span class="col-year">2023–24</span></th>
+                    <th scope="col" data-col="2"><span class="col-name">U by Prodia</span><span class="col-year">2024–now</span></th>
+                    <th scope="col" data-col="3"><span class="col-name">Xporter Camera</span><span class="col-year">2026</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">UI</th></tr>
+                  <tr>
+                    <th scope="row">XML Views</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="XML Views · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="XML Views · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Jetpack Compose</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Jetpack Compose · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Jetpack Compose · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">State &amp; async</th></tr>
+                  <tr>
+                    <th scope="row">LiveData + callbacks</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="LiveData + callbacks · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="LiveData + callbacks · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Coroutines &amp; Flow</th>
+                    <td data-col="0"><span class="dot dot-half" tabindex="0" data-tip="Coroutines & Flow · partly, in Tips n Trip"></span><span class="sr-only">Partly</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Coroutines & Flow · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Coroutines & Flow · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Dependency injection</th></tr>
+                  <tr>
+                    <th scope="row">Hand-written factories</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="Hand-written factories · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="Hand-written factories · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Hilt</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Hilt · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Hilt · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Data</th></tr>
+                  <tr>
+                    <th scope="row">Retrofit</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="Retrofit · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Retrofit · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Firebase</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="Firebase · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Firebase · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Firebase · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Room &amp; DataStore</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Room & DataStore · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Architecture</th></tr>
+                  <tr>
+                    <th scope="row">MVVM</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Clean Architecture</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Clean Architecture · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Clean Architecture · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Multi-module</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Multi-module · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Quality</th></tr>
+                  <tr>
+                    <th scope="row">Unit tests</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Unit tests · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">CI on every pull request</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="CI on every pull request · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="matrix-legend">
+              <span><span class="dot dot-full" aria-hidden="true"></span> Used</span>
+              <span><span class="dot dot-half" aria-hidden="true"></span> Partly (Paging calls only)</span>
+              <span class="matrix-note">Personal and team projects are checked against their repositories. U by Prodia is closed source and lists what I use there.</span>
+            </div>
+          </div>
         </div>
       </section>
 
