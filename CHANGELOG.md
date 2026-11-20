@@ -23,9 +23,10 @@
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
 ### Visualisations and Apple-style scrollytelling
-- **Stack evolution matrix** (home, under Skills): a dot matrix of 13 technologies across the four projects, oldest first. It shows the move from XML, LiveData, callbacks, and hand-written factories to Compose, Flow, Hilt, Room, multi-module, unit tests, and CI. Built as a real `<table>` with screen-reader labels, and "partly" uses a different shape, not just a different colour. Dots pop in column by column, the hovered project's column is highlighted, and each dot has a tooltip on hover, tap, or keyboard focus. On phones it fits the screen without sideways scrolling.
+- **Stack evolution matrix** (home, under Skills): a dot matrix of 14 technologies across the four projects, oldest first. It shows the move from XML, LiveData, callbacks, and hand-written factories to Compose, Flow, Hilt, Room, multi-module, unit tests, and CI. Built as a real `<table>` with screen-reader labels, and "partly" uses a different shape, not just a different colour. Dots pop in column by column, the hovered project's column is highlighted, and each dot has a tooltip on hover, tap, or keyboard focus. On phones it fits the screen without sideways scrolling.
 - **Xporter Camera "A closer look"**: the screens grid is now a scrollytelling section. A phone stays pinned while four steps scroll past, and the screen changes with the active step. On tablets and phones, each step shows its own screen instead.
 - **USB vs Wi-Fi bar chart** in the Xporter research section: 20.6 vs 0.71 MB/s with direct labels, a tooltip with the time for a 17.5 MB JPEG, and an "≈29× faster" callout. The bars grow in when they scroll into view.
+- Matrix: split "Room & DataStore" into two rows and marked Room for U by Prodia (confirmed by Reza). DataStore stays Xporter-only. Added a Room tag to the U by Prodia card.
 - All new motion turns off with *reduce motion*. Hidden tooltips no longer take up space, so they can't widen a scroll area.
 
 ### Xporter Camera
