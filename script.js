@@ -82,8 +82,11 @@ themeToggle.addEventListener("click", () => {
     root.animate(
       { clipPath: toDark ? [full, small] : [small, full] },
       {
-        duration: 550,
-        easing: toDark ? "cubic-bezier(0.4, 0, 1, 1)" : "cubic-bezier(0, 0, 0.2, 1)",
+        duration: 600,
+        // Standard easing both ways. A decelerate curve on the expanding
+        // circle covers the screen within the first frames and looks like
+        // a flash, because the toggle sits in the corner.
+        easing: "cubic-bezier(0.4, 0, 0.2, 1)",
         fill: "forwards",
         pseudoElement: toDark ? "::view-transition-old(root)" : "::view-transition-new(root)",
       }
