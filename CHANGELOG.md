@@ -26,7 +26,7 @@
 - Every project card now has a **context line** (production / thesis / team project, plus the year), **3 highlight bullets** on what was built, and tech tags checked against each repository's `build.gradle` and source code.
 - **Qurbanku**: describes the two role-based flows (committee and congregants), CameraX, and Google Maps + Fused Location. Removed the **Espresso** tag, because the repo only has the default example tests.
 - **Tips n Trip**: removed the **GCP** and **Maps SDK** tags, which the Android app does not use. Added Retrofit, OkHttp, Paging 3, Navigation, and Glide, which it does use.
-- **U by Prodia**: replaced the text placeholder with `assets/uprodia.jpg`, a banner made from the home feature menu and the Met-U screen (status bar, greeting, and personal health data left out). Added Hilt (as stated in the Experience section) and split the features into bullets.
+- **U by Prodia**: replaced the text placeholder with `assets/uprodia.jpg`, a banner made from the home feature menu and the Met-U screen (status bar, greeting, and personal health data left out). Added Hilt, Coroutines, Flow, and Retrofit (confirmed by Reza) and split the features into bullets.
 - Project names use `<h3>` and cards use `<article>` for a better heading structure.
 
 ### Performance
