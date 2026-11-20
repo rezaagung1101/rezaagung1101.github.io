@@ -250,6 +250,8 @@
                 <li class="chip chip-strong">Auth0</li>
                 <li class="chip">Git &amp; GitHub</li>
                 <li class="chip chip-strong">GitHub Actions CI</li>
+                <li class="chip chip-strong">Codemagic CI/CD</li>
+                <li class="chip">App sealing · R8 obfuscation</li>
                 <li class="chip">JUnit · Turbine</li>
                 <li class="chip">Spotless · ktlint</li>
                 <li class="chip">LeakCanary</li>
@@ -319,7 +321,7 @@
                   </tr>
                   <tr>
                     <th scope="row">Coroutines &amp; Flow</th>
-                    <td data-col="0"><span class="dot dot-half" tabindex="0" data-tip="Coroutines & Flow · partly, in Tips n Trip"></span><span class="sr-only">Partly</span></td>
+                    <td data-col="0"><span class="dot dot-half" tabindex="0" data-tip="Partly · suspend calls for Paging only in Tips n Trip"></span><span class="sr-only">Partly</span></td>
                     <td data-col="1"><span class="sr-only">Not used</span></td>
                     <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Coroutines & Flow · used in U by Prodia"></span><span class="sr-only">Used</span></td>
                     <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Coroutines & Flow · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
@@ -403,22 +405,29 @@
                     <th scope="row">Unit tests</th>
                     <td data-col="0"><span class="sr-only">Not used</span></td>
                     <td data-col="1"><span class="sr-only">Not used</span></td>
-                    <td data-col="2"><span class="sr-only">Not used</span></td>
-                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Unit tests · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Unit tests · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Unit tests · JUnit, coroutines-test, Turbine in Xporter Camera"></span><span class="sr-only">Used</span></td>
                   </tr>
                   <tr>
-                    <th scope="row">CI on every pull request</th>
+                    <th scope="row">CI/CD pipeline</th>
                     <td data-col="0"><span class="sr-only">Not used</span></td>
                     <td data-col="1"><span class="sr-only">Not used</span></td>
-                    <td data-col="2"><span class="sr-only">Not used</span></td>
-                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="CI on every pull request · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="CI/CD · Codemagic in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="CI · GitHub Actions on every pull request in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Release hardening</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="App sealing and code obfuscation in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-half" tabindex="0" data-tip="Partly · R8 shrinking and obfuscation in Xporter Camera"></span><span class="sr-only">Partly</span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="matrix-legend">
               <span><span class="dot dot-full" aria-hidden="true"></span> Used</span>
-              <span><span class="dot dot-half" aria-hidden="true"></span> Partly (Paging calls only)</span>
+              <span><span class="dot dot-half" aria-hidden="true"></span> Partly (hover or tap for details)</span>
               <span class="matrix-note">Personal and team projects are checked against their repositories. U by Prodia is closed source and lists what I use there.</span>
             </div>
           </div>
@@ -454,7 +463,7 @@
                   <li><strong>Sub Account Management</strong>: lets users manage family members' accounts and book lab tests for them together.</li>
                   <li><strong>Met-U</strong>: a metabolic health tracker covering BMI, blood pressure, and blood sugar.</li>
                   <li>Integrated <strong>Health Connect</strong>, <strong>Auth0</strong> sign-in, and Firebase Crashlytics, Remote Config, and Cloud Messaging.</li>
-                  <li>Built with Jetpack Compose, Coroutines/Flow, Retrofit, and Hilt on a Clean Architecture codebase.</li>
+                  <li>Built with Jetpack Compose, Coroutines/Flow, Retrofit, and Hilt on a Clean Architecture codebase, with unit tests, Codemagic CI/CD, and app sealing for release builds.</li>
                 </ul>
                 <div class="tag-row">
                   <span class="tag">Kotlin</span>

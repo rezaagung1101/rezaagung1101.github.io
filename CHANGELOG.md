@@ -27,6 +27,8 @@
 - **Xporter Camera "A closer look"**: the screens grid is now a scrollytelling section. A phone stays pinned while four steps scroll past, and the screen changes with the active step. On tablets and phones, each step shows its own screen instead.
 - **USB vs Wi-Fi bar chart** in the Xporter research section: 20.6 vs 0.71 MB/s with direct labels, a tooltip with the time for a 17.5 MB JPEG, and an "≈29× faster" callout. The bars grow in when they scroll into view.
 - Matrix: split "Room & DataStore" into two rows and marked Room for U by Prodia (confirmed by Reza). DataStore stays Xporter-only. Added a Room tag to the U by Prodia card.
+- Matrix Quality group (confirmed by Reza): unit tests for U by Prodia; "CI on every pull request" became "CI/CD pipeline" (Codemagic for U by Prodia, GitHub Actions for Xporter); a new "Release hardening" row (app sealing and obfuscation for U by Prodia, R8 only for Xporter, shown as partly). Each half dot's tooltip says why it's partial.
+- Skills: added Codemagic CI/CD and App sealing · R8 obfuscation. The U by Prodia card mentions unit tests, Codemagic, and app sealing.
 - All new motion turns off with *reduce motion*. Hidden tooltips no longer take up space, so they can't widen a scroll area.
 
 ### Xporter Camera
