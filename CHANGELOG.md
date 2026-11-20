@@ -20,6 +20,7 @@
 - **Icons load from Font Awesome Free on cdnjs** instead of a personal Font Awesome Kit, so they no longer depend on the kit staying active.
 - All `target="_blank"` links now carry `rel="noopener noreferrer"`.
 - Decorative icons marked `aria-hidden="true"`.
+- **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
 ### Performance
 - `assets/profile_image.jpg` resized from 2179×2179 to 640×640 — **436 KB → 40 KB**.
