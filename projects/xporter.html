@@ -160,26 +160,58 @@
       <!-- ============ Screens ============ -->
       <section>
         <div class="wrap">
-          <span class="tab-label reveal"><span class="dot"></span>03_screens.kt</span>
-          <h2 class="section-heading reveal">Screens</h2>
+          <span class="tab-label reveal"><span class="dot"></span>03_a_closer_look.kt</span>
+          <h2 class="section-heading reveal">A closer look</h2>
 
-          <div class="screens">
-            <figure class="screen reveal">
-              <img src="../assets/xporter/connect.jpg" alt="Connect screen with USB-C cable, camera Wi-Fi, and Bluetooth options" width="540" height="980" loading="lazy" decoding="async" />
-              <figcaption>Pick USB or Wi-Fi. Photos show up as soon as the camera is found.</figcaption>
-            </figure>
-            <figure class="screen reveal">
-              <img src="../assets/xporter/detail.jpg" alt="Photo detail with aperture, shutter, ISO, lens, and the Classic Chrome film simulation" width="540" height="980" loading="lazy" decoding="async" />
-              <figcaption>Exposure, lens, and the film simulation, read from the file's metadata.</figcaption>
-            </figure>
-            <figure class="screen reveal">
-              <img src="../assets/xporter/exposure.jpg" alt="Share sheet with an exposure frame showing camera, lens, and settings" width="540" height="980" loading="lazy" decoding="async" />
-              <figcaption>Share a photo with its exposure info in a clean frame.</figcaption>
-            </figure>
-            <figure class="screen reveal">
-              <img src="../assets/xporter/polaroid.jpg" alt="Share sheet with the photo drawn as a polaroid print for a story" width="540" height="980" loading="lazy" decoding="async" />
-              <figcaption>Or as a polaroid print, sized for stories.</figcaption>
-            </figure>
+          <p class="section-sub reveal">Scroll through one photo's trip, from the camera to a shareable card.</p>
+
+          <div class="story">
+            <div class="story-stage" aria-hidden="true">
+              <div class="story-phone">
+                <img class="story-shot is-active" data-i="0" src="../assets/xporter/connect.jpg" alt="" width="540" height="980" />
+                <img class="story-shot" data-i="1" src="../assets/xporter/detail.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
+                <img class="story-shot" data-i="2" src="../assets/xporter/exposure.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
+                <img class="story-shot" data-i="3" src="../assets/xporter/polaroid.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
+              </div>
+            </div>
+
+            <ol class="story-steps">
+              <li class="story-step is-active" data-i="0">
+                <img class="story-inline" src="../assets/xporter/connect.jpg" alt="Connect screen with USB-C cable, camera Wi-Fi, and Bluetooth options" width="540" height="980" loading="lazy" decoding="async" />
+                <p class="decision-num">01 · Connect</p>
+                <h3>Plug in, or go wireless</h3>
+                <p>
+                  USB-C is the recommended and fastest link. Wi-Fi joins the camera's own network
+                  from inside the app. Either way, photos show up as soon as the camera is found.
+                </p>
+              </li>
+              <li class="story-step" data-i="1">
+                <img class="story-inline" src="../assets/xporter/detail.jpg" alt="Photo detail with aperture, shutter, ISO, lens, and the Classic Chrome film simulation" width="540" height="980" loading="lazy" decoding="async" />
+                <p class="decision-num">02 · Read</p>
+                <h3>Every photo, with its recipe</h3>
+                <p>
+                  Aperture, shutter, ISO, and lens come from EXIF. The film simulation and all ten
+                  recipe settings come from Fujifilm's MakerNote, one tap away.
+                </p>
+              </li>
+              <li class="story-step" data-i="2">
+                <img class="story-inline" src="../assets/xporter/exposure.jpg" alt="Share sheet with an exposure frame showing camera, lens, and settings" width="540" height="980" loading="lazy" decoding="async" />
+                <p class="decision-num">03 · Share</p>
+                <h3>Exposure info, framed</h3>
+                <p>
+                  A clean frame with the camera, lens, and settings under the photo, ready for a
+                  feed post. Save it to the gallery or share it straight away.
+                </p>
+              </li>
+              <li class="story-step" data-i="3">
+                <img class="story-inline" src="../assets/xporter/polaroid.jpg" alt="Share sheet with the photo drawn as a polaroid print for a story" width="540" height="980" loading="lazy" decoding="async" />
+                <p class="decision-num">04 · Share</p>
+                <h3>Or a polaroid for stories</h3>
+                <p>
+                  The same photo drawn as a plain print with its date, sized for stories.
+                </p>
+              </li>
+            </ol>
           </div>
 
           <div class="showcase reveal">
@@ -214,6 +246,25 @@
             </p>
             <p>The spike measured what each link can actually do:</p>
           </div>
+
+          <figure class="speed-chart reveal" aria-label="Full-size download speed measured on an X-T3: USB 20.6 megabytes per second, Wi-Fi 0.71 megabytes per second, about 29 times faster over USB.">
+            <figcaption class="chart-title">Full-size download speed · MB/s</figcaption>
+            <div class="bar-row">
+              <span class="bar-label">USB</span>
+              <div class="bar-track">
+                <div class="bar" style="--w: 100%" tabindex="0" data-tip="USB · 20.6 MB/s · a 17.5 MB JPEG in ≈0.85 s"></div>
+              </div>
+              <span class="bar-value">20.6</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">Wi-Fi</span>
+              <div class="bar-track">
+                <div class="bar" style="--w: 3.45%" tabindex="0" data-tip="Wi-Fi · 0.71 MB/s · a 17.5 MB JPEG in 24.6 s"></div>
+              </div>
+              <span class="bar-value">0.71</span>
+            </div>
+            <p class="chart-callout"><strong>≈29×</strong> faster over USB. A full-size 17.5&nbsp;MB JPEG takes under a second by cable and about 25 seconds over Wi-Fi.</p>
+          </figure>
 
           <div class="table-wrap reveal">
             <table class="spec-table">

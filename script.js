@@ -245,6 +245,62 @@ codeRestore?.addEventListener("click", () => {
   );
 });
 
+// ============ Scrollytelling: switch the phone screen per step ============
+const storySteps = document.querySelectorAll(".story-step");
+const storyShots = document.querySelectorAll(".story-shot");
+
+if (storySteps.length && "IntersectionObserver" in window) {
+  const setStep = (i) => {
+    storySteps.forEach((step) => step.classList.toggle("is-active", step.dataset.i === i));
+    storyShots.forEach((shot) => shot.classList.toggle("is-active", shot.dataset.i === i));
+  };
+  // A step becomes active when it crosses the middle band of the viewport.
+  const storyObserver = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && setStep(e.target.dataset.i)),
+    { rootMargin: "-45% 0px -45% 0px" }
+  );
+  storySteps.forEach((step) => storyObserver.observe(step));
+}
+
+// ============ Charts: draw once they scroll into view ============
+const charts = document.querySelectorAll(".speed-chart, .stack-matrix");
+
+if (charts.length) {
+  if ("IntersectionObserver" in window && !reduceMotion.matches) {
+    const chartObserver = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-drawn");
+            chartObserver.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.35 }
+    );
+    charts.forEach((c) => chartObserver.observe(c));
+  } else {
+    charts.forEach((c) => c.classList.add("is-drawn"));
+  }
+}
+
+// ============ Stack matrix: highlight the hovered project column ============
+const matrix = document.querySelector(".stack-matrix");
+
+if (matrix) {
+  const setCol = (col) =>
+    matrix.querySelectorAll("[data-col]").forEach((cell) => cell.classList.toggle("col-hover", cell.dataset.col === col));
+  matrix.addEventListener("mouseover", (e) => {
+    const cell = e.target.closest("[data-col]");
+    setCol(cell ? cell.dataset.col : null);
+  });
+  matrix.addEventListener("mouseleave", () => setCol(null));
+  matrix.addEventListener("focusin", (e) => {
+    const cell = e.target.closest("[data-col]");
+    if (cell) setCol(cell.dataset.col);
+  });
+  matrix.addEventListener("focusout", () => setCol(null));
+}
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();

@@ -154,6 +154,7 @@
                   <li>Write scalable, maintainable code in Kotlin, leveraging Hilt and other Jetpack libraries.</li>
                   <li>Collaborate cross-functionally with iOS, Backend, and QA teams to deliver features on schedule.</li>
                   <li>Integrate platform and third-party services, including Health Connect, Auth0, and Firebase (Crashlytics, Remote Config, Cloud Messaging, Analytics).</li>
+                  <li>Contribute to the Codemagic CI/CD pipeline and release scripts: pull request checks with ktlint, unit tests, and coverage, app sealing for release builds, and an automated R8 obfuscation check that fails the build when code relies on class names R8 renames.</li>
                   <li>Conduct code reviews and provide constructive feedback to improve team code quality.</li>
                 </ul>
               </div>
@@ -225,6 +226,7 @@
                 <li class="chip chip-strong">Hilt</li>
                 <li class="chip chip-strong">Multi-module</li>
                 <li class="chip">Repository Pattern</li>
+                <li class="chip">MVI-style events</li>
                 <li class="chip">Gradle Convention Plugins</li>
               </ul>
             </div>
@@ -234,11 +236,12 @@
                 <li class="chip chip-strong">Coroutines</li>
                 <li class="chip chip-strong">Flow</li>
                 <li class="chip chip-strong">Retrofit</li>
+                <li class="chip">Socket.IO realtime</li>
                 <li class="chip">OkHttp</li>
                 <li class="chip chip-strong">Room</li>
                 <li class="chip">DataStore</li>
                 <li class="chip">LiveData</li>
-                <li class="chip">Paging 3</li>
+                <li class="chip chip-strong">Paging 3</li>
                 <li class="chip">Coil</li>
                 <li class="chip">Glide</li>
               </ul>
@@ -250,7 +253,11 @@
                 <li class="chip chip-strong">Auth0</li>
                 <li class="chip">Git &amp; GitHub</li>
                 <li class="chip chip-strong">GitHub Actions CI</li>
-                <li class="chip">JUnit · Turbine</li>
+                <li class="chip chip-strong">Codemagic CI/CD</li>
+                <li class="chip">App sealing · certificate pinning</li>
+                <li class="chip chip-strong">R8 obfuscation</li>
+                <li class="chip chip-strong">JUnit · MockK · Turbine</li>
+                <li class="chip">JaCoCo · SonarQube</li>
                 <li class="chip">Spotless · ktlint</li>
                 <li class="chip">LeakCanary</li>
                 <li class="chip">Android Studio</li>
@@ -270,6 +277,177 @@
                 <li class="chip">Firestore</li>
                 <li class="chip">Cloud Storage</li>
               </ul>
+            </div>
+          </div>
+
+          <div class="stack-evolution reveal">
+            <h3 class="evo-title">How my stack evolved</h3>
+            <p class="evo-sub">
+              From XML, LiveData, and callbacks in 2023 to Compose, Flow, Hilt, and a tested
+              multi-module codebase today. Hover or tap a dot for details.
+            </p>
+            <div class="matrix-wrap">
+              <table class="stack-matrix">
+                <caption class="sr-only">Technologies used in each project, oldest project first</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" class="matrix-corner">Tech</th>
+                    <th scope="col" data-col="0"><span class="col-name">Tips n Trip</span><span class="col-year">2023</span></th>
+                    <th scope="col" data-col="1"><span class="col-name">Qurbanku</span><span class="col-year">2023–24</span></th>
+                    <th scope="col" data-col="2"><span class="col-name">U by Prodia</span><span class="col-year">2024–now</span></th>
+                    <th scope="col" data-col="3"><span class="col-name">Xporter Camera</span><span class="col-year">2026</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">UI</th></tr>
+                  <tr>
+                    <th scope="row">XML Views</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="XML Views · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="XML Views · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-half" tabindex="0" data-tip="Partly · a few older screens, the rest is Compose in U by Prodia"></span><span class="sr-only">Partly</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Jetpack Compose</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Jetpack Compose · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Jetpack Compose · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">State &amp; async</th></tr>
+                  <tr>
+                    <th scope="row">LiveData + callbacks</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="LiveData + callbacks · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="LiveData + callbacks · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-half" tabindex="0" data-tip="Partly · only in older screens of U by Prodia"></span><span class="sr-only">Partly</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Coroutines &amp; Flow</th>
+                    <td data-col="0"><span class="dot dot-half" tabindex="0" data-tip="Partly · suspend calls for Paging only in Tips n Trip"></span><span class="sr-only">Partly</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Coroutines, Flow, and StateFlow UI state in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Coroutines &amp; Flow · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Dependency injection</th></tr>
+                  <tr>
+                    <th scope="row">Hand-written factories</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="Hand-written factories · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="Hand-written factories · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="sr-only">Not used</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Hilt</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Hilt · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Hilt · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Data</th></tr>
+                  <tr>
+                    <th scope="row">Retrofit</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="Retrofit · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Retrofit · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Paging 3</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="Paging 3 · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Paging 3 · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="sr-only">Not used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Firebase</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="Firebase · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Analytics, Crashlytics, Remote Config, FCM, Performance, App Distribution in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Firebase · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Room</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Room with an encrypted database in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Room · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">DataStore</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="DataStore · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="DataStore · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Architecture</th></tr>
+                  <tr>
+                    <th scope="row">MVVM</th>
+                    <td data-col="0"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in Tips n Trip"></span><span class="sr-only">Used</span></td>
+                    <td data-col="1"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in Qurbanku"></span><span class="sr-only">Used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="MVVM · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Clean Architecture</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Clean Architecture · used in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Clean Architecture · used in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Multi-module</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="7 Gradle modules in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="16 Gradle modules in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr class="matrix-group"><th scope="rowgroup" colspan="5">Quality</th></tr>
+                  <tr>
+                    <th scope="row">Unit tests</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="JUnit and MockK, about 750 test files, in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="JUnit, coroutines-test, and Turbine in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Lint &amp; static analysis</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="ktlint, SonarQube, and JaCoCo coverage in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="Spotless, ktlint, and Android Lint in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">CI/CD pipeline</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="Codemagic: ktlint, tests, and coverage on every pull request, then signed builds per environment, in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-full" tabindex="0" data-tip="GitHub Actions on every pull request in Xporter Camera"></span><span class="sr-only">Used</span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Release hardening</th>
+                    <td data-col="0"><span class="sr-only">Not used</span></td>
+                    <td data-col="1"><span class="sr-only">Not used</span></td>
+                    <td data-col="2"><span class="dot dot-full" tabindex="0" data-tip="R8, app sealing, and certificate pinning in U by Prodia"></span><span class="sr-only">Used</span></td>
+                    <td data-col="3"><span class="dot dot-half" tabindex="0" data-tip="Partly · R8 shrinking and obfuscation in Xporter Camera"></span><span class="sr-only">Partly</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="matrix-legend">
+              <span><span class="dot dot-full" aria-hidden="true"></span> Used</span>
+              <span><span class="dot dot-half" aria-hidden="true"></span> Partly (hover or tap for details)</span>
+              <span class="matrix-note">Every column is checked against the project's build configuration. U by Prodia is a closed-source company app, so only the stack is shown, not the code.</span>
             </div>
           </div>
         </div>
@@ -303,8 +481,8 @@
                 <ul class="project-points">
                   <li><strong>Sub Account Management</strong>: lets users manage family members' accounts and book lab tests for them together.</li>
                   <li><strong>Met-U</strong>: a metabolic health tracker covering BMI, blood pressure, and blood sugar.</li>
-                  <li>Integrated <strong>Health Connect</strong>, <strong>Auth0</strong> sign-in, and Firebase Crashlytics, Remote Config, and Cloud Messaging.</li>
-                  <li>Built with Jetpack Compose, Coroutines/Flow, Retrofit, and Hilt on a Clean Architecture codebase.</li>
+                  <li>Also worked on <strong>realtime in-app chat</strong>, lab test booking and order details, health plans, and the cart, plus <strong>Health Connect</strong> data, <strong>Auth0</strong> sign-in, and Firebase.</li>
+                  <li>7-module Clean Architecture codebase with Compose, Flow, Hilt, Retrofit, and Room. Every pull request runs ktlint, unit tests, and coverage on <strong>Codemagic</strong>. Release builds use R8, app sealing, and certificate pinning, with an automated check that catches code broken by R8 obfuscation.</li>
                 </ul>
                 <div class="tag-row">
                   <span class="tag">Kotlin</span>
@@ -312,10 +490,13 @@
                   <span class="tag">Coroutines/Flow</span>
                   <span class="tag">Hilt</span>
                   <span class="tag">Retrofit</span>
-                  <span class="tag">Clean Architecture</span>
+                  <span class="tag">Room</span>
+                  <span class="tag">Paging 3</span>
+                  <span class="tag">Multi-module</span>
                   <span class="tag">Health Connect</span>
                   <span class="tag">Auth0</span>
                   <span class="tag">Firebase</span>
+                  <span class="tag">Codemagic</span>
                 </div>
               </div>
             </article>
