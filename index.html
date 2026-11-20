@@ -154,7 +154,7 @@
                   <li>Write scalable, maintainable code in Kotlin, leveraging Hilt and other Jetpack libraries.</li>
                   <li>Collaborate cross-functionally with iOS, Backend, and QA teams to deliver features on schedule.</li>
                   <li>Integrate platform and third-party services, including Health Connect, Auth0, and Firebase (Crashlytics, Remote Config, Cloud Messaging, Analytics).</li>
-                  <li>Contribute to the Codemagic CI/CD pipeline and release scripts: pull request checks with ktlint, unit tests, and coverage, plus app sealing for release builds.</li>
+                  <li>Contribute to the Codemagic CI/CD pipeline and release scripts: pull request checks with ktlint, unit tests, and coverage, app sealing for release builds, and an automated R8 obfuscation check that fails the build when code relies on class names R8 renames.</li>
                   <li>Conduct code reviews and provide constructive feedback to improve team code quality.</li>
                 </ul>
               </div>
@@ -236,6 +236,7 @@
                 <li class="chip chip-strong">Coroutines</li>
                 <li class="chip chip-strong">Flow</li>
                 <li class="chip chip-strong">Retrofit</li>
+                <li class="chip">Socket.IO realtime</li>
                 <li class="chip">OkHttp</li>
                 <li class="chip chip-strong">Room</li>
                 <li class="chip">DataStore</li>
@@ -253,7 +254,8 @@
                 <li class="chip">Git &amp; GitHub</li>
                 <li class="chip chip-strong">GitHub Actions CI</li>
                 <li class="chip chip-strong">Codemagic CI/CD</li>
-                <li class="chip">App sealing · R8 · certificate pinning</li>
+                <li class="chip">App sealing · certificate pinning</li>
+                <li class="chip chip-strong">R8 obfuscation</li>
                 <li class="chip chip-strong">JUnit · MockK · Turbine</li>
                 <li class="chip">JaCoCo · SonarQube</li>
                 <li class="chip">Spotless · ktlint</li>
@@ -479,8 +481,8 @@
                 <ul class="project-points">
                   <li><strong>Sub Account Management</strong>: lets users manage family members' accounts and book lab tests for them together.</li>
                   <li><strong>Met-U</strong>: a metabolic health tracker covering BMI, blood pressure, and blood sugar.</li>
-                  <li>Also worked on in-app chat, lab test booking and order details, health plans, and the cart, plus <strong>Health Connect</strong> data, <strong>Auth0</strong> sign-in, and Firebase.</li>
-                  <li>7-module Clean Architecture codebase with Compose, Flow, Hilt, Retrofit, and Room. Every pull request runs ktlint, unit tests, and coverage on <strong>Codemagic</strong>, and release builds use R8, app sealing, and certificate pinning.</li>
+                  <li>Also worked on <strong>realtime in-app chat</strong>, lab test booking and order details, health plans, and the cart, plus <strong>Health Connect</strong> data, <strong>Auth0</strong> sign-in, and Firebase.</li>
+                  <li>7-module Clean Architecture codebase with Compose, Flow, Hilt, Retrofit, and Room. Every pull request runs ktlint, unit tests, and coverage on <strong>Codemagic</strong>. Release builds use R8, app sealing, and certificate pinning, with an automated check that catches code broken by R8 obfuscation.</li>
                 </ul>
                 <div class="tag-row">
                   <span class="tag">Kotlin</span>

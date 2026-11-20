@@ -31,6 +31,7 @@
 - **U by Prodia verified against its build configuration** (summary from Reza's local session, no code shared). Matrix now has 17 rows: XML Views and LiveData are partly (older screens only), and DataStore, Paging 3, multi-module (7 modules), a new "Lint & static analysis" row (ktlint, SonarQube, JaCoCo), CI/CD (Codemagic pull request checks), and release hardening (R8, app sealing, certificate pinning) are marked used. The footnote now says every column is checked against build configuration.
 - U by Prodia card: new bullets for the other feature areas worked on (chat, lab test booking and order details, health plans, cart) and the engineering setup. Added Paging 3, Multi-module, and Codemagic tags. Experience: added the Codemagic CI/CD and release scripts work.
 - Skills: added MVI-style events, MockK, JaCoCo and SonarQube, and certificate pinning.
+- Confirmed by Reza: realtime in-app chat (U by Prodia card, Socket.IO realtime in Skills) and the automated R8 obfuscation check (Experience and the U by Prodia card, R8 obfuscation in Skills). The in-house mocking tool and commit counts are left out on purpose.
 - Skills: added Codemagic CI/CD and App sealing · R8 obfuscation. The U by Prodia card mentions unit tests, Codemagic, and app sealing.
 - All new motion turns off with *reduce motion*. Hidden tooltips no longer take up space, so they can't widen a scroll area.
 
