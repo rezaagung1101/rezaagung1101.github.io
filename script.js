@@ -40,13 +40,44 @@ function renderToggle() {
   themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
 }
 
-themeToggle.addEventListener("click", () => {
-  const next = currentTheme() === "dark" ? "light" : "dark";
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function applyTheme(next) {
   root.setAttribute("data-theme", next);
   try {
     localStorage.setItem("theme", next);
   } catch (e) {}
   renderToggle();
+}
+
+// Circular reveal from the toggle button, like Android's
+// ViewAnimationUtils.createCircularReveal. Falls back to an instant
+// switch where the View Transitions API or motion is unavailable.
+themeToggle.addEventListener("click", () => {
+  const next = currentTheme() === "dark" ? "light" : "dark";
+
+  if (!document.startViewTransition || reduceMotion.matches) {
+    applyTheme(next);
+    return;
+  }
+
+  const rect = themeToggle.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  const radius = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y)
+  );
+
+  root.classList.add("theme-switching");
+  const transition = document.startViewTransition(() => applyTheme(next));
+  transition.ready.then(() => {
+    root.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+      { duration: 550, easing: "cubic-bezier(0.4, 0, 0.2, 1)", pseudoElement: "::view-transition-new(root)" }
+    );
+  });
+  transition.finished.finally(() => root.classList.remove("theme-switching"));
 });
 
 darkQuery.addEventListener?.("change", renderToggle);
@@ -60,7 +91,7 @@ const sections = [...navLinks]
 
 function updateActiveLink() {
   const offset = window.innerHeight * 0.35;
-  let current = sections[0];
+  let current = null; // nothing highlighted while in the hero
   sections.forEach((sec) => {
     if (sec.getBoundingClientRect().top <= offset) current = sec;
   });
@@ -69,11 +100,20 @@ function updateActiveLink() {
     current = sections[sections.length - 1];
   }
   navLinks.forEach((link) => {
-    const active = link.getAttribute("href") === "#" + current.id;
+    const active = current !== null && link.getAttribute("href") === "#" + current.id;
     link.classList.toggle("active", active);
     if (active) link.setAttribute("aria-current", "true");
     else link.removeAttribute("aria-current");
   });
+}
+
+// ============ Scroll progress bar ============
+const progressBar = document.getElementById("scrollProgress");
+
+function updateProgress() {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+  progressBar.style.transform = `scaleX(${ratio})`;
 }
 
 let ticking = false;
@@ -83,6 +123,7 @@ window.addEventListener(
     if (!ticking) {
       requestAnimationFrame(() => {
         updateActiveLink();
+        updateProgress();
         ticking = false;
       });
       ticking = true;
@@ -90,19 +131,43 @@ window.addEventListener(
   },
   { passive: true }
 );
-window.addEventListener("resize", updateActiveLink);
+window.addEventListener("resize", () => {
+  updateActiveLink();
+  updateProgress();
+});
 updateActiveLink();
+updateProgress();
 
-// ============ Scroll reveal ============
+// ============ Scroll reveal (staggered inside grids) ============
 const revealEls = document.querySelectorAll(".reveal");
+
+document
+  .querySelectorAll(".project-grid, .cert-grid, .skills-grid, .hero-visual")
+  .forEach((group) => {
+    [...group.children]
+      .filter((el) => el.classList.contains("reveal"))
+      .forEach((el, i) => el.style.setProperty("--stagger", `${Math.min(i, 5) * 90}ms`));
+  });
 
 if ("IntersectionObserver" in window && revealEls.length) {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-          observer.unobserve(entry.target);
+          const el = entry.target;
+          el.classList.add("in-view");
+          observer.unobserve(el);
+          // Once revealed, drop the reveal classes so the element's own
+          // hover transitions apply without the reveal duration/delay.
+          el.addEventListener(
+            "transitionend",
+            (e) => {
+              if (e.propertyName !== "opacity") return;
+              el.classList.remove("reveal", "in-view");
+              el.style.removeProperty("--stagger");
+            },
+            { once: false }
+          );
         }
       });
     },

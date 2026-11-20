@@ -22,6 +22,16 @@
 - Decorative icons marked `aria-hidden="true"`.
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
+### Visual & motion package
+- **Skills section** (`03_skills.kt`): four groups (Android UI, Architecture, Async & Data, Backend & Tools), with the main skills highlighted. It only lists tech verified in the project repos or confirmed by Reza.
+- **Kotlin code card in the hero**: an editor-style `Reza.kt` snippet with IntelliJ-style syntax colours. It overlaps the photo on desktop and sits under the intro text on mobile.
+- **Circular reveal theme switch**: the new theme grows as a circle from the toggle button, like Android's `createCircularReveal` (View Transitions API, with an instant switch as the fallback).
+- **Scroll progress bar**: a thin purple → orange bar under the navbar.
+- **Staggered reveal**: cards in the Skills, Projects, and Certification grids appear one after another.
+- Navbar: removed **Home** (the `reza.kt` logo already links to the top) to make room for **Skills**. No menu item is highlighted while the hero is on screen.
+- Section labels renumbered: `03_skills.kt`, `04_projects.kt`, `05_certification.kt`.
+- Fix: revealed elements now drop the reveal classes, so card hover effects use their own fast transitions instead of the slow reveal timing.
+
 ### Projects section
 - Every project card now has a **context line** (production / thesis / team project, plus the year), **3 highlight bullets** on what was built, and tech tags checked against each repository's `build.gradle` and source code.
 - **Qurbanku**: describes the two role-based flows (committee and congregants), CameraX, and Google Maps + Fused Location. Removed the **Espresso** tag, because the repo only has the default example tests.
