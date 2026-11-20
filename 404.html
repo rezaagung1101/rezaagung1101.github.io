@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found · Reza Agung Nugraha</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#faf9f6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Absolute paths: GitHub Pages serves this page for any missing URL, at any depth -->
+    <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="case-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header>
+      <nav aria-label="Main">
+        <a class="brand" href="/">reza<span class="brand-ext">.kt</span></a>
+        <div class="nav-tools">
+          <a class="back-link" href="/">← Home</a>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="notfound">
+        <div class="wrap">
+          <p class="eyebrow">&gt; cd this-page<span class="blink"></span></p>
+          <h1 class="case-title">404: page not found</h1>
+          <p class="case-lede">
+            This page doesn't exist, or it moved. While you're here, ship a few builds:
+            jump over build errors and duck under ANRs.
+          </p>
+
+          <div class="phone-landscape">
+            <div class="phone-screen">
+              <div id="notFoundGame"></div>
+            </div>
+          </div>
+          <p class="game-hint">Space or ↑ to jump · ↓ to duck · or use the buttons</p>
+
+          <div class="case-links case-links-center notfound-links">
+            <a class="btn btn-primary" href="/">Back to home</a>
+            <a class="btn btn-ghost" href="/#projects">See my projects</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap footer-row">
+        <span>&copy; <span id="year">2026</span> Reza Agung Nugraha</span>
+        <span>Built with Kotlin in mind.</span>
+      </div>
+    </footer>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
