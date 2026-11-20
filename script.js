@@ -190,6 +190,47 @@ if ("IntersectionObserver" in window && revealEls.length) {
   revealEls.forEach((el) => el.classList.add("in-view"));
 }
 
+// ============ Code window: close / restore ============
+const codeCard = document.querySelector(".code-card");
+const codeClose = document.getElementById("codeClose");
+const codeRestore = document.getElementById("codeRestore");
+
+function afterTransition(el, fn) {
+  if (reduceMotion.matches) return fn();
+  let done = false;
+  const finish = () => {
+    if (!done) {
+      done = true;
+      fn();
+    }
+  };
+  el.addEventListener("transitionend", finish, { once: true });
+  setTimeout(finish, 300); // safety net if transitionend never fires
+}
+
+codeClose?.addEventListener("click", () => {
+  codeCard.classList.remove("reveal", "in-view");
+  codeCard.classList.add("is-closed");
+  afterTransition(codeCard, () => {
+    codeCard.hidden = true;
+    codeRestore.hidden = false;
+    codeRestore.classList.add("is-entering");
+    requestAnimationFrame(() => requestAnimationFrame(() => codeRestore.classList.remove("is-entering")));
+    codeRestore.focus({ preventScroll: true });
+  });
+});
+
+codeRestore?.addEventListener("click", () => {
+  codeRestore.hidden = true;
+  codeCard.hidden = false;
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => {
+      codeCard.classList.remove("is-closed");
+      codeClose.focus({ preventScroll: true });
+    })
+  );
+});
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();

@@ -26,6 +26,7 @@
 - **Skills section** (`03_skills.kt`): four groups (Android UI, Architecture, Async & Data, Backend & Tools), with the main skills highlighted. It only lists tech verified in the project repos or confirmed by Reza.
 - **Kotlin code card in the hero**: an editor-style `Reza.kt` snippet with IntelliJ-style syntax colours. It overlaps the photo on desktop and sits under the intro text on mobile.
 - **Circular reveal theme switch**: the new theme grows as a circle from the toggle button, like Android's `createCircularReveal` (View Transitions API, with an instant switch as the fallback).
+- **Closable code window**: the red traffic light closes the `Reza.kt` card (it shrinks and fades like a macOS window), and a small `▸ Reza.kt` button brings it back. Hovering the traffic lights shows the × − + glyphs. The card now sits lower, so it only covers the bottom third of the photo.
 - **Direction-aware theme animation**: switching to light grows the light page out of the toggle icon (decelerating), and switching to dark shrinks the light page back into the icon (accelerating) to reveal the dark theme underneath.
 - **Scroll progress bar**: a thin purple → orange bar under the navbar.
 - **Staggered reveal**: cards in the Skills, Projects, and Certification grids appear one after another.

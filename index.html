@@ -111,8 +111,12 @@
               <img src="assets/profile_image.jpg" alt="Reza Agung Nugraha" width="640" height="640" />
             </div>
             <figure class="code-card reveal" aria-label="Kotlin snippet describing Reza">
-              <div class="code-bar" aria-hidden="true">
-                <span class="code-dots"><i></i><i></i><i></i></span>
+              <div class="code-bar">
+                <span class="code-dots">
+                  <button class="code-dot dot-close" id="codeClose" type="button" aria-label="Close code window"></button>
+                  <span class="code-dot dot-min" aria-hidden="true"></span>
+                  <span class="code-dot dot-max" aria-hidden="true"></span>
+                </span>
                 <span class="code-file">Reza.kt</span>
               </div>
 <pre class="code-body"><code><span class="k">val</span> reza = <span class="t">AndroidDev</span>(
@@ -124,6 +128,9 @@
   <span class="p">openToWork</span> = <span class="k">true</span>,
 )<span class="code-caret" aria-hidden="true"></span></code></pre>
             </figure>
+            <button class="code-restore" id="codeRestore" type="button" hidden>
+              Reza.kt
+            </button>
           </div>
         </div>
       </section>

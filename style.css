@@ -442,7 +442,7 @@ section#about {
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
-  padding-bottom: 72px;
+  padding-bottom: 130px;
 }
 
 .code-card {
@@ -473,15 +473,94 @@ section#about {
   gap: 6px;
 }
 
-.code-dots i {
-  width: 9px;
-  height: 9px;
+.code-dot {
+  position: relative;
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border: none;
   border-radius: 50%;
   background: #ff5f57;
+  flex: none;
 }
 
-.code-dots i:nth-child(2) { background: #febc2e; }
-.code-dots i:nth-child(3) { background: #28c840; }
+.dot-min { background: #febc2e; }
+.dot-max { background: #28c840; }
+
+.dot-close {
+  cursor: pointer;
+}
+
+/* macOS-style glyphs appear when hovering the traffic lights */
+.code-dot::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 700 9px/1 system-ui, sans-serif;
+  color: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.dot-close::after { content: "\00D7"; font-size: 10px; }
+.dot-min::after { content: "\2212"; }
+.dot-max::after { content: "+"; }
+
+.code-dots:hover .code-dot::after,
+.code-dots:focus-within .code-dot::after {
+  opacity: 1;
+}
+
+/* Close / restore */
+.code-card {
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  transform-origin: 18px 18px;
+}
+
+.code-card.is-closed {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.code-restore {
+  position: absolute;
+  left: -40px;
+  bottom: 24px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #bcbec4;
+  background: #1e1f22;
+  border: 1px solid #2b2d31;
+  border-radius: 8px;
+  padding: 7px 12px;
+  cursor: pointer;
+  box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.6);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.code-card[hidden],
+.code-restore[hidden] {
+  display: none;
+}
+
+.code-restore::before {
+  content: "\25B8";
+  color: var(--orange);
+}
+
+.code-restore:hover {
+  transform: translateY(-2px);
+}
+
+.code-restore.is-entering {
+  opacity: 0;
+  transform: translateY(6px);
+}
 
 .code-file {
   font-family: var(--font-mono);
@@ -1130,6 +1209,10 @@ footer {
   .code-caret {
     animation: none;
   }
+  .code-card,
+  .code-restore {
+    transition: none;
+  }
 }
 
 /* ============ Responsive ============ */
@@ -1153,6 +1236,11 @@ footer {
     position: static;
     width: 100%;
     max-width: 360px;
+  }
+
+  .code-restore {
+    position: static;
+    justify-self: start;
   }
 
   .hero-bio {
