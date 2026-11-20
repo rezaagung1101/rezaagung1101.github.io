@@ -19,8 +19,8 @@
       property="og:description"
       content="How I implemented PTP over USB and Fujifilm's PTP/IP Wi-Fi protocol in Kotlin, made the app read-only by design, and structured it as a tested multi-module codebase."
     />
-    <meta property="og:image" content="https://rezaagung1101.github.io/assets/profile_image.jpg" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://rezaagung1101.github.io/assets/xporter.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 
@@ -93,6 +93,10 @@
             <div><span class="stat-num">32</span><span class="stat-label">unit test files</span></div>
             <div><span class="stat-num">38</span><span class="stat-label">pull requests, each through CI</span></div>
           </div>
+
+          <figure class="case-cover case-cover-gap reveal">
+            <img src="../assets/xporter.jpg" alt="Xporter Camera: the connect screen, a photo's detail, and a shared film recipe card" width="1080" height="480" />
+          </figure>
         </div>
       </section>
 
@@ -153,10 +157,51 @@
         </div>
       </section>
 
+      <!-- ============ Screens ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>03_screens.kt</span>
+          <h2 class="section-heading reveal">Screens</h2>
+
+          <div class="screens">
+            <figure class="screen reveal">
+              <img src="../assets/xporter/connect.jpg" alt="Connect screen with USB-C cable, camera Wi-Fi, and Bluetooth options" width="540" height="980" loading="lazy" decoding="async" />
+              <figcaption>Pick USB or Wi-Fi. Photos show up as soon as the camera is found.</figcaption>
+            </figure>
+            <figure class="screen reveal">
+              <img src="../assets/xporter/detail.jpg" alt="Photo detail with aperture, shutter, ISO, lens, and the Classic Chrome film simulation" width="540" height="980" loading="lazy" decoding="async" />
+              <figcaption>Exposure, lens, and the film simulation, read from the file's metadata.</figcaption>
+            </figure>
+            <figure class="screen reveal">
+              <img src="../assets/xporter/exposure.jpg" alt="Share sheet with an exposure frame showing camera, lens, and settings" width="540" height="980" loading="lazy" decoding="async" />
+              <figcaption>Share a photo with its exposure info in a clean frame.</figcaption>
+            </figure>
+            <figure class="screen reveal">
+              <img src="../assets/xporter/polaroid.jpg" alt="Share sheet with the photo drawn as a polaroid print for a story" width="540" height="980" loading="lazy" decoding="async" />
+              <figcaption>Or as a polaroid print, sized for stories.</figcaption>
+            </figure>
+          </div>
+
+          <div class="showcase reveal">
+            <img src="../assets/xporter/recipe-card.jpg" alt="Recipe card: the photo above the Classic Chrome recipe settings, exposure info, and a QR code" width="1280" height="1600" loading="lazy" decoding="async" />
+            <div class="showcase-text">
+              <p class="decision-num">Recipe card</p>
+              <h3>The photo and its recipe, in one image</h3>
+              <p>
+                The app reads the film simulation and all ten recipe settings from Fujifilm's
+                MakerNote, then draws them under the photo with the exposure and lens. The QR code
+                holds the recipe as text, so another photographer can scan it into their own
+                collection.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ============ Research ============ -->
       <section>
         <div class="wrap">
-          <span class="tab-label reveal"><span class="dot"></span>03_research.kt</span>
+          <span class="tab-label reveal"><span class="dot"></span>04_research.kt</span>
           <h2 class="section-heading reveal">Research before code</h2>
           <div class="case-prose reveal">
             <p>
@@ -192,7 +237,7 @@
       <!-- ============ Architecture ============ -->
       <section>
         <div class="wrap">
-          <span class="tab-label reveal"><span class="dot"></span>04_architecture.kt</span>
+          <span class="tab-label reveal"><span class="dot"></span>05_architecture.kt</span>
           <h2 class="section-heading reveal">Architecture</h2>
           <p class="section-sub reveal">
             Multi-module Clean Architecture. Shared build setup lives in convention plugins under
@@ -254,7 +299,7 @@
       <!-- ============ Decisions ============ -->
       <section>
         <div class="wrap">
-          <span class="tab-label reveal"><span class="dot"></span>05_decisions.kt</span>
+          <span class="tab-label reveal"><span class="dot"></span>06_decisions.kt</span>
           <h2 class="section-heading reveal">Key decisions</h2>
 
           <div class="decision-grid">
@@ -307,7 +352,7 @@
       <!-- ============ Process ============ -->
       <section>
         <div class="wrap case-prose">
-          <span class="tab-label reveal"><span class="dot"></span>06_process.kt</span>
+          <span class="tab-label reveal"><span class="dot"></span>07_process.kt</span>
           <h2 class="section-heading reveal">How I worked</h2>
           <div class="reveal">
             <p>
@@ -327,7 +372,7 @@
       <!-- ============ Limits ============ -->
       <section>
         <div class="wrap case-prose">
-          <span class="tab-label reveal"><span class="dot"></span>07_limits.kt</span>
+          <span class="tab-label reveal"><span class="dot"></span>08_limits.kt</span>
           <h2 class="section-heading reveal">Known limits</h2>
           <div class="reveal">
             <ul class="case-list">

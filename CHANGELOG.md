@@ -23,8 +23,9 @@
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
 ### Xporter Camera
-- New **Xporter Camera** project card (second, after U by Prodia): a Fujifilm photo transfer app over USB and Wi-Fi with PTP/PTP-IP written in Kotlin, read-only by design, multi-module with CI. Uses a placeholder image until screenshots are added. No GitHub link, because the repository is private.
+- New **Xporter Camera** project card (second, after U by Prodia): a Fujifilm photo transfer app over USB and Wi-Fi with PTP/PTP-IP written in Kotlin, read-only by design, multi-module with CI. Its banner (`assets/xporter.jpg`) combines the connect screen, a photo's detail, and a recipe card on an amber background. No GitHub link, because the repository is private.
 - New case study `projects/xporter.html`: problem, 4-step flow, the protocol research and measured USB vs Wi-Fi numbers from the X-T3 spike, a module architecture diagram, 4 key decisions (read-only allowlist, one repository for USB and Wi-Fi, streaming geotag, resumable Wi-Fi exports), the engineering process, and known limits.
+- Case study **Screens** section: connect, photo detail, exposure frame, and polaroid (status bar and debug button cropped out), shown as a grid on desktop and a swipeable carousel on mobile, plus a showcase of the exported recipe card. The old app name on the card was covered, and screenshots showing the office or coworkers were left out.
 - Every number and claim was checked against the repository (16 modules, 32 test files, 38 pull requests, allowlists in `PtpSession` and `FujiProperty`, `GpsTaggingSink`, foreground `ExportService`).
 - Skills: added Multi-module, Gradle convention plugins, Room, DataStore, Coil, Navigation 3, USB Host and PTP/IP, GitHub Actions CI, JUnit and Turbine, Spotless and ktlint, and LeakCanary.
 - Case studies now link in a loop: Xporter → Qurbanku → Tips n Trip → Xporter.
