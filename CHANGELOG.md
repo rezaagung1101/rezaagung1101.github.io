@@ -26,6 +26,7 @@
 - New page `projects/tipsntrip.html`: problem, guest vs signed-in flow, architecture from the Android client to the team's API and ML model, 4 key decisions (generic `ExplorePagingSource<V>`, OkHttp auth interceptor with debug-only logging, guest-first explore, on-device validation of budget and trip length), the cross-disciplinary teamwork, and a retrospective.
 - Claims checked against the Tips n Trip source and history (Reza authored the initial ~8,200-line app commit).
 - Linked from the Tips n Trip project card. The two case studies link to each other.
+- Added the Tips n Trip demo video: a button and an embedded player in the case study, plus a Demo link on the project card.
 
 ### Qurbanku case study
 - New page `projects/qurbanku.html`: problem, a 4-step flow between committee and congregants, an architecture diagram (UI → ViewModel → Repository → Firebase), 4 key technical decisions, the embedded demo video, and a retrospective on what I'd change today.
