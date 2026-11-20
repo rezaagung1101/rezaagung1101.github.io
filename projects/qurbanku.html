@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Qurbanku — Case Study · Reza Agung Nugraha</title>
+    <meta
+      name="description"
+      content="Case study: Qurbanku, an Android app that lets a mosque's qurbani committee and its congregation organize and jointly fund qurbani animals. Kotlin, MVVM, Firebase, CameraX, Google Maps."
+    />
+    <link rel="canonical" href="https://rezaagung1101.github.io/projects/qurbanku.html" />
+    <meta name="theme-color" content="#faf9f6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://rezaagung1101.github.io/projects/qurbanku.html" />
+    <meta property="og:title" content="Qurbanku — Case Study" />
+    <meta
+      property="og:description"
+      content="How I built an Android app for a mosque's qurbani committee and its congregation: role-based flows, payment verification, CameraX, and Google Maps on Firebase."
+    />
+    <meta property="og:image" content="https://rezaagung1101.github.io/assets/qurbanku1.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="case-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header>
+      <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+      <nav aria-label="Main">
+        <a class="brand" href="../index.html#about">reza<span class="brand-ext">.kt</span></a>
+        <div class="nav-tools">
+          <a class="back-link" href="../index.html#projects">← All projects</a>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- ============ Intro ============ -->
+      <section class="case-hero">
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>case_study/qurbanku.kt</span>
+          <h1 class="case-title reveal">Qurbanku</h1>
+          <p class="case-lede reveal">
+            An Android app that lets a mosque's qurbani committee and its congregation
+            organize and jointly fund qurbani animals, from publishing an animal to
+            verifying every payment.
+          </p>
+
+          <dl class="case-meta reveal">
+            <div>
+              <dt>Role</dt>
+              <dd>Sole Android developer</dd>
+            </div>
+            <div>
+              <dt>Context</dt>
+              <dd>Undergraduate thesis, built for Masjid Al Huda, Malang</dd>
+            </div>
+            <div>
+              <dt>Timeline</dt>
+              <dd>Sep 2023 — Jul 2024</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Kotlin · MVVM · Firebase · CameraX · Google Maps</dd>
+            </div>
+          </dl>
+
+          <div class="case-links reveal">
+            <a class="btn btn-primary" href="https://youtu.be/70XUhdvDiKU" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-youtube" aria-hidden="true"></i> Watch the demo
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/rezaagung1101/QURBANKU_APPS_SKRIPSI" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Source code
+            </a>
+          </div>
+
+          <figure class="case-cover reveal">
+            <img src="../assets/qurbanku1.jpg" alt="Qurbanku home screen listing nearby mosques" width="1080" height="925" />
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ Problem ============ -->
+      <section>
+        <div class="wrap case-prose">
+          <span class="tab-label reveal"><span class="dot"></span>01_problem.kt</span>
+          <h2 class="section-heading reveal">The problem</h2>
+          <div class="reveal">
+            <p>
+              Every Eid al-Adha, mosque committees collect money for shared qurbani
+              animals. A cow is usually split between seven people, so one animal means
+              seven payments to chase and confirm. This is usually coordinated through
+              chat groups, paper lists, and bank transfers checked by hand, which leads to
+              three problems:
+            </p>
+            <ul class="case-list">
+              <li><strong>No single source of truth.</strong> Which shares are still open lives in someone's notes or chat history.</li>
+              <li><strong>Slow payment checks.</strong> Proofs of transfer arrive as chat photos, mixed in with everything else.</li>
+              <li><strong>Little visibility for congregants.</strong> Participants have to ask whether their payment was received or their animal has been slaughtered.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Flow ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>02_solution.kt</span>
+          <h2 class="section-heading reveal">How it works</h2>
+          <p class="section-sub reveal">
+            Two roles share one app. Each signs up separately and lands on its own home screen.
+          </p>
+
+          <ol class="flow">
+            <li class="flow-step reveal">
+              <span class="flow-who who-panitia">Committee</span>
+              <p class="flow-title">Publishes an animal</p>
+              <p class="flow-desc">Species, weight, price, operational costs, number of shares, and a photo from the in-app camera.</p>
+            </li>
+            <li class="flow-step reveal">
+              <span class="flow-who who-jemaah">Congregant</span>
+              <p class="flow-title">Finds a mosque and joins</p>
+              <p class="flow-desc">Browses mosques on a list or map, sees the cost per share and seats left, and uploads proof of transfer.</p>
+            </li>
+            <li class="flow-step reveal">
+              <span class="flow-who who-panitia">Committee</span>
+              <p class="flow-title">Verifies the payment</p>
+              <p class="flow-desc">Reviews the proof, then accepts it, which reserves the share, or rejects it with a note.</p>
+            </li>
+            <li class="flow-step reveal">
+              <span class="flow-who who-both">Both</span>
+              <p class="flow-title">Track it to the end</p>
+              <p class="flow-desc">The committee marks the animal as slaughtered, and congregants see every status in their history.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ Architecture ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>03_architecture.kt</span>
+          <h2 class="section-heading reveal">Architecture</h2>
+          <p class="section-sub reveal">
+            MVVM with a repository layer. Screens only talk to ViewModels, and only
+            repositories touch the Firebase SDKs.
+          </p>
+
+          <div class="arch reveal" role="img" aria-label="Architecture: Activities and Fragments observe ViewModels, ViewModels call repositories, and repositories use Firebase Auth, Cloud Firestore, and Cloud Storage.">
+            <div class="arch-layer">
+              <p class="arch-name">UI</p>
+              <div class="arch-boxes">
+                <span>Activities &amp; Fragments</span>
+                <span>ViewBinding</span>
+                <span>Navigation</span>
+              </div>
+            </div>
+            <p class="arch-arrow" aria-hidden="true">observes LiveData ↑ · user actions ↓</p>
+            <div class="arch-layer">
+              <p class="arch-name">ViewModel</p>
+              <div class="arch-boxes">
+                <span>AuthViewModel</span>
+                <span>UserViewModel</span>
+                <span>AnimalViewModel</span>
+                <span>TransactionViewModel</span>
+              </div>
+            </div>
+            <p class="arch-arrow" aria-hidden="true">↓</p>
+            <div class="arch-layer">
+              <p class="arch-name">Repository</p>
+              <div class="arch-boxes">
+                <span>AuthRepository</span>
+                <span>UserRepository</span>
+                <span>AnimalRepository</span>
+                <span>TransactionRepository</span>
+              </div>
+            </div>
+            <p class="arch-arrow" aria-hidden="true">↓</p>
+            <div class="arch-layer arch-backend">
+              <p class="arch-name">Firebase</p>
+              <div class="arch-boxes">
+                <span>Authentication</span>
+                <span>Cloud Firestore · <code>user</code> <code>animal</code> <code>transaction</code></span>
+                <span>Cloud Storage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Decisions ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>04_decisions.kt</span>
+          <h2 class="section-heading reveal">Key decisions</h2>
+
+          <div class="decision-grid">
+            <article class="decision reveal">
+              <p class="decision-num">01</p>
+              <h3>Shares are reserved only after payment is verified</h3>
+              <p>
+                Joining creates a pending transaction, not a seat. A congregant is added to the
+                animal's participant list with <code>FieldValue.arrayUnion</code> only when the
+                committee accepts the proof, which also prevents duplicates. Seats left are
+                calculated from that list, and the join button disables itself when the animal
+                is full or already slaughtered.
+              </p>
+            </article>
+            <article class="decision reveal">
+              <p class="decision-num">02</p>
+              <h3>An in-app camera for reliable proof photos</h3>
+              <p>
+                Proofs of transfer and animal photos are taken with <strong>CameraX</strong>,
+                with gallery upload as a fallback. Before upload, each photo has its rotation
+                fixed and is compressed to under 1&nbsp;MB, which keeps uploads fast on mobile
+                data and Storage costs low.
+              </p>
+            </article>
+            <article class="decision reveal">
+              <p class="decision-num">03</p>
+              <h3>Location first, address second</h3>
+              <p>
+                The committee picks the mosque's position on a <strong>Google Map</strong>
+                instead of typing an address. The app stores coordinates and turns them into a
+                readable address with the Geocoder, so congregants can find nearby mosques on a
+                map using <strong>Fused Location</strong>.
+              </p>
+            </article>
+            <article class="decision reveal">
+              <p class="decision-num">04</p>
+              <h3>One user model, two roles</h3>
+              <p>
+                Both roles live in a single <code>user</code> collection with an
+                <code>admin</code> flag. At login, the app checks that the chosen role matches
+                the stored one before routing to the committee or congregant home. One-shot
+                results like login and registration use a <code>SingleLiveEvent</code>, so they
+                don't fire again on rotation.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Demo ============ -->
+      <section>
+        <div class="wrap">
+          <span class="tab-label reveal"><span class="dot"></span>05_demo.kt</span>
+          <h2 class="section-heading reveal">Demo</h2>
+          <div class="video-frame reveal">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/70XUhdvDiKU"
+              title="Qurbanku app demo"
+              loading="lazy"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Reflection ============ -->
+      <section>
+        <div class="wrap case-prose">
+          <span class="tab-label reveal"><span class="dot"></span>06_retrospective.kt</span>
+          <h2 class="section-heading reveal">What I'd do differently today</h2>
+          <div class="reveal">
+            <p>
+              Qurbanku was my first full app from idea to thesis defence. Looking back with
+              production experience, these are the changes I would make:
+            </p>
+            <ul class="case-list">
+              <li><strong>Enforce seat limits atomically.</strong> Accepting a payment updates the transaction and the participant list in two separate writes, and doesn't re-check capacity. A Firestore transaction would make both writes succeed or fail together and reject an animal that is already full.</li>
+              <li><strong>Coroutines and Flow instead of nested callbacks.</strong> Repositories use callback chains. Suspending functions with <code>await()</code> and <code>Flow</code> would flatten them and make errors easier to handle.</li>
+              <li><strong>Hilt for dependency injection</strong> instead of a hand-written <code>ViewModelFactory</code>.</li>
+              <li><strong>Tests.</strong> Unit tests for ViewModels and repositories with the Firebase Emulator Suite, which the project doesn't have yet.</li>
+              <li><strong>Security rules and key restrictions</strong> reviewed as part of the release, not after it.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Next ============ -->
+      <section class="case-next">
+        <div class="wrap">
+          <p class="contact-eyebrow reveal">&gt; cd ../projects</p>
+          <h2 class="contact-heading reveal">Want to see more?</h2>
+          <div class="case-links case-links-center reveal">
+            <a class="btn btn-primary" href="../index.html#projects">Back to all projects</a>
+            <a class="btn btn-ghost" href="../index.html#contact">Get in touch</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap footer-row">
+        <span>&copy; <span id="year">2026</span> Reza Agung Nugraha</span>
+        <span>Built with Kotlin in mind.</span>
+      </div>
+    </footer>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

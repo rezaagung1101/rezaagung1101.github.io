@@ -22,6 +22,13 @@
 - Decorative icons marked `aria-hidden="true"`.
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
+### Qurbanku case study
+- New page `projects/qurbanku.html`: problem, a 4-step flow between committee and congregants, an architecture diagram (UI → ViewModel → Repository → Firebase), 4 key technical decisions, the embedded demo video, and a retrospective on what I'd change today.
+- Every technical claim was checked against the Qurbanku source code (seat reservation via `arrayUnion` on approval, image compression under 1 MB, Geocoder, role check at login, `SingleLiveEvent`).
+- Diagrams are built with HTML/CSS, so they follow the light/dark theme and reflow on mobile.
+- The Qurbanku card on the home page now links to the case study.
+- `script.js` works on pages without the hamburger menu or nav sections.
+
 ### Visual & motion package
 - **Skills section** (`03_skills.kt`): four groups (Android UI, Architecture, Async & Data, Backend & Tools), with the main skills highlighted. It only lists tech verified in the project repos or confirmed by Reza.
 - **Kotlin code card in the hero**: an editor-style `Reza.kt` snippet with IntelliJ-style syntax colours. It overlaps the photo on desktop and sits under the intro text on mobile.

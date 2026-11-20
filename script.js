@@ -9,20 +9,23 @@ function setMenu(open) {
   hamburger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
 }
 
-hamburger.addEventListener("click", () => {
-  setMenu(!navList.classList.contains("active"));
-});
+// Case study pages have no hamburger menu, so only wire it up when present.
+if (hamburger && navList) {
+  hamburger.addEventListener("click", () => {
+    setMenu(!navList.classList.contains("active"));
+  });
 
-navList.querySelectorAll("a").forEach((link) =>
-  link.addEventListener("click", () => setMenu(false))
-);
+  navList.querySelectorAll("a").forEach((link) =>
+    link.addEventListener("click", () => setMenu(false))
+  );
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && navList.classList.contains("active")) {
-    setMenu(false);
-    hamburger.focus();
-  }
-});
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navList.classList.contains("active")) {
+      setMenu(false);
+      hamburger.focus();
+    }
+  });
+}
 
 // ============ Theme (light / dark) ============
 const root = document.documentElement;
@@ -119,7 +122,7 @@ function updateActiveLink() {
     if (sec.getBoundingClientRect().top <= offset) current = sec;
   });
   // At the very bottom, the last section is always active
-  if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+  if (sections.length && window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
     current = sections[sections.length - 1];
   }
   navLinks.forEach((link) => {
@@ -136,7 +139,7 @@ const progressBar = document.getElementById("scrollProgress");
 function updateProgress() {
   const max = document.documentElement.scrollHeight - window.innerHeight;
   const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-  progressBar.style.transform = `scaleX(${ratio})`;
+  if (progressBar) progressBar.style.transform = `scaleX(${ratio})`;
 }
 
 let ticking = false;
