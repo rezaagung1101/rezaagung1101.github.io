@@ -28,6 +28,9 @@
 - **USB vs Wi-Fi bar chart** in the Xporter research section: 20.6 vs 0.71 MB/s with direct labels, a tooltip with the time for a 17.5 MB JPEG, and an "≈29× faster" callout. The bars grow in when they scroll into view.
 - Matrix: split "Room & DataStore" into two rows and marked Room for U by Prodia (confirmed by Reza). DataStore stays Xporter-only. Added a Room tag to the U by Prodia card.
 - Matrix Quality group (confirmed by Reza): unit tests for U by Prodia; "CI on every pull request" became "CI/CD pipeline" (Codemagic for U by Prodia, GitHub Actions for Xporter); a new "Release hardening" row (app sealing and obfuscation for U by Prodia, R8 only for Xporter, shown as partly). Each half dot's tooltip says why it's partial.
+- **U by Prodia verified against its build configuration** (summary from Reza's local session, no code shared). Matrix now has 17 rows: XML Views and LiveData are partly (older screens only), and DataStore, Paging 3, multi-module (7 modules), a new "Lint & static analysis" row (ktlint, SonarQube, JaCoCo), CI/CD (Codemagic pull request checks), and release hardening (R8, app sealing, certificate pinning) are marked used. The footnote now says every column is checked against build configuration.
+- U by Prodia card: new bullets for the other feature areas worked on (chat, lab test booking and order details, health plans, cart) and the engineering setup. Added Paging 3, Multi-module, and Codemagic tags. Experience: added the Codemagic CI/CD and release scripts work.
+- Skills: added MVI-style events, MockK, JaCoCo and SonarQube, and certificate pinning.
 - Skills: added Codemagic CI/CD and App sealing · R8 obfuscation. The U by Prodia card mentions unit tests, Codemagic, and app sealing.
 - All new motion turns off with *reduce motion*. Hidden tooltips no longer take up space, so they can't widen a scroll area.
 
