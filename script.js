@@ -301,6 +301,70 @@ if (matrix) {
   matrix.addEventListener("focusout", () => setCol(null));
 }
 
+// ============ Impact numbers: count up once when they come into view ============
+// The final values are already in the HTML, so search engines, screen readers and
+// visitors without JS (or with reduced motion) always see the right numbers.
+const counters = document.querySelectorAll("[data-count-to]");
+
+if (counters.length && "IntersectionObserver" in window && !reduceMotion.matches) {
+  const format = (el, value) => {
+    const decimals = Number(el.dataset.decimals || 0);
+    return (el.dataset.prefix || "") + value.toFixed(decimals) + (el.dataset.suffix || "");
+  };
+
+  const countUp = (el) => {
+    const target = Number(el.dataset.countTo);
+    const duration = 900;
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+      el.textContent = format(el, target * eased);
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = format(el, target);
+    };
+    requestAnimationFrame(step);
+  };
+
+  counters.forEach((el) => (el.textContent = format(el, 0)));
+  const counterObserver = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          countUp(e.target);
+          counterObserver.unobserve(e.target);
+        }
+      }),
+    { threshold: 0.6 }
+  );
+  counters.forEach((el) => counterObserver.observe(el));
+}
+
+// ============ Case study header: show the project title once the hero title is gone ============
+const caseTitle = document.querySelector(".case-title");
+const siteHeader = document.querySelector("header");
+
+if (caseTitle && siteHeader && "IntersectionObserver" in window) {
+  const swapped = siteHeader.querySelectorAll(".case-nav-title, .case-nav-cta");
+  const originals = siteHeader.querySelectorAll(".nav-swap .brand, .nav-swap-end .back-link");
+  const setCondensed = (on) => {
+    siteHeader.classList.toggle("is-condensed", on);
+    // Only the visible item of each pair is focusable and announced.
+    swapped.forEach((el) => {
+      el.tabIndex = on ? 0 : -1;
+      el.toggleAttribute("aria-hidden", !on);
+    });
+    originals.forEach((el) => {
+      el.tabIndex = on ? -1 : 0;
+      el.toggleAttribute("aria-hidden", on);
+    });
+  };
+  new IntersectionObserver(
+    ([entry]) => setCondensed(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+    { rootMargin: "-64px 0px 0px 0px" }
+  ).observe(caseTitle);
+}
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();

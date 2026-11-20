@@ -22,6 +22,10 @@
 - Decorative icons marked `aria-hidden="true"`.
 - **Experience timeline**: the connector line is now centred on the dots, and it stops at the last item instead of running past it.
 
+### Impact strip and case study header
+- **Impact strip under the hero**: 1M+ downloads, 4.5★ on Google Play, Top 68 of 700+ Bangkit teams, and GPA 3.88. The last three count up once (≈0.9 s, ease-out) when they come into view. 1M+ stays static, because counting from 0 to 1 looks like a flicker. The final values are in the HTML, with screen-reader text, so search engines, screen readers, no-JS visitors, and *reduce motion* users always see the right numbers. It's a 2×2 grid on phones.
+- **Case study header swap**: once the hero title scrolls away, the `reza.kt` logo becomes the project name, and on Qurbanku and Tips n Trip "← All projects" becomes a "Watch demo" pill. Xporter keeps "← All projects" because it has no demo video. Both items share one grid cell, so nothing shifts. Only the visible item can be focused or announced.
+
 ### Visualisations and Apple-style scrollytelling
 - **Stack evolution matrix** (home, under Skills): a dot matrix of 14 technologies across the four projects, oldest first. It shows the move from XML, LiveData, callbacks, and hand-written factories to Compose, Flow, Hilt, Room, multi-module, unit tests, and CI. Built as a real `<table>` with screen-reader labels, and "partly" uses a different shape, not just a different colour. Dots pop in column by column, the hovered project's column is highlighted, and each dot has a tooltip on hover, tap, or keyboard focus. On phones it fits the screen without sideways scrolling.
 - **Xporter Camera "A closer look"**: the screens grid is now a scrollytelling section. A phone stays pinned while four steps scroll past, and the screen changes with the active step. On tablets and phones, each step shows its own screen instead.

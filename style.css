@@ -295,7 +295,7 @@ nav {
 
 /* ============ Hero ============ */
 section#about {
-  padding: 150px 0 100px;
+  padding: 150px 0 72px;
 }
 
 .hero-grid {
@@ -2349,4 +2349,135 @@ footer {
 .dot:focus:not(:focus-visible),
 .bar:focus:not(:focus-visible) {
   outline: none;
+}
+
+/* ============ Impact strip under the hero ============ */
+.impact-strip {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 56px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.impact-strip li {
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.impact-strip li + li {
+  border-left: 1px solid var(--line);
+}
+
+.impact-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.impact-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+@media screen and (max-width: 700px) {
+  .impact-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .impact-strip li:nth-child(3) {
+    border-left: none;
+  }
+
+  .impact-strip li:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* ============ Case study header: swaps to the project title after the hero ============ */
+.nav-swap {
+  display: grid;
+  align-items: center;
+}
+
+/* Both items share one grid cell, so swapping them never shifts the layout */
+.nav-swap > * {
+  grid-area: 1 / 1;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.nav-swap-end {
+  justify-items: end;
+}
+
+.case-nav-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.case-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--on-ink);
+  background: var(--ink);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.case-nav-cta:hover {
+  background: var(--purple-deep);
+}
+
+.case-nav-title,
+.case-nav-cta,
+header.is-condensed .brand,
+header.is-condensed .nav-swap-end .back-link {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+header.is-condensed .case-nav-title,
+header.is-condensed .case-nav-cta {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-swap > * {
+    transition: none;
+  }
+}
+
+/* Line the first column up with the hero text */
+.impact-strip li:first-child {
+  padding-left: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .impact-strip li:nth-child(3) {
+    padding-left: 0;
+  }
 }
