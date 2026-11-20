@@ -78,8 +78,9 @@ themeToggle.addEventListener("click", () => {
   root.classList.add("theme-switching");
   root.classList.toggle("theme-to-dark", toDark);
   const transition = document.startViewTransition(() => applyTheme(next));
+  let reveal;
   transition.ready.then(() => {
-    root.animate(
+    reveal = root.animate(
       { clipPath: toDark ? [full, small] : [small, full] },
       {
         duration: 600,
@@ -92,7 +93,14 @@ themeToggle.addEventListener("click", () => {
       }
     );
   });
-  transition.finished.finally(() => root.classList.remove("theme-switching", "theme-to-dark"));
+  transition.finished.finally(() => {
+    // Drop the finished animation. With fill: "forwards" it would otherwise
+    // stay attached to ::view-transition-old(root) and clip the next
+    // transition's old snapshot to nothing, so dark -> light would flash
+    // to a blank page before the circle grows.
+    reveal?.cancel();
+    root.classList.remove("theme-switching", "theme-to-dark");
+  });
 });
 
 darkQuery.addEventListener?.("change", renderToggle);
