@@ -33,6 +33,38 @@
       })();
     </script>
 
+    <script>
+      // Page-to-page view transitions: only the project being opened (or returned from)
+      // gets shared names, and reveal content shows at once so nothing morphs into a hidden box.
+      (function () {
+        function keyFrom(url) {
+          var m = /projects\/(\w+)\.html/.exec(url || "");
+          return m ? m[1] : null;
+        }
+        function nameOnly(key) {
+          document.querySelectorAll(".vt").forEach(function (el) {
+            var n = el.style.getPropertyValue("--vt").trim();
+            el.style.viewTransitionName = key && n.slice(n.indexOf("-") + 1) === key ? "" : "none";
+          });
+        }
+        window.addEventListener("pageswap", function (e) {
+          if (!e.viewTransition) return;
+          var to = e.activation && e.activation.entry ? e.activation.entry.url : "";
+          nameOnly(keyFrom(location.href) || keyFrom(to));
+        });
+        window.addEventListener("pagereveal", function (e) {
+          if (!e.viewTransition) return;
+          var nav = window.navigation && window.navigation.activation;
+          var from = nav && nav.from ? nav.from.url : "";
+          nameOnly(keyFrom(location.href) || keyFrom(from));
+          var html = document.documentElement;
+          html.classList.add("vt-arrive");
+          e.viewTransition.finished.finally(function () {
+            html.classList.remove("vt-arrive");
+          });
+        });
+      })();
+    </script>
     <link rel="stylesheet" href="../style.css" />
     <link
       rel="stylesheet"
@@ -64,7 +96,7 @@
       <section class="case-hero">
         <div class="wrap">
           <span class="tab-label reveal"><span class="dot"></span>case_study/xporter_camera.kt</span>
-          <h1 class="case-title reveal">Xporter Camera</h1>
+          <h1 class="case-title reveal vt vt-title" style="--vt: title-xporter">Xporter Camera</h1>
           <p class="case-lede reveal">
             An Android app that copies photos from a Fujifilm camera to the phone over USB or
             Wi-Fi, keeps each photo's film simulation recipe, and makes it easy to share. I wrote
@@ -97,7 +129,7 @@
             <div><span class="stat-num">38</span><span class="stat-label">pull requests, each through CI</span></div>
           </div>
 
-          <figure class="case-cover case-cover-gap reveal">
+          <figure class="case-cover case-cover-gap reveal vt vt-cover" style="--vt: cover-xporter">
             <img src="../assets/xporter.jpg" alt="Xporter Camera: the connect screen, a photo's detail, and a shared film recipe card" width="1080" height="480" />
           </figure>
         </div>

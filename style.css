@@ -1166,15 +1166,16 @@ footer {
 }
 
 /* ============ Theme switch: circular reveal ============ */
-::view-transition-old(root),
-::view-transition-new(root) {
+/* Scoped to .theme-switching so page-to-page transitions keep their own crossfade. */
+.theme-switching::view-transition-old(root),
+.theme-switching::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 
 /* To light: the new (light) view grows from the toggle, so it sits on top.
    To dark: the old (light) view shrinks into the toggle, so it sits on top. */
-::view-transition-new(root) {
+.theme-switching::view-transition-new(root) {
   z-index: 2;
 }
 
@@ -2691,4 +2692,67 @@ header.is-condensed .case-nav-cta {
   .notfound {
     padding-top: 108px;
   }
+}
+
+/* ============ Page-to-page transitions (cross-document View Transitions) ============ */
+/* A project card's image and name morph into the case study's cover and title, and back.
+   Browsers without support simply navigate as usual. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+.vt {
+  view-transition-name: var(--vt);
+}
+
+.vt-cover {
+  view-transition-class: cover;
+}
+
+.vt-title {
+  view-transition-class: title;
+}
+
+/* The theme switch is a view transition too: there, nothing should fly on its own. */
+.theme-switching .vt {
+  view-transition-name: none;
+}
+
+::view-transition-group(*.cover),
+::view-transition-group(*.title) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+::view-transition-group(*.cover) {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+/* Images of different shapes: fill the morphing box, anchored to the top like the cards */
+::view-transition-old(*.cover),
+::view-transition-new(*.cover) {
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+::view-transition-old(*.title),
+::view-transition-new(*.title) {
+  height: 100%;
+  width: auto;
+}
+
+/* Keep shared titles as wide as their text, so the morph scales instead of stretching */
+.case-title {
+  width: fit-content;
+}
+
+/* Arriving through a transition: show reveal content at once so nothing morphs into an invisible box */
+.vt-arrive .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
 }
