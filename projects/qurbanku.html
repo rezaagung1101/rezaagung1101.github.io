@@ -23,6 +23,13 @@
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../assets/icon-180.png" />
+    <link rel="manifest" href="../site.webmanifest" />
+
+    <!-- Prefetch case studies on hover so the page-to-page transition starts instantly -->
+    <script type="speculationrules">
+      {"prefetch": [{"where": {"and": [{"href_matches": "/projects/*"}, {"not": {"selector_matches": "[target=_blank]"}}]}, "eagerness": "moderate"}, {"where": {"href_matches": "/index.html"}, "eagerness": "moderate"}]}
+    </script>
 
     <script>
       (function () {

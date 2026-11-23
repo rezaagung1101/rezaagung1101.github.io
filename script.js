@@ -50,6 +50,7 @@ function applyTheme(next) {
     localStorage.setItem("theme", next);
   } catch (e) {}
   renderToggle();
+  syncThemeColor();
 }
 
 // Circular reveal from the toggle button, like Android's
@@ -105,8 +106,18 @@ themeToggle.addEventListener("click", () => {
   });
 });
 
-darkQuery.addEventListener?.("change", renderToggle);
+// Keep the browser's UI colour (mobile address bar) in step with the page, including manual switches.
+function syncThemeColor() {
+  const bg = getComputedStyle(root).getPropertyValue("--bg").trim();
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute("content", bg));
+}
+
+darkQuery.addEventListener?.("change", () => {
+  renderToggle();
+  syncThemeColor();
+});
 renderToggle();
+syncThemeColor();
 
 // ============ Active nav link on scroll ============
 const navLinks = document.querySelectorAll(".nav-link");

@@ -20,12 +20,20 @@
       property="og:description"
       content="Android Developer building Kotlin apps at PT Prodia Digital Indonesia. Bangkit Academy alumnus, Informatics Engineering graduate."
     />
-    <meta property="og:image" content="https://rezaagung1101.github.io/assets/profile_image.jpg" />
-    <meta property="og:image:width" content="640" />
-    <meta property="og:image:height" content="640" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://rezaagung1101.github.io/assets/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Reza Agung Nugraha, Android Developer at PT Prodia Digital Indonesia" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icon-180.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <!-- Prefetch case studies on hover so the page-to-page transition starts instantly -->
+    <script type="speculationrules">
+      {"prefetch": [{"where": {"and": [{"href_matches": "/projects/*"}, {"not": {"selector_matches": "[target=_blank]"}}]}, "eagerness": "moderate"}, {"where": {"href_matches": "/index.html"}, "eagerness": "moderate"}]}
+    </script>
 
     <!-- Structured data: who this site is about -->
     <script type="application/ld+json">
