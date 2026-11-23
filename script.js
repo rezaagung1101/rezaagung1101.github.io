@@ -632,6 +632,47 @@ if (hamburger && navList) {
   });
 }
 
+// ============ Case study image zoom ============
+const lightbox = document.getElementById("lightbox");
+
+if (lightbox && typeof lightbox.showModal === "function") {
+  const lbImg = lightbox.querySelector(".lightbox-img");
+  const lbCaption = lightbox.querySelector(".lightbox-caption");
+  let opener = null;
+
+  document.querySelectorAll(".case-cover img, .story-inline, .showcase img").forEach((img) => {
+    img.dataset.zoom = "";
+    img.tabIndex = 0;
+    img.setAttribute("role", "button");
+    img.setAttribute("aria-label", "Enlarge image: " + img.alt);
+  });
+
+  const open = (img) => {
+    opener = img;
+    lbImg.src = img.currentSrc || img.src; // the full-resolution source the browser already chose
+    lbImg.alt = img.alt;
+    lbCaption.textContent = img.alt;
+    lightbox.showModal();
+  };
+
+  document.addEventListener("click", (e) => {
+    const img = e.target.closest && e.target.closest("[data-zoom]");
+    if (img) open(img);
+  });
+  document.addEventListener("keydown", (e) => {
+    const img = e.target.closest && e.target.closest("[data-zoom]");
+    if (img && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      open(img);
+    }
+  });
+  // Any click closes it: on the image, the backdrop, or the ✕ button.
+  lightbox.addEventListener("click", () => lightbox.close());
+  lightbox.addEventListener("close", () => {
+    if (opener) opener.focus({ preventScroll: true });
+  });
+}
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();

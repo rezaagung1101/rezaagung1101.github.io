@@ -3354,3 +3354,89 @@ picture > source {
     max-width: 220px;
   }
 }
+
+/* ============ Case study image zoom ============ */
+[data-zoom] {
+  cursor: zoom-in;
+}
+
+[data-zoom]:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 4px;
+}
+
+.lightbox {
+  margin: auto;
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100dvh;
+  padding: 56px 16px 24px;
+  border: none;
+  background: transparent;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: zoom-out;
+}
+
+.lightbox[open] {
+  display: flex;
+  animation: lightboxIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lightbox::backdrop {
+  background: rgba(10, 10, 12, 0.86);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox-img {
+  max-width: min(100%, 1100px);
+  max-height: calc(100dvh - 130px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-caption {
+  max-width: 640px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #e4e5ea;
+  /* its own dark pill, so the caption stays readable whatever sits behind the backdrop */
+  background: rgba(20, 21, 24, 0.9);
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(30, 31, 34, 0.8);
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+@keyframes lightboxIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox[open] {
+    animation: none;
+  }
+}
