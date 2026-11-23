@@ -2881,3 +2881,198 @@ header.is-condensed .case-nav-cta {
     transition: none;
   }
 }
+
+/* ============ Terminal ============ */
+/* "> whoami" stays looking like the eyebrow text, with a hint that it's clickable */
+.term-open {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.term-open:hover,
+.term-open:focus-visible {
+  background: var(--purple-tint);
+}
+
+.term-dialog {
+  margin: auto;
+  width: min(720px, calc(100vw - 24px));
+  max-width: none;
+  height: min(480px, calc(100dvh - 48px));
+  padding: 0;
+  border: 1px solid #2b2d31;
+  border-radius: 14px;
+  background: #1e1f22;
+  color: #bcbec4;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+
+.term-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.term-dialog::backdrop {
+  background: rgba(10, 10, 12, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #2b2d30;
+  border-bottom: 1px solid #1e1f22;
+  flex: none;
+}
+
+.term-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #9da0a8;
+}
+
+.term-close {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #9da0a8;
+  cursor: pointer;
+}
+
+.term-close:hover,
+.term-close:focus-visible {
+  background: #3a3c40;
+  color: #ffffff;
+}
+
+.term-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overscroll-behavior: contain;
+}
+
+.term-line {
+  margin: 0;
+}
+
+.term-echo {
+  margin-top: 8px;
+  color: #dfe1e5;
+}
+
+.term-prompt {
+  color: #6aab73;
+  white-space: nowrap;
+}
+
+.term-key {
+  color: #56a8f5;
+}
+
+.term-strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.term-dim {
+  color: #8c9099;
+}
+
+.term-err {
+  color: #ff8a6b;
+}
+
+.term-ok {
+  color: #6aab73;
+}
+
+.term-output a {
+  color: #cf8e6d;
+  text-underline-offset: 3px;
+}
+
+.term-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  flex: none;
+}
+
+.term-input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: var(--orange);
+}
+
+.term-input::placeholder {
+  color: #5c6068;
+}
+
+@media screen and (max-width: 620px) {
+  .term-dialog {
+    height: min(520px, calc(100dvh - 32px));
+  }
+
+  /* 16px stops iOS from zooming into the field */
+  .term-form,
+  .term-output {
+    font-size: 16px;
+  }
+
+  .term-output {
+    font-size: 0.8rem;
+  }
+
+  .term-prompt {
+    font-size: 0.78rem;
+  }
+}
+
+/* Keyboard hint in the footer, only where there is a keyboard and a mouse */
+.footer-hint {
+  display: none;
+}
+
+.footer-hint kbd {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  color: var(--muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-hint {
+    display: inline;
+  }
+}

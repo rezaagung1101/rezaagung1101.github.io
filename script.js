@@ -411,6 +411,60 @@ if (playButton && gameDialog && typeof gameDialog.showModal === "function") {
   playButton.hidden = true; // very old browsers without <dialog>
 }
 
+// ============ Terminal: "> whoami" in the hero, or the ` key anywhere ============
+const termOpen = document.getElementById("termOpen");
+const termDialog = document.getElementById("termDialog");
+
+if (termOpen && termDialog && typeof termDialog.showModal === "function") {
+  let terminal = null;
+  let termScript = null;
+  const loadTerminal = () => {
+    if (window.KtTerminal) return Promise.resolve(window.KtTerminal);
+    if (!termScript) {
+      termScript = new Promise((resolve, reject) => {
+        const el = document.createElement("script");
+        el.src = "terminal.js";
+        el.onload = () => resolve(window.KtTerminal);
+        el.onerror = reject;
+        document.head.appendChild(el);
+      });
+    }
+    return termScript;
+  };
+  const openTerminal = () => {
+    if (termDialog.open) return;
+    termDialog.showModal();
+    loadTerminal().then((KtTerminal) => {
+      if (!terminal) {
+        terminal = KtTerminal.mount(termDialog, {
+          onPlay: () => playButton && playButton.click(),
+          onTheme: () => themeToggle.click(),
+          currentTheme,
+        });
+      }
+      terminal.focus();
+    });
+  };
+  termOpen.addEventListener("click", openTerminal);
+  document.getElementById("termClose").addEventListener("click", () => termDialog.close());
+  termDialog.addEventListener("click", (e) => {
+    if (e.target !== termDialog) return;
+    const r = termDialog.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) termDialog.close();
+  });
+  termDialog.addEventListener("close", () => termOpen.focus({ preventScroll: true }));
+
+  // The backtick opens it, unless someone is typing or another dialog is open.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "`" || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (t.closest && t.closest("input, textarea, select, [contenteditable]")) return;
+    if (document.querySelector("dialog[open]")) return;
+    e.preventDefault();
+    openTerminal();
+  });
+}
+
 // The 404 page mounts the game straight away.
 const notFoundGame = document.getElementById("notFoundGame");
 if (notFoundGame) {
