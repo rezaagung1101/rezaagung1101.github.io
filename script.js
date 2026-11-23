@@ -417,6 +417,36 @@ if (notFoundGame) {
   loadGame("/game.js").then((KtRunner) => KtRunner.mount(notFoundGame));
 }
 
+// ============ Card spotlight: track the pointer inside cards (mouse only) ============
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const spotCards = document.querySelectorAll(
+    ".project-card, .skill-group, .cert-card, .edu-card, .decision, .flow-step, .stat-strip > div, .showcase"
+  );
+  spotCards.forEach((el) => el.classList.add("spot"));
+
+  let spotTarget = null;
+  let spotEvent = null;
+  let spotQueued = false;
+  document.addEventListener(
+    "pointermove",
+    (e) => {
+      spotTarget = e.target.closest && e.target.closest(".spot");
+      spotEvent = e;
+      if (spotTarget && !spotQueued) {
+        spotQueued = true;
+        requestAnimationFrame(() => {
+          spotQueued = false;
+          if (!spotTarget) return;
+          const r = spotTarget.getBoundingClientRect();
+          spotTarget.style.setProperty("--mx", spotEvent.clientX - r.left + "px");
+          spotTarget.style.setProperty("--my", spotEvent.clientY - r.top + "px");
+        });
+      }
+    },
+    { passive: true }
+  );
+}
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
