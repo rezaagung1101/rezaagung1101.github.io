@@ -34,6 +34,10 @@
           var t = localStorage.getItem("theme");
           if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
         } catch (e) {}
+        // Hero intro animation: only with JS and when motion is welcome.
+        if (window.matchMedia && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document.documentElement.classList.add("js-intro");
+        }
       })();
     </script>
 
@@ -116,9 +120,9 @@
       <!-- ============ About / Hero ============ -->
       <section id="about">
         <div class="wrap hero-grid">
-          <div class="reveal">
+          <div class="hero-copy">
             <p class="eyebrow">&gt; whoami<span class="blink"></span></p>
-            <h1 class="hero-name">Reza Agung Nugraha</h1>
+            <h1 class="hero-name"><span class="word" style="--i: 0"><span>Reza</span></span> <span class="word" style="--i: 1"><span>Agung</span></span> <span class="word" style="--i: 2"><span>Nugraha</span></span></h1>
             <p class="hero-role">Android Developer @ <span class="co">PT Prodia Digital Indonesia</span></p>
             <p class="hero-bio">
               I build Android apps with Kotlin — currently shipping features for

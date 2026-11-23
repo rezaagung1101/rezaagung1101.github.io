@@ -2756,3 +2756,58 @@ header.is-condensed .case-nav-cta {
   transform: none !important;
   transition: none !important;
 }
+
+/* ============ Hero intro: words rise from behind a mask, then the rest follows ============ */
+.hero-name .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders (g) inside the mask */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.hero-name .word > span {
+  display: inline-block;
+}
+
+@keyframes wordRise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes introFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.js-intro .hero-name .word > span {
+  animation: wordRise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(0.15s + var(--i) * 0.09s);
+}
+
+.js-intro .hero-copy > :not(.hero-name) {
+  animation: introFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.js-intro .hero-copy > .eyebrow { animation-delay: 0s; }
+.js-intro .hero-copy > .hero-role { animation-delay: 0.45s; }
+.js-intro .hero-copy > .hero-bio { animation-delay: 0.55s; }
+.js-intro .hero-copy > .hero-actions { animation-delay: 0.65s; }
+.js-intro .hero-copy > .hero-social { animation-delay: 0.75s; }
+
+/* Coming back through a page transition: no intro replay */
+.vt-arrive .hero-copy *,
+.vt-arrive .hero-copy {
+  animation: none !important;
+}
