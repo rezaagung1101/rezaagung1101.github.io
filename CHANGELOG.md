@@ -2,6 +2,34 @@
 
 ## [Unreleased] — branch `develop`
 
+### Overnight polish (23 Nov 2026)
+**Motion**
+- **Page-to-page transitions**: a project card's image and name morph into the case study's cover and title, and back. Uses cross-document View Transitions. Only the opened project is paired, the theme switch keeps its own circle, and reduced motion turns it off.
+- **Hero intro**: each word of the name rises from behind a mask, then the role, bio, buttons, and links fade in. Runs with JS only, skipped with reduced motion and on transition returns.
+- **Card spotlight**: a soft purple glow follows the pointer on cards (mouse only).
+- **Experience timeline** draws itself with scroll, and dots light up as the line reaches them.
+- **Project cards**: slow image zoom and a nudged "Case study →" arrow on hover.
+
+**Features**
+- **Interactive terminal** behind `> whoami` and the backtick key: `help`, `whoami`, `experience`, `projects`, `skills`, `contact`, `open <project>`, `cd <section>`, `resume`, `play`, `theme`, `clear`, plus easter eggs (`sudo hire reza`, `gradle`). Tab completion and history. Content is read from the page, and output is text-only.
+- **Copy email** button with a live status message. Tapping outside the **mobile menu** closes it.
+- **Image zoom** for case study covers, screens, and the recipe card.
+- **Print stylesheet**: always light, interactive parts hidden, charts and counters shown, link URLs printed.
+
+**Accessibility, SEO, performance**
+- **axe-core: 0 violations** on every page, light and dark, with dialogs open. Fixes cover `--faint` contrast, a new `--orange-text` token, the brand `.kt` colour, the code comment, the Jump button in dark mode, a focusable terminal output, and scrollytelling dimmed by colour instead of opacity.
+- **Font Awesome CDN replaced with inline SVG icons**: about 377 KB less per visitor, and icons can't turn into empty boxes anymore.
+- **WebP everywhere** with `srcset` sizes (cards and covers 640/1080, profile 400/640), plus `fetchpriority` on the hero photo. Images went from 452 KB to 208 KB, and the Xporter screens from 520 KB to 319 KB.
+- **Google Fonts** linked from HTML with `preconnect` instead of a CSS `@import`.
+- **JSON-LD Person**, `sitemap.xml`, `robots.txt`, a **1200×630 social preview image**, **prefetch on hover** (speculation rules), browser UI colour that follows the theme, and an `apple-touch-icon` with a web manifest.
+- Lighthouse on home: **Performance 95 · Accessibility 100 · Best Practices 100 · SEO 100**.
+
+**Bugs fixed along the way**
+- The count-up could show a negative number for one frame (`Top -1`), because rAF timestamps run slightly behind the start time.
+- `<source>` inside `display: contents` pictures became a grid item, which pushed the recipe card into the wrong column.
+- The timeline progress line briefly brought back the connector under the last item.
+- The scrollytelling dimming would have greyed out steps on phones.
+
 ### Added
 - **Dark mode** — follows the system setting by default, with a toggle button (moon/sun) in the navbar. The choice is saved in `localStorage` and applied before first paint, so there is no light flash on reload.
 - **Active nav highlight** — the menu item for the section currently on screen is highlighted (with `aria-current`).
