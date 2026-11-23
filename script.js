@@ -575,6 +575,55 @@ if (timeline) {
   remeasure();
 }
 
+// ============ Contact: copy the email address ============
+const copyBtn = document.getElementById("copyEmail");
+const copyToast = document.getElementById("copyToast");
+
+if (copyBtn) {
+  let copyTimer = 0;
+  copyBtn.addEventListener("click", async () => {
+    const value = copyBtn.dataset.copy;
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(value);
+      ok = true;
+    } catch (e) {
+      // Older browsers or blocked clipboard: fall back to a hidden textarea.
+      const ta = document.createElement("textarea");
+      ta.value = value;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        ok = document.execCommand("copy");
+      } catch (err) {
+        ok = false;
+      }
+      ta.remove();
+    }
+    copyBtn.classList.toggle("is-copied", ok);
+    copyBtn.querySelector(".copy-label").textContent = ok ? "Copied" : "Copy";
+    copyToast.textContent = ok ? "Email copied to clipboard" : "Couldn't copy. Select the address instead.";
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => {
+      copyBtn.classList.remove("is-copied");
+      copyBtn.querySelector(".copy-label").textContent = "Copy";
+      copyToast.textContent = "";
+    }, 2200);
+  });
+}
+
+// ============ Mobile menu: tapping outside closes it ============
+if (hamburger && navList) {
+  document.addEventListener("pointerdown", (e) => {
+    if (!navList.classList.contains("active")) return;
+    if (e.target.closest("#navList, #hamburger")) return;
+    setMenu(false);
+  });
+}
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
