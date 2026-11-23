@@ -27,6 +27,42 @@
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
+    <!-- Structured data: who this site is about -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Reza Agung Nugraha",
+      "jobTitle": "Android Developer",
+      "url": "https://rezaagung1101.github.io/",
+      "image": "https://rezaagung1101.github.io/assets/profile_image.jpg",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "PT Prodia Digital Indonesia",
+        "url": "https://prodiadigital.com/en"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universitas Brawijaya"
+      },
+      "knowsAbout": [
+        "Android",
+        "Kotlin",
+        "Jetpack Compose",
+        "Kotlin Coroutines",
+        "Hilt",
+        "Clean Architecture",
+        "Firebase",
+        "Health Connect"
+      ],
+      "sameAs": [
+        "https://github.com/rezaagung1101",
+        "https://www.linkedin.com/in/rezaagn2/",
+        "https://www.instagram.com/rezaa.agn/"
+      ]
+    }
+    </script>
+
     <!-- Apply saved / system theme before first paint to avoid a flash -->
     <script>
       (function () {
@@ -73,6 +109,10 @@
         });
       })();
     </script>
+    <!-- Fonts: linked from HTML (not @import in CSS) so they start downloading right away -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" />
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -146,7 +186,10 @@
           </div>
           <div class="hero-visual">
             <div class="photo-frame reveal">
-              <img src="assets/profile_image.jpg" alt="Reza Agung Nugraha" width="640" height="640" />
+              <picture>
+                <source type="image/webp" srcset="assets/profile_image.webp" />
+                <img src="assets/profile_image.jpg" alt="Reza Agung Nugraha" width="640" height="640" />
+              </picture>
             </div>
             <figure class="code-card reveal" aria-label="Kotlin snippet describing Reza">
               <div class="code-bar">
@@ -526,7 +569,10 @@
           <div class="project-grid">
             <article class="project-card reveal">
               <div class="project-media">
-                <img src="assets/uprodia.jpg" alt="U by Prodia app: home feature menu and the Met-U metabolic health screen" width="1080" height="480" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="assets/uprodia.webp" />
+                  <img src="assets/uprodia.jpg" alt="U by Prodia app: home feature menu and the Met-U metabolic health screen" width="1080" height="480" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">
@@ -567,7 +613,10 @@
 
             <article class="project-card reveal">
               <div class="project-media vt vt-cover" style="--vt: cover-xporter">
-                <img src="assets/xporter.jpg" alt="Xporter Camera: the connect screen, a photo's detail, and a shared film recipe card" width="1080" height="480" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="assets/xporter.webp" />
+                  <img src="assets/xporter.jpg" alt="Xporter Camera: the connect screen, a photo's detail, and a shared film recipe card" width="1080" height="480" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">
@@ -602,7 +651,10 @@
 
             <article class="project-card reveal">
               <div class="project-media vt vt-cover" style="--vt: cover-qurbanku">
-                <img src="assets/qurbanku1.jpg" alt="Qurbanku app screenshot" width="1080" height="925" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="assets/qurbanku1.webp" />
+                  <img src="assets/qurbanku1.jpg" alt="Qurbanku app screenshot" width="1080" height="925" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">
@@ -638,7 +690,10 @@
 
             <article class="project-card reveal">
               <div class="project-media vt vt-cover" style="--vt: cover-tipsntrip">
-                <img src="assets/tipsntrip.jpg" alt="Tips n Trip app screenshot" width="1080" height="695" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="assets/tipsntrip.webp" />
+                  <img src="assets/tipsntrip.jpg" alt="Tips n Trip app screenshot" width="1080" height="695" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">

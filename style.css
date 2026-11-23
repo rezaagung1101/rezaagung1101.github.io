@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
-
 /* ============ Tokens ============ */
 :root {
   --bg: #faf9f6;
@@ -3088,4 +3086,9 @@ header.is-condensed .case-nav-cta {
   .footer-hint {
     display: inline;
   }
+}
+
+/* <picture> only picks the WebP/JPG source; layout keeps targeting the <img> as before */
+picture {
+  display: contents;
 }

@@ -65,6 +65,10 @@
         });
       })();
     </script>
+    <!-- Fonts: linked from HTML (not @import in CSS) so they start downloading right away -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" />
     <link rel="stylesheet" href="../style.css" />
     <link
       rel="stylesheet"
@@ -137,7 +141,10 @@
           </div>
 
           <figure class="case-cover reveal vt vt-cover" style="--vt: cover-qurbanku">
-            <img src="../assets/qurbanku1.jpg" alt="Qurbanku home screen listing nearby mosques" width="1080" height="925" />
+            <picture>
+              <source type="image/webp" srcset="../assets/qurbanku1.webp" />
+              <img src="../assets/qurbanku1.jpg" alt="Qurbanku home screen listing nearby mosques" width="1080" height="925" />
+            </picture>
           </figure>
         </div>
       </section>
