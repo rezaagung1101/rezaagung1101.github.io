@@ -6,7 +6,8 @@
   --surface: #ffffff;
   --ink: #16171a;
   --muted: #686b73;
-  --faint: #9a9da4;
+  --faint: #6e7178; /* 4.6:1 on the page background (WCAG AA) */
+  --orange-text: #b8461f; /* orange for text: 5:1, the brand orange stays for shapes */
   --line: #e6e4de;
   --purple: #7f52ff;
   --purple-deep: #5c33d6;
@@ -34,7 +35,8 @@
   --surface: #1a1b1f;
   --ink: #ececef;
   --muted: #a3a6ae;
-  --faint: #7a7d85;
+  --faint: #858891;
+  --orange-text: var(--orange);
   --line: #2a2b31;
   --purple: #9b7bff;
   --purple-deep: #b8a1ff;
@@ -55,7 +57,8 @@
     --surface: #1a1b1f;
     --ink: #ececef;
     --muted: #a3a6ae;
-    --faint: #7a7d85;
+    --faint: #858891;
+  --orange-text: var(--orange);
     --line: #2a2b31;
     --purple: #9b7bff;
     --purple-deep: #b8a1ff;
@@ -201,7 +204,7 @@ nav {
 }
 
 .brand .brand-ext {
-  color: var(--purple);
+  color: var(--purple-deep);
 }
 
 .nav-list {
@@ -709,7 +712,7 @@ section#about {
 .badge-current {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  color: var(--orange);
+  color: var(--orange-text);
   border: 1px solid var(--orange);
   border-radius: 5px;
   padding: 1px 7px;
@@ -1550,7 +1553,7 @@ footer {
 }
 
 .who-jemaah {
-  color: var(--orange);
+  color: var(--orange-text);
   border: 1px solid var(--orange);
 }
 
@@ -1618,7 +1621,7 @@ footer {
 }
 
 .arch-backend .arch-name {
-  color: var(--orange);
+  color: var(--orange-text);
 }
 
 .arch-arrow {
@@ -1645,7 +1648,7 @@ footer {
 .decision-num {
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  color: var(--orange);
+  color: var(--orange-text);
   margin-bottom: 8px;
 }
 
@@ -1920,17 +1923,26 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  opacity: 0.32;
-  transition: opacity 0.4s ease;
+}
+
+/* Inactive steps are dimmed with colour, not opacity, so they keep readable contrast */
+.story-step h3,
+.story-step p {
+  transition: color 0.4s ease;
+}
+
+@media screen and (min-width: 861px) {
+  .story-step:not(.is-active) h3,
+  .story-step:not(.is-active) p {
+    color: var(--faint) !important;
+  }
 }
 
 .story-step:first-child {
   min-height: 56vh;
 }
 
-.story-step.is-active {
-  opacity: 1;
-}
+
 
 .story-step h3 {
   font-family: var(--font-display);
@@ -2091,7 +2103,8 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
   .story-shot,
-  .story-step,
+  .story-step h3,
+  .story-step p,
   .bar {
     transition: none;
   }
@@ -2558,7 +2571,7 @@ header.is-condensed .case-nav-cta {
 }
 
 .kt-btn-primary {
-  color: #ffffff;
+  color: var(--on-ink); /* white on purple in light, near-black on light purple in dark */
   background: var(--purple);
   border-color: var(--purple);
 }
@@ -2595,7 +2608,7 @@ header.is-condensed .case-nav-cta {
 }
 
 .code-body .c {
-  color: #7a7e85;
+  color: #8c9099;
   font-style: italic;
 }
 
@@ -3033,7 +3046,7 @@ header.is-condensed .case-nav-cta {
 }
 
 .term-input::placeholder {
-  color: #5c6068;
+  color: #80848d;
 }
 
 @media screen and (max-width: 620px) {
