@@ -11,7 +11,7 @@
 - **Project cards**: slow image zoom and a nudged "Case study →" arrow on hover.
 
 **Features**
-- **Interactive terminal** behind `> whoami` and the backtick key: `help`, `whoami`, `experience`, `projects`, `skills`, `contact`, `open <project>`, `cd <section>`, `resume`, `play`, `theme`, `clear`, plus easter eggs (`sudo hire reza`, `gradle`). Tab completion and history. Content is read from the page, and output is text-only.
+- **Interactive terminal** behind `> whoami` and the backtick key: `help`, `whoami`, `experience`, `projects`, `skills`, `contact`, `open <project>`, `cd <section>`, `resume`, `play`, `theme`, `clear`, plus easter eggs (`sudo hire reza`, `gradle`). Tab completion and history. Content is read from the page, and output is text-only. The red traffic light closes it, like the hero's `Reza.kt` card. It shows "loading terminal…" while the script loads, and an error with a retry if the script fails, instead of an empty window.
 - **Copy email** button with a live status message. Tapping outside the **mobile menu** closes it.
 - **Image zoom** for case study covers, screens, and the recipe card.
 - **Print stylesheet**: always light, interactive parts hidden, charts and counters shown, link URLs printed.

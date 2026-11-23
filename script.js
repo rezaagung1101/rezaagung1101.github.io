@@ -452,19 +452,33 @@ if (termOpen && termDialog && typeof termDialog.showModal === "function") {
   const openTerminal = () => {
     if (termDialog.open) return;
     termDialog.showModal();
-    loadTerminal().then((KtTerminal) => {
-      if (!terminal) {
-        terminal = KtTerminal.mount(termDialog, {
-          onPlay: () => playButton && playButton.click(),
-          onTheme: () => themeToggle.click(),
-          currentTheme,
-        });
-      }
-      terminal.focus();
-    });
+    loadTerminal()
+      .then((KtTerminal) => {
+        if (!terminal) {
+          const loading = termDialog.querySelector(".term-loading");
+          if (loading) loading.remove();
+          terminal = KtTerminal.mount(termDialog, {
+            onPlay: () => playButton && playButton.click(),
+            onTheme: () => themeToggle.click(),
+            currentTheme,
+          });
+        }
+        terminal.focus();
+      })
+      .catch(() => {
+        // Never leave an empty, silent terminal: say what happened and allow a retry.
+        termScript = null;
+        const loading = termDialog.querySelector(".term-loading");
+        if (loading) {
+          loading.textContent = "couldn't load the terminal. Close it and try again.";
+          loading.classList.add("term-err");
+        }
+      });
   };
   termOpen.addEventListener("click", openTerminal);
   document.getElementById("termClose").addEventListener("click", () => termDialog.close());
+  // The red traffic light closes it too, like the Reza.kt card in the hero.
+  document.getElementById("termDotClose").addEventListener("click", () => termDialog.close());
   termDialog.addEventListener("click", (e) => {
     if (e.target !== termDialog) return;
     const r = termDialog.getBoundingClientRect();
