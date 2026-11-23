@@ -38,8 +38,7 @@ function currentTheme() {
 
 function renderToggle() {
   const dark = currentTheme() === "dark";
-  const icon = themeToggle.querySelector("i");
-  icon.className = dark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+  themeToggle.dataset.mode = dark ? "dark" : "light"; // CSS shows the sun in dark mode, the moon in light
   themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
 }
 
