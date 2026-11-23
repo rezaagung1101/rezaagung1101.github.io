@@ -322,12 +322,15 @@ if (counters.length && "IntersectionObserver" in window && !reduceMotion.matches
     return (el.dataset.prefix || "") + value.toFixed(decimals) + (el.dataset.suffix || "");
   };
 
+  let countersDone = false; // set when printing: jump to the final values and stop
   const countUp = (el) => {
     const target = Number(el.dataset.countTo);
     const duration = 900;
     const start = performance.now();
     const step = (now) => {
-      const t = Math.min((now - start) / duration, 1);
+      if (countersDone) return (el.textContent = format(el, target));
+      // rAF timestamps can be slightly earlier than performance.now(): clamp so we never show a negative number
+      const t = Math.min(Math.max((now - start) / duration, 0), 1);
       const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
       el.textContent = format(el, target * eased);
       if (t < 1) requestAnimationFrame(step);
@@ -337,6 +340,11 @@ if (counters.length && "IntersectionObserver" in window && !reduceMotion.matches
   };
 
   counters.forEach((el) => (el.textContent = format(el, 0)));
+  // Printing (or saving as PDF) before scrolling down must still show the real numbers.
+  window.addEventListener("beforeprint", () => {
+    countersDone = true;
+    counters.forEach((el) => (el.textContent = format(el, Number(el.dataset.countTo))));
+  });
   const counterObserver = new IntersectionObserver(
     (entries) =>
       entries.forEach((e) => {

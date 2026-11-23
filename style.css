@@ -3173,3 +3173,184 @@ picture > source {
   font-size: 0.76rem;
   color: var(--purple-deep);
 }
+
+/* ============ Print: a clean, light, paper-friendly version ============ */
+@media print {
+  /* !important beats the more specific dark-theme selectors, so paper is always light */
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
+    --bg: #ffffff !important;
+    --surface: #ffffff !important;
+    --ink: #111111 !important;
+    --muted: #333333 !important;
+    --faint: #555555 !important;
+    --line: #cccccc !important;
+    --purple: #6a3df0 !important;
+    --purple-deep: #3d1fa3 !important;
+    --purple-tint: #f1edff !important;
+    --tab-border: #d9ceff !important;
+    --orange-text: #9a3412 !important;
+    --on-ink: #ffffff !important;
+    color-scheme: light;
+  }
+
+  /* Charts that normally animate in on scroll are simply drawn */
+  .stack-matrix .dot,
+  .bar {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* break-after only works on block boxes, so keep section labels with their heading */
+  .tab-label {
+    display: flex;
+    width: fit-content;
+    break-after: avoid;
+  }
+
+  .project-top {
+    flex-wrap: wrap;
+  }
+
+  .project-links {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  @page {
+    margin: 14mm 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  header,
+  .skip-link,
+  .scroll-progress,
+  .theme-toggle,
+  .hamburger,
+  .hero-actions,
+  .code-card,
+  .code-restore,
+  .copy-btn,
+  .copy-toast,
+  .footer-hint,
+  .case-links,
+  .case-next,
+  .video-frame,
+  .story-stage,
+  .kt-runner-controls,
+  .game-hint,
+  dialog,
+  .notfound-links {
+    display: none !important;
+  }
+
+  /* Everything that would normally reveal on scroll is simply there */
+  .reveal,
+  .js-intro .hero-copy *,
+  .story-step,
+  .story-step h3,
+  .story-step p {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    color: inherit;
+  }
+
+  section,
+  section#about,
+  .case-hero {
+    padding: 18px 0 !important;
+    border-top: none;
+  }
+
+  .wrap {
+    max-width: none;
+    padding: 0;
+  }
+
+  .hero-visual {
+    padding-bottom: 0;
+    max-width: 160px;
+  }
+
+  .photo-frame::before {
+    display: none;
+  }
+
+  /* No glows, shadows or hover lift on paper */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    background-image: none !important;
+  }
+
+  .project-card,
+  .skill-group,
+  .cert-card,
+  .edu-card,
+  .decision,
+  .flow-step,
+  .timeline-item,
+  .stack-evolution,
+  .showcase,
+  .arch,
+  .spec-table,
+  .speed-chart,
+  .story-step {
+    break-inside: avoid;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  .project-grid,
+  .decision-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Paper can't click: print where external links go */
+  .project-links a[href^="http"]::after,
+  .contact-social a::after,
+  .hero-social a::after {
+    content: " " attr(href);
+    font-size: 0.7rem;
+    color: #555555;
+    word-break: break-all;
+  }
+
+  .contact-social,
+  .hero-social {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .contact-social a,
+  .hero-social a {
+    width: auto;
+    height: auto;
+    border: none;
+    justify-content: flex-start;
+  }
+
+  .timeline-progress {
+    display: none;
+  }
+
+  .timeline-animated .timeline-item::before {
+    background: var(--purple);
+  }
+
+  .story-inline {
+    display: block;
+    max-width: 220px;
+  }
+}
