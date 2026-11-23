@@ -2844,3 +2844,40 @@ header.is-condensed .case-nav-cta {
     transition: none;
   }
 }
+
+/* ============ Experience timeline: the line draws itself as you scroll ============ */
+.timeline-progress {
+  position: absolute;
+  left: calc(8.5px - 1px); /* same x as the connectors (timeline padding 28 − 28 + 8.5 − 1) */
+  width: 2px;
+  background: linear-gradient(180deg, var(--purple), var(--orange));
+  border-radius: 2px;
+  transform-origin: top;
+  transform: scaleY(0);
+  pointer-events: none;
+  z-index: 1; /* above the grey connectors; the dots (later in the DOM, also z 1) stay on top */
+}
+
+/* With the script running, dots start muted and light up as the line reaches them */
+.timeline-animated .timeline-item::before {
+  background: var(--line);
+  border-color: var(--surface);
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.timeline-animated .timeline-item.is-lit::before {
+  background: var(--purple);
+  border-color: var(--purple-tint);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--purple) 14%, transparent);
+}
+
+.timeline-animated .timeline-item.current.is-lit::before {
+  background: var(--orange);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--orange) 18%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-animated .timeline-item::before {
+    transition: none;
+  }
+}

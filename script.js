@@ -447,6 +447,70 @@ if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
   );
 }
 
+// ============ Experience timeline: draw the line with scroll and light up dots ============
+const timeline = document.querySelector(".timeline");
+
+if (timeline) {
+  const items = [...timeline.querySelectorAll(".timeline-item")];
+  const line = document.createElement("div");
+  line.className = "timeline-progress";
+  line.setAttribute("aria-hidden", "true");
+  // First child, so the last timeline item stays :last-child (no connector below it).
+  timeline.prepend(line);
+  timeline.classList.add("timeline-animated");
+
+  const DOT_CENTER = 5 + 8.5; // dot top offset + half its size
+  let dotY = []; // each dot's centre, relative to the timeline top
+
+  // Measured without the reveal translate, so the line lines up with the dots.
+  const measure = () => {
+    const top = timeline.getBoundingClientRect().top;
+    dotY = items.map((el) => {
+      const ty = new DOMMatrixReadOnly(getComputedStyle(el).transform).m42 || 0;
+      return el.getBoundingClientRect().top - top - ty + DOT_CENTER;
+    });
+    const first = dotY[0];
+    const last = dotY[dotY.length - 1];
+    line.style.top = first + "px";
+    line.style.height = Math.max(last - first, 0) + "px";
+  };
+
+  const draw = () => {
+    if (!dotY.length) return;
+    // The "pen" sits 60% down the viewport.
+    const reach = window.innerHeight * 0.6 - timeline.getBoundingClientRect().top;
+    const first = dotY[0];
+    const span = Math.max(dotY[dotY.length - 1] - first, 1);
+    const progress = Math.min(Math.max((reach - first) / span, 0), 1);
+    line.style.transform = `scaleY(${progress})`;
+    items.forEach((item, i) => item.classList.toggle("is-lit", reach >= dotY[i] - 2));
+  };
+
+  const remeasure = () => {
+    measure();
+    draw();
+  };
+
+  let queued = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        draw();
+      });
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", remeasure);
+  // Reveal animations and late fonts move things for a moment; settle afterwards.
+  window.addEventListener("load", remeasure);
+  setTimeout(remeasure, 900);
+  remeasure();
+}
+
 // ============ Footer year ============
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
