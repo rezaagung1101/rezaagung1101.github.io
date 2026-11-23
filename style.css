@@ -3093,6 +3093,11 @@ picture {
   display: contents;
 }
 
+/* With display: contents, <source> would otherwise become a grid/flex item */
+picture > source {
+  display: none;
+}
+
 /* ============ Inline SVG icons (Font Awesome Free, CC BY 4.0) ============ */
 .icon {
   height: 1em;

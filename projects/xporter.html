@@ -137,7 +137,7 @@
 
           <figure class="case-cover case-cover-gap reveal vt vt-cover" style="--vt: cover-xporter">
             <picture>
-              <source type="image/webp" srcset="../assets/xporter.webp" />
+              <source type="image/webp" srcset="../assets/xporter-640.webp 640w, ../assets/xporter.webp 1080w" sizes="(max-width: 900px) calc(100vw - 48px), 832px" />
               <img src="../assets/xporter.jpg" alt="Xporter Camera: the connect screen, a photo's detail, and a shared film recipe card" width="1080" height="480" />
             </picture>
           </figure>
@@ -212,16 +212,31 @@
           <div class="story">
             <div class="story-stage" aria-hidden="true">
               <div class="story-phone">
-                <img class="story-shot is-active" data-i="0" src="../assets/xporter/connect.jpg" alt="" width="540" height="980" />
-                <img class="story-shot" data-i="1" src="../assets/xporter/detail.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
-                <img class="story-shot" data-i="2" src="../assets/xporter/exposure.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
-                <img class="story-shot" data-i="3" src="../assets/xporter/polaroid.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/connect.webp" />
+                  <img class="story-shot is-active" data-i="0" src="../assets/xporter/connect.jpg" alt="" width="540" height="980" />
+                </picture>
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/detail.webp" />
+                  <img class="story-shot" data-i="1" src="../assets/xporter/detail.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
+                </picture>
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/exposure.webp" />
+                  <img class="story-shot" data-i="2" src="../assets/xporter/exposure.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
+                </picture>
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/polaroid.webp" />
+                  <img class="story-shot" data-i="3" src="../assets/xporter/polaroid.jpg" alt="" width="540" height="980" loading="lazy" decoding="async" />
+                </picture>
               </div>
             </div>
 
             <ol class="story-steps">
               <li class="story-step is-active" data-i="0">
-                <img class="story-inline" src="../assets/xporter/connect.jpg" alt="Connect screen with USB-C cable, camera Wi-Fi, and Bluetooth options" width="540" height="980" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/connect.webp" />
+                  <img class="story-inline" src="../assets/xporter/connect.jpg" alt="Connect screen with USB-C cable, camera Wi-Fi, and Bluetooth options" width="540" height="980" loading="lazy" decoding="async" />
+                </picture>
                 <p class="decision-num">01 · Connect</p>
                 <h3>Plug in, or go wireless</h3>
                 <p>
@@ -230,7 +245,10 @@
                 </p>
               </li>
               <li class="story-step" data-i="1">
-                <img class="story-inline" src="../assets/xporter/detail.jpg" alt="Photo detail with aperture, shutter, ISO, lens, and the Classic Chrome film simulation" width="540" height="980" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/detail.webp" />
+                  <img class="story-inline" src="../assets/xporter/detail.jpg" alt="Photo detail with aperture, shutter, ISO, lens, and the Classic Chrome film simulation" width="540" height="980" loading="lazy" decoding="async" />
+                </picture>
                 <p class="decision-num">02 · Read</p>
                 <h3>Every photo, with its recipe</h3>
                 <p>
@@ -239,7 +257,10 @@
                 </p>
               </li>
               <li class="story-step" data-i="2">
-                <img class="story-inline" src="../assets/xporter/exposure.jpg" alt="Share sheet with an exposure frame showing camera, lens, and settings" width="540" height="980" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/exposure.webp" />
+                  <img class="story-inline" src="../assets/xporter/exposure.jpg" alt="Share sheet with an exposure frame showing camera, lens, and settings" width="540" height="980" loading="lazy" decoding="async" />
+                </picture>
                 <p class="decision-num">03 · Share</p>
                 <h3>Exposure info, framed</h3>
                 <p>
@@ -248,7 +269,10 @@
                 </p>
               </li>
               <li class="story-step" data-i="3">
-                <img class="story-inline" src="../assets/xporter/polaroid.jpg" alt="Share sheet with the photo drawn as a polaroid print for a story" width="540" height="980" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="../assets/xporter/polaroid.webp" />
+                  <img class="story-inline" src="../assets/xporter/polaroid.jpg" alt="Share sheet with the photo drawn as a polaroid print for a story" width="540" height="980" loading="lazy" decoding="async" />
+                </picture>
                 <p class="decision-num">04 · Share</p>
                 <h3>Or a polaroid for stories</h3>
                 <p>
@@ -259,7 +283,10 @@
           </div>
 
           <div class="showcase reveal">
-            <img src="../assets/xporter/recipe-card.jpg" alt="Recipe card: the photo above the Classic Chrome recipe settings, exposure info, and a QR code" width="1280" height="1600" loading="lazy" decoding="async" />
+            <picture>
+              <source type="image/webp" srcset="../assets/xporter/recipe-card.webp" />
+              <img src="../assets/xporter/recipe-card.jpg" alt="Recipe card: the photo above the Classic Chrome recipe settings, exposure info, and a QR code" width="1280" height="1600" loading="lazy" decoding="async" />
+            </picture>
             <div class="showcase-text">
               <p class="decision-num">Recipe card</p>
               <h3>The photo and its recipe, in one image</h3>
