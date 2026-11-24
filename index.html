@@ -20,12 +20,56 @@
       property="og:description"
       content="Android Developer building Kotlin apps at PT Prodia Digital Indonesia. Bangkit Academy alumnus, Informatics Engineering graduate."
     />
-    <meta property="og:image" content="https://rezaagung1101.github.io/assets/profile_image.jpg" />
-    <meta property="og:image:width" content="640" />
-    <meta property="og:image:height" content="640" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://rezaagung1101.github.io/assets/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Reza Agung Nugraha, Android Developer at PT Prodia Digital Indonesia" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icon-180.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <!-- Prefetch case studies on hover so the page-to-page transition starts instantly -->
+    <script type="speculationrules">
+      {"prefetch": [{"where": {"and": [{"href_matches": "/projects/*"}, {"not": {"selector_matches": "[target=_blank]"}}]}, "eagerness": "moderate"}, {"where": {"href_matches": "/index.html"}, "eagerness": "moderate"}]}
+    </script>
+
+    <!-- Structured data: who this site is about -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Reza Agung Nugraha",
+      "jobTitle": "Android Developer",
+      "url": "https://rezaagung1101.github.io/",
+      "image": "https://rezaagung1101.github.io/assets/profile_image.jpg",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "PT Prodia Digital Indonesia",
+        "url": "https://prodiadigital.com/en"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universitas Brawijaya"
+      },
+      "knowsAbout": [
+        "Android",
+        "Kotlin",
+        "Jetpack Compose",
+        "Kotlin Coroutines",
+        "Hilt",
+        "Clean Architecture",
+        "Firebase",
+        "Health Connect"
+      ],
+      "sameAs": [
+        "https://github.com/rezaagung1101",
+        "https://www.linkedin.com/in/rezaagn2/",
+        "https://www.instagram.com/rezaa.agn/"
+      ]
+    }
+    </script>
 
     <!-- Apply saved / system theme before first paint to avoid a flash -->
     <script>
@@ -34,16 +78,51 @@
           var t = localStorage.getItem("theme");
           if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
         } catch (e) {}
+        // Hero intro animation: only with JS and when motion is welcome.
+        if (window.matchMedia && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document.documentElement.classList.add("js-intro");
+        }
       })();
     </script>
 
+    <script>
+      // Page-to-page view transitions: only the project being opened (or returned from)
+      // gets shared names, and reveal content shows at once so nothing morphs into a hidden box.
+      (function () {
+        function keyFrom(url) {
+          var m = /projects\/(\w+)\.html/.exec(url || "");
+          return m ? m[1] : null;
+        }
+        function nameOnly(key) {
+          document.querySelectorAll(".vt").forEach(function (el) {
+            var n = el.style.getPropertyValue("--vt").trim();
+            el.style.viewTransitionName = key && n.slice(n.indexOf("-") + 1) === key ? "" : "none";
+          });
+        }
+        window.addEventListener("pageswap", function (e) {
+          if (!e.viewTransition) return;
+          var to = e.activation && e.activation.entry ? e.activation.entry.url : "";
+          nameOnly(keyFrom(location.href) || keyFrom(to));
+        });
+        window.addEventListener("pagereveal", function (e) {
+          if (!e.viewTransition) return;
+          var nav = window.navigation && window.navigation.activation;
+          var from = nav && nav.from ? nav.from.url : "";
+          nameOnly(keyFrom(location.href) || keyFrom(from));
+          var html = document.documentElement;
+          html.classList.add("vt-arrive");
+          e.viewTransition.finished.finally(function () {
+            html.classList.remove("vt-arrive");
+          });
+        });
+      })();
+    </script>
+    <!-- Fonts: linked from HTML (not @import in CSS) so they start downloading right away -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" />
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <!-- Icons: Font Awesome Free 6.5.2 by @fontawesome, https://fontawesome.com (CC BY 4.0), inlined as SVG -->
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -62,7 +141,7 @@
         </ul>
         <div class="nav-tools">
           <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
-            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+            <svg class="icon icon-moon" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg><svg class="icon icon-sun" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"/></svg>
           </button>
           <button
             class="hamburger"
@@ -84,9 +163,11 @@
       <!-- ============ About / Hero ============ -->
       <section id="about">
         <div class="wrap hero-grid">
-          <div class="reveal">
-            <p class="eyebrow">&gt; whoami<span class="blink"></span></p>
-            <h1 class="hero-name">Reza Agung Nugraha</h1>
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <button class="term-open" id="termOpen" type="button" aria-haspopup="dialog" title="Open the terminal (press ` anywhere)">&gt; whoami<span class="blink"></span></button>
+            </p>
+            <h1 class="hero-name"><span class="word" style="--i: 0"><span>Reza</span></span> <span class="word" style="--i: 1"><span>Agung</span></span> <span class="word" style="--i: 2"><span>Nugraha</span></span></h1>
             <p class="hero-role">Android Developer @ <span class="co">PT Prodia Digital Indonesia</span></p>
             <p class="hero-bio">
               I build Android apps with Kotlin — currently shipping features for
@@ -100,15 +181,18 @@
               <a class="btn btn-ghost" href="#projects">View Projects</a>
             </div>
             <ul class="hero-social">
-              <li><a href="https://github.com/rezaagung1101" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a></li>
-              <li><a href="https://www.linkedin.com/in/rezaagn2/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
-              <li><a href="https://www.instagram.com/rezaa.agn/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
-              <li><a href="mailto:rezaagung3910@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a></li>
+              <li><a href="https://github.com/rezaagung1101" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 496 512" aria-hidden="true" focusable="false"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></a></li>
+              <li><a href="https://www.linkedin.com/in/rezaagn2/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a></li>
+              <li><a href="https://www.instagram.com/rezaa.agn/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a></li>
+              <li><a href="mailto:rezaagung3910@gmail.com" aria-label="Email"><svg class="icon" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg></a></li>
             </ul>
           </div>
           <div class="hero-visual">
             <div class="photo-frame reveal">
-              <img src="assets/profile_image.jpg" alt="Reza Agung Nugraha" width="640" height="640" />
+              <picture>
+                <source type="image/webp" srcset="assets/profile_image-400.webp 400w, assets/profile_image.webp 640w" sizes="(max-width: 860px) 220px, 300px" />
+                <img src="assets/profile_image.jpg" alt="Reza Agung Nugraha" width="640" height="640" fetchpriority="high" />
+              </picture>
             </div>
             <figure class="code-card reveal" aria-label="Kotlin snippet describing Reza">
               <div class="code-bar">
@@ -488,7 +572,10 @@
           <div class="project-grid">
             <article class="project-card reveal">
               <div class="project-media">
-                <img src="assets/uprodia.jpg" alt="U by Prodia app: home feature menu and the Met-U metabolic health screen" width="1080" height="480" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset="assets/uprodia-640.webp 640w, assets/uprodia.webp 1080w" sizes="(max-width: 700px) calc(100vw - 48px), 420px" />
+                  <img src="assets/uprodia.jpg" alt="U by Prodia app: home feature menu and the Met-U metabolic health screen" width="1080" height="480" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">
@@ -528,12 +615,15 @@
             </article>
 
             <article class="project-card reveal">
-              <div class="project-media">
-                <img src="assets/xporter.jpg" alt="Xporter Camera: the connect screen, a photo's detail, and a shared film recipe card" width="1080" height="480" loading="lazy" decoding="async" />
+              <div class="project-media vt vt-cover" style="--vt: cover-xporter">
+                <picture>
+                  <source type="image/webp" srcset="assets/xporter-640.webp 640w, assets/xporter.webp 1080w" sizes="(max-width: 700px) calc(100vw - 48px), 420px" />
+                  <img src="assets/xporter.jpg" alt="Xporter Camera: the connect screen, a photo's detail, and a shared film recipe card" width="1080" height="480" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">
-                  <h3 class="project-name">Xporter Camera</h3>
+                  <h3 class="project-name vt vt-title" style="--vt: title-xporter">Xporter Camera</h3>
                   <div class="project-links">
                     <a class="link-case" href="projects/xporter.html">Case study →</a>
                   </div>
@@ -563,12 +653,15 @@
             </article>
 
             <article class="project-card reveal">
-              <div class="project-media">
-                <img src="assets/qurbanku1.jpg" alt="Qurbanku app screenshot" width="1080" height="925" loading="lazy" decoding="async" />
+              <div class="project-media vt vt-cover" style="--vt: cover-qurbanku">
+                <picture>
+                  <source type="image/webp" srcset="assets/qurbanku1-640.webp 640w, assets/qurbanku1.webp 1080w" sizes="(max-width: 700px) calc(100vw - 48px), 420px" />
+                  <img src="assets/qurbanku1.jpg" alt="Qurbanku app screenshot" width="1080" height="925" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">
-                  <h3 class="project-name">Qurbanku</h3>
+                  <h3 class="project-name vt vt-title" style="--vt: title-qurbanku">Qurbanku</h3>
                   <div class="project-links">
                     <a class="link-case" href="projects/qurbanku.html">Case study →</a>
                     <a href="https://github.com/rezaagung1101/QURBANKU_APPS_SKRIPSI" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -599,12 +692,15 @@
             </article>
 
             <article class="project-card reveal">
-              <div class="project-media">
-                <img src="assets/tipsntrip.jpg" alt="Tips n Trip app screenshot" width="1080" height="695" loading="lazy" decoding="async" />
+              <div class="project-media vt vt-cover" style="--vt: cover-tipsntrip">
+                <picture>
+                  <source type="image/webp" srcset="assets/tipsntrip-640.webp 640w, assets/tipsntrip.webp 1080w" sizes="(max-width: 700px) calc(100vw - 48px), 420px" />
+                  <img src="assets/tipsntrip.jpg" alt="Tips n Trip app screenshot" width="1080" height="695" loading="lazy" decoding="async" />
+                </picture>
               </div>
               <div class="project-body">
                 <div class="project-top">
-                  <h3 class="project-name">Tips n Trip</h3>
+                  <h3 class="project-name vt vt-title" style="--vt: title-tipsntrip">Tips n Trip</h3>
                   <div class="project-links">
                     <a class="link-case" href="projects/tipsntrip.html">Case study →</a>
                     <a href="https://github.com/Tips-n-Trip/Mobile-App" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -685,12 +781,18 @@
             Open to new opportunities and collaborations. Drop a message and
             I'll get back to you as soon as I can.
           </p>
-          <a class="contact-email reveal" href="mailto:rezaagung3910@gmail.com">rezaagung3910@gmail.com</a>
+          <div class="contact-email-row reveal">
+            <a class="contact-email" href="mailto:rezaagung3910@gmail.com">rezaagung3910@gmail.com</a>
+            <button class="copy-btn" id="copyEmail" type="button" data-copy="rezaagung3910@gmail.com" aria-label="Copy email address">
+              <svg class="icon icon-copy" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg><svg class="icon icon-check" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg><span class="copy-label">Copy</span>
+            </button>
+          </div>
+          <p class="copy-toast" id="copyToast" role="status" aria-live="polite"></p>
           <div class="contact-social reveal">
-            <a href="https://www.linkedin.com/in/rezaagn2/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
-            <a href="https://github.com/rezaagung1101" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
-            <a href="https://www.instagram.com/rezaa.agn/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
-            <a href="https://wa.me/+6282232412504" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="https://www.linkedin.com/in/rezaagn2/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+            <a href="https://github.com/rezaagung1101" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 496 512" aria-hidden="true" focusable="false"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></a>
+            <a href="https://www.instagram.com/rezaa.agn/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+            <a href="https://wa.me/+6282232412504" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg class="icon" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg></a>
           </div>
         </div>
       </section>
@@ -699,9 +801,26 @@
     <footer>
       <div class="wrap footer-row">
         <span>&copy; <span id="year">2026</span> Reza Agung Nugraha</span>
-        <span>Built with Kotlin in mind.</span>
+        <span>Built with Kotlin in mind.<span class="footer-hint"> · Press <kbd>`</kbd> for a terminal</span></span>
       </div>
     </footer>
+
+    <dialog class="term-dialog" id="termDialog" aria-label="Terminal">
+      <div class="term-bar">
+        <span class="code-dots">
+          <button class="code-dot dot-close" id="termDotClose" type="button" aria-label="Close terminal"></button>
+          <span class="code-dot dot-min" aria-hidden="true"></span>
+          <span class="code-dot dot-max" aria-hidden="true"></span>
+        </span>
+        <span class="term-title">reza@portfolio: ~</span>
+        <button class="term-close" id="termClose" type="button" aria-label="Close terminal">✕</button>
+      </div>
+      <div class="term-output" role="log" aria-live="polite" tabindex="0" aria-label="Terminal output"><p class="term-line term-dim term-loading">loading terminal…</p></div>
+      <form class="term-form" autocomplete="off">
+        <label class="term-prompt" for="termInput">reza@portfolio ~ $</label>
+        <input class="term-input" id="termInput" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="go" placeholder="type help" />
+      </form>
+    </dialog>
 
     <dialog class="game-dialog" id="gameDialog" aria-labelledby="gameTitle">
       <div class="game-dialog-head">

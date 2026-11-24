@@ -1,12 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
-
 /* ============ Tokens ============ */
 :root {
   --bg: #faf9f6;
   --surface: #ffffff;
   --ink: #16171a;
   --muted: #686b73;
-  --faint: #9a9da4;
+  --faint: #6e7178; /* 4.6:1 on the page background (WCAG AA) */
+  --orange-text: #b8461f; /* orange for text: 5:1, the brand orange stays for shapes */
   --line: #e6e4de;
   --purple: #7f52ff;
   --purple-deep: #5c33d6;
@@ -34,7 +33,8 @@
   --surface: #1a1b1f;
   --ink: #ececef;
   --muted: #a3a6ae;
-  --faint: #7a7d85;
+  --faint: #858891;
+  --orange-text: var(--orange);
   --line: #2a2b31;
   --purple: #9b7bff;
   --purple-deep: #b8a1ff;
@@ -55,7 +55,8 @@
     --surface: #1a1b1f;
     --ink: #ececef;
     --muted: #a3a6ae;
-    --faint: #7a7d85;
+    --faint: #858891;
+  --orange-text: var(--orange);
     --line: #2a2b31;
     --purple: #9b7bff;
     --purple-deep: #b8a1ff;
@@ -201,7 +202,7 @@ nav {
 }
 
 .brand .brand-ext {
-  color: var(--purple);
+  color: var(--purple-deep);
 }
 
 .nav-list {
@@ -709,7 +710,7 @@ section#about {
 .badge-current {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  color: var(--orange);
+  color: var(--orange-text);
   border: 1px solid var(--orange);
   border-radius: 5px;
   padding: 1px 7px;
@@ -1166,15 +1167,16 @@ footer {
 }
 
 /* ============ Theme switch: circular reveal ============ */
-::view-transition-old(root),
-::view-transition-new(root) {
+/* Scoped to .theme-switching so page-to-page transitions keep their own crossfade. */
+.theme-switching::view-transition-old(root),
+.theme-switching::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 
 /* To light: the new (light) view grows from the toggle, so it sits on top.
    To dark: the old (light) view shrinks into the toggle, so it sits on top. */
-::view-transition-new(root) {
+.theme-switching::view-transition-new(root) {
   z-index: 2;
 }
 
@@ -1549,7 +1551,7 @@ footer {
 }
 
 .who-jemaah {
-  color: var(--orange);
+  color: var(--orange-text);
   border: 1px solid var(--orange);
 }
 
@@ -1617,7 +1619,7 @@ footer {
 }
 
 .arch-backend .arch-name {
-  color: var(--orange);
+  color: var(--orange-text);
 }
 
 .arch-arrow {
@@ -1644,7 +1646,7 @@ footer {
 .decision-num {
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  color: var(--orange);
+  color: var(--orange-text);
   margin-bottom: 8px;
 }
 
@@ -1919,17 +1921,26 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  opacity: 0.32;
-  transition: opacity 0.4s ease;
+}
+
+/* Inactive steps are dimmed with colour, not opacity, so they keep readable contrast */
+.story-step h3,
+.story-step p {
+  transition: color 0.4s ease;
+}
+
+@media screen and (min-width: 861px) {
+  .story-step:not(.is-active) h3,
+  .story-step:not(.is-active) p {
+    color: var(--faint) !important;
+  }
 }
 
 .story-step:first-child {
   min-height: 56vh;
 }
 
-.story-step.is-active {
-  opacity: 1;
-}
+
 
 .story-step h3 {
   font-family: var(--font-display);
@@ -2090,7 +2101,8 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
   .story-shot,
-  .story-step,
+  .story-step h3,
+  .story-step p,
   .bar {
     transition: none;
   }
@@ -2557,7 +2569,7 @@ header.is-condensed .case-nav-cta {
 }
 
 .kt-btn-primary {
-  color: #ffffff;
+  color: var(--on-ink); /* white on purple in light, near-black on light purple in dark */
   background: var(--purple);
   border-color: var(--purple);
 }
@@ -2594,7 +2606,7 @@ header.is-condensed .case-nav-cta {
 }
 
 .code-body .c {
-  color: #7a7e85;
+  color: #8c9099;
   font-style: italic;
 }
 
@@ -2690,5 +2702,773 @@ header.is-condensed .case-nav-cta {
 @media screen and (max-width: 620px) {
   .notfound {
     padding-top: 108px;
+  }
+}
+
+/* ============ Page-to-page transitions (cross-document View Transitions) ============ */
+/* A project card's image and name morph into the case study's cover and title, and back.
+   Browsers without support simply navigate as usual. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+.vt {
+  view-transition-name: var(--vt);
+}
+
+.vt-cover {
+  view-transition-class: cover;
+}
+
+.vt-title {
+  view-transition-class: title;
+}
+
+/* The theme switch is a view transition too: there, nothing should fly on its own. */
+.theme-switching .vt {
+  view-transition-name: none;
+}
+
+::view-transition-group(*.cover),
+::view-transition-group(*.title) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+::view-transition-group(*.cover) {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+/* Images of different shapes: fill the morphing box, anchored to the top like the cards */
+::view-transition-old(*.cover),
+::view-transition-new(*.cover) {
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+::view-transition-old(*.title),
+::view-transition-new(*.title) {
+  height: 100%;
+  width: auto;
+}
+
+/* Keep shared titles as wide as their text, so the morph scales instead of stretching */
+.case-title {
+  width: fit-content;
+}
+
+/* Arriving through a transition: show reveal content at once so nothing morphs into an invisible box */
+.vt-arrive .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ============ Hero intro: words rise from behind a mask, then the rest follows ============ */
+.hero-name .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders (g) inside the mask */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.hero-name .word > span {
+  display: inline-block;
+}
+
+@keyframes wordRise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes introFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.js-intro .hero-name .word > span {
+  animation: wordRise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(0.15s + var(--i) * 0.09s);
+}
+
+.js-intro .hero-copy > :not(.hero-name) {
+  animation: introFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.js-intro .hero-copy > .eyebrow { animation-delay: 0s; }
+.js-intro .hero-copy > .hero-role { animation-delay: 0.45s; }
+.js-intro .hero-copy > .hero-bio { animation-delay: 0.55s; }
+.js-intro .hero-copy > .hero-actions { animation-delay: 0.65s; }
+.js-intro .hero-copy > .hero-social { animation-delay: 0.75s; }
+
+/* Coming back through a page transition: no intro replay */
+.vt-arrive .hero-copy *,
+.vt-arrive .hero-copy {
+  animation: none !important;
+}
+
+/* ============ Card spotlight: a soft glow that follows the pointer (mouse only) ============ */
+@property --spot-o {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spot {
+    --spot-o: 0;
+    background-image: radial-gradient(
+      260px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in srgb, var(--purple) calc(var(--spot-o) * 13%), transparent),
+      transparent 70%
+    );
+  }
+
+  /* Only once a card has finished its reveal, so the reveal fade and stagger stay intact */
+  .spot:not(.reveal) {
+    transition: --spot-o 0.35s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .spot:hover {
+    --spot-o: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spot:not(.reveal) {
+    transition: none;
+  }
+}
+
+/* ============ Experience timeline: the line draws itself as you scroll ============ */
+.timeline-progress {
+  position: absolute;
+  left: calc(8.5px - 1px); /* same x as the connectors (timeline padding 28 − 28 + 8.5 − 1) */
+  width: 2px;
+  background: linear-gradient(180deg, var(--purple), var(--orange));
+  border-radius: 2px;
+  transform-origin: top;
+  transform: scaleY(0);
+  pointer-events: none;
+  z-index: 1; /* above the grey connectors; the dots (later in the DOM, also z 1) stay on top */
+}
+
+/* With the script running, dots start muted and light up as the line reaches them */
+.timeline-animated .timeline-item::before {
+  background: var(--line);
+  border-color: var(--surface);
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.timeline-animated .timeline-item.is-lit::before {
+  background: var(--purple);
+  border-color: var(--purple-tint);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--purple) 14%, transparent);
+}
+
+.timeline-animated .timeline-item.current.is-lit::before {
+  background: var(--orange);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--orange) 18%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-animated .timeline-item::before {
+    transition: none;
+  }
+}
+
+/* ============ Terminal ============ */
+/* "> whoami" stays looking like the eyebrow text, with a hint that it's clickable */
+.term-open {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.term-open:hover,
+.term-open:focus-visible {
+  background: var(--purple-tint);
+}
+
+.term-dialog {
+  margin: auto;
+  width: min(720px, calc(100vw - 24px));
+  max-width: none;
+  height: min(480px, calc(100dvh - 48px));
+  padding: 0;
+  border: 1px solid #2b2d31;
+  border-radius: 14px;
+  background: #1e1f22;
+  color: #bcbec4;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+
+.term-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.term-dialog::backdrop {
+  background: rgba(10, 10, 12, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #2b2d30;
+  border-bottom: 1px solid #1e1f22;
+  flex: none;
+}
+
+.term-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #9da0a8;
+}
+
+.term-close {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #9da0a8;
+  cursor: pointer;
+}
+
+.term-close:hover,
+.term-close:focus-visible {
+  background: #3a3c40;
+  color: #ffffff;
+}
+
+.term-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overscroll-behavior: contain;
+}
+
+.term-line {
+  margin: 0;
+}
+
+.term-echo {
+  margin-top: 8px;
+  color: #dfe1e5;
+}
+
+.term-prompt {
+  color: #6aab73;
+  white-space: nowrap;
+}
+
+.term-key {
+  color: #56a8f5;
+}
+
+.term-strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.term-dim {
+  color: #8c9099;
+}
+
+.term-err {
+  color: #ff8a6b;
+}
+
+.term-ok {
+  color: #6aab73;
+}
+
+.term-output a {
+  color: #cf8e6d;
+  text-underline-offset: 3px;
+}
+
+.term-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  flex: none;
+}
+
+.term-input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: var(--orange);
+}
+
+.term-input::placeholder {
+  color: #80848d;
+}
+
+@media screen and (max-width: 620px) {
+  .term-dialog {
+    height: min(520px, calc(100dvh - 32px));
+  }
+
+  /* 16px stops iOS from zooming into the field */
+  .term-form,
+  .term-output {
+    font-size: 16px;
+  }
+
+  .term-output {
+    font-size: 0.8rem;
+  }
+
+  .term-prompt {
+    font-size: 0.78rem;
+  }
+}
+
+/* Keyboard hint in the footer, only where there is a keyboard and a mouse */
+.footer-hint {
+  display: none;
+}
+
+.footer-hint kbd {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  color: var(--muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-hint {
+    display: inline;
+  }
+}
+
+/* <picture> only picks the WebP/JPG source; layout keeps targeting the <img> as before */
+picture {
+  display: contents;
+}
+
+/* With display: contents, <source> would otherwise become a grid/flex item */
+picture > source {
+  display: none;
+}
+
+/* ============ Inline SVG icons (Font Awesome Free, CC BY 4.0) ============ */
+.icon {
+  height: 1em;
+  width: auto;
+  fill: currentColor;
+  vertical-align: -0.125em;
+  flex: none;
+}
+
+/* Theme toggle carries both icons; show the one that matches */
+.theme-toggle .icon-sun,
+.theme-toggle[data-mode="dark"] .icon-moon {
+  display: none;
+}
+
+.theme-toggle[data-mode="dark"] .icon-sun {
+  display: inline-block;
+}
+
+/* ============ Contact: copy email ============ */
+.contact-email-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contact-email-row .contact-email {
+  margin-bottom: 0;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 11px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.copy-btn:hover,
+.copy-btn:focus-visible {
+  color: var(--purple-deep);
+  border-color: var(--purple);
+}
+
+.copy-btn .icon-check,
+.copy-btn.is-copied .icon-copy {
+  display: none;
+}
+
+.copy-btn.is-copied .icon-check {
+  display: inline-block;
+}
+
+.copy-btn.is-copied {
+  color: var(--purple-deep);
+  border-color: var(--purple);
+}
+
+.copy-toast {
+  min-height: 1.2em;
+  margin: -18px 0 14px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--purple-deep);
+}
+
+/* ============ Print: a clean, light, paper-friendly version ============ */
+@media print {
+  /* !important beats the more specific dark-theme selectors, so paper is always light */
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
+    --bg: #ffffff !important;
+    --surface: #ffffff !important;
+    --ink: #111111 !important;
+    --muted: #333333 !important;
+    --faint: #555555 !important;
+    --line: #cccccc !important;
+    --purple: #6a3df0 !important;
+    --purple-deep: #3d1fa3 !important;
+    --purple-tint: #f1edff !important;
+    --tab-border: #d9ceff !important;
+    --orange-text: #9a3412 !important;
+    --on-ink: #ffffff !important;
+    color-scheme: light;
+  }
+
+  /* Charts that normally animate in on scroll are simply drawn */
+  .stack-matrix .dot,
+  .bar {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* break-after only works on block boxes, so keep section labels with their heading */
+  .tab-label {
+    display: flex;
+    width: fit-content;
+    break-after: avoid;
+  }
+
+  .project-top {
+    flex-wrap: wrap;
+  }
+
+  .project-links {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  @page {
+    margin: 14mm 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  header,
+  .skip-link,
+  .scroll-progress,
+  .theme-toggle,
+  .hamburger,
+  .hero-actions,
+  .code-card,
+  .code-restore,
+  .copy-btn,
+  .copy-toast,
+  .footer-hint,
+  .case-links,
+  .case-next,
+  .video-frame,
+  .story-stage,
+  .kt-runner-controls,
+  .game-hint,
+  dialog,
+  .notfound-links {
+    display: none !important;
+  }
+
+  /* Everything that would normally reveal on scroll is simply there */
+  .reveal,
+  .js-intro .hero-copy *,
+  .story-step,
+  .story-step h3,
+  .story-step p {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    color: inherit;
+  }
+
+  section,
+  section#about,
+  .case-hero {
+    padding: 18px 0 !important;
+    border-top: none;
+  }
+
+  .wrap {
+    max-width: none;
+    padding: 0;
+  }
+
+  .hero-visual {
+    padding-bottom: 0;
+    max-width: 160px;
+  }
+
+  .photo-frame::before {
+    display: none;
+  }
+
+  /* No glows, shadows or hover lift on paper */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    background-image: none !important;
+  }
+
+  .project-card,
+  .skill-group,
+  .cert-card,
+  .edu-card,
+  .decision,
+  .flow-step,
+  .timeline-item,
+  .stack-evolution,
+  .showcase,
+  .arch,
+  .spec-table,
+  .speed-chart,
+  .story-step {
+    break-inside: avoid;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  .project-grid,
+  .decision-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Paper can't click: print where external links go */
+  .project-links a[href^="http"]::after,
+  .contact-social a::after,
+  .hero-social a::after {
+    content: " " attr(href);
+    font-size: 0.7rem;
+    color: #555555;
+    word-break: break-all;
+  }
+
+  .contact-social,
+  .hero-social {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .contact-social a,
+  .hero-social a {
+    width: auto;
+    height: auto;
+    border: none;
+    justify-content: flex-start;
+  }
+
+  .timeline-progress {
+    display: none;
+  }
+
+  .timeline-animated .timeline-item::before {
+    background: var(--purple);
+  }
+
+  .story-inline {
+    display: block;
+    max-width: 220px;
+  }
+}
+
+/* ============ Case study image zoom ============ */
+[data-zoom] {
+  cursor: zoom-in;
+}
+
+[data-zoom]:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 4px;
+}
+
+.lightbox {
+  margin: auto;
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100dvh;
+  padding: 56px 16px 24px;
+  border: none;
+  background: transparent;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: zoom-out;
+}
+
+.lightbox[open] {
+  display: flex;
+  animation: lightboxIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lightbox::backdrop {
+  background: rgba(10, 10, 12, 0.86);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox-img {
+  max-width: min(100%, 1100px);
+  max-height: calc(100dvh - 130px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-caption {
+  max-width: 640px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #e4e5ea;
+  /* its own dark pill, so the caption stays readable whatever sits behind the backdrop */
+  background: rgba(20, 21, 24, 0.9);
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(30, 31, 34, 0.8);
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+@keyframes lightboxIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox[open] {
+    animation: none;
+  }
+}
+
+/* ============ Project cards: slow image zoom and a nudged arrow on hover (mouse only) ============ */
+@media (hover: hover) and (pointer: fine) {
+  .project-media img {
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .project-card:hover .project-media img {
+    transform: scale(1.035);
+  }
+
+  .project-links a.link-case {
+    display: inline-block;
+    transition: transform 0.25s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .project-card:hover .project-links a.link-case {
+    transform: translateX(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-media img,
+  .project-links a.link-case {
+    transition: none;
+  }
+
+  .project-card:hover .project-media img,
+  .project-card:hover .project-links a.link-case {
+    transform: none;
   }
 }

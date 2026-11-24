@@ -38,8 +38,7 @@ function currentTheme() {
 
 function renderToggle() {
   const dark = currentTheme() === "dark";
-  const icon = themeToggle.querySelector("i");
-  icon.className = dark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+  themeToggle.dataset.mode = dark ? "dark" : "light"; // CSS shows the sun in dark mode, the moon in light
   themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
 }
 
@@ -51,6 +50,7 @@ function applyTheme(next) {
     localStorage.setItem("theme", next);
   } catch (e) {}
   renderToggle();
+  syncThemeColor();
 }
 
 // Circular reveal from the toggle button, like Android's
@@ -106,8 +106,18 @@ themeToggle.addEventListener("click", () => {
   });
 });
 
-darkQuery.addEventListener?.("change", renderToggle);
+// Keep the browser's UI colour (mobile address bar) in step with the page, including manual switches.
+function syncThemeColor() {
+  const bg = getComputedStyle(root).getPropertyValue("--bg").trim();
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute("content", bg));
+}
+
+darkQuery.addEventListener?.("change", () => {
+  renderToggle();
+  syncThemeColor();
+});
 renderToggle();
+syncThemeColor();
 
 // ============ Active nav link on scroll ============
 const navLinks = document.querySelectorAll(".nav-link");
@@ -312,12 +322,15 @@ if (counters.length && "IntersectionObserver" in window && !reduceMotion.matches
     return (el.dataset.prefix || "") + value.toFixed(decimals) + (el.dataset.suffix || "");
   };
 
+  let countersDone = false; // set when printing: jump to the final values and stop
   const countUp = (el) => {
     const target = Number(el.dataset.countTo);
     const duration = 900;
     const start = performance.now();
     const step = (now) => {
-      const t = Math.min((now - start) / duration, 1);
+      if (countersDone) return (el.textContent = format(el, target));
+      // rAF timestamps can be slightly earlier than performance.now(): clamp so we never show a negative number
+      const t = Math.min(Math.max((now - start) / duration, 0), 1);
       const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
       el.textContent = format(el, target * eased);
       if (t < 1) requestAnimationFrame(step);
@@ -327,6 +340,11 @@ if (counters.length && "IntersectionObserver" in window && !reduceMotion.matches
   };
 
   counters.forEach((el) => (el.textContent = format(el, 0)));
+  // Printing (or saving as PDF) before scrolling down must still show the real numbers.
+  window.addEventListener("beforeprint", () => {
+    countersDone = true;
+    counters.forEach((el) => (el.textContent = format(el, Number(el.dataset.countTo))));
+  });
   const counterObserver = new IntersectionObserver(
     (entries) =>
       entries.forEach((e) => {
@@ -411,10 +429,262 @@ if (playButton && gameDialog && typeof gameDialog.showModal === "function") {
   playButton.hidden = true; // very old browsers without <dialog>
 }
 
+// ============ Terminal: "> whoami" in the hero, or the ` key anywhere ============
+const termOpen = document.getElementById("termOpen");
+const termDialog = document.getElementById("termDialog");
+
+if (termOpen && termDialog && typeof termDialog.showModal === "function") {
+  let terminal = null;
+  let termScript = null;
+  const loadTerminal = () => {
+    if (window.KtTerminal) return Promise.resolve(window.KtTerminal);
+    if (!termScript) {
+      termScript = new Promise((resolve, reject) => {
+        const el = document.createElement("script");
+        el.src = "terminal.js";
+        el.onload = () => resolve(window.KtTerminal);
+        el.onerror = reject;
+        document.head.appendChild(el);
+      });
+    }
+    return termScript;
+  };
+  const openTerminal = () => {
+    if (termDialog.open) return;
+    termDialog.showModal();
+    loadTerminal()
+      .then((KtTerminal) => {
+        if (!terminal) {
+          const loading = termDialog.querySelector(".term-loading");
+          if (loading) loading.remove();
+          terminal = KtTerminal.mount(termDialog, {
+            onPlay: () => playButton && playButton.click(),
+            onTheme: () => themeToggle.click(),
+            currentTheme,
+          });
+        }
+        terminal.focus();
+      })
+      .catch(() => {
+        // Never leave an empty, silent terminal: say what happened and allow a retry.
+        termScript = null;
+        const loading = termDialog.querySelector(".term-loading");
+        if (loading) {
+          loading.textContent = "couldn't load the terminal. Close it and try again.";
+          loading.classList.add("term-err");
+        }
+      });
+  };
+  termOpen.addEventListener("click", openTerminal);
+  document.getElementById("termClose").addEventListener("click", () => termDialog.close());
+  // The red traffic light closes it too, like the Reza.kt card in the hero.
+  document.getElementById("termDotClose").addEventListener("click", () => termDialog.close());
+  termDialog.addEventListener("click", (e) => {
+    if (e.target !== termDialog) return;
+    const r = termDialog.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) termDialog.close();
+  });
+  termDialog.addEventListener("close", () => termOpen.focus({ preventScroll: true }));
+
+  // The backtick opens it, unless someone is typing or another dialog is open.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "`" || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (t.closest && t.closest("input, textarea, select, [contenteditable]")) return;
+    if (document.querySelector("dialog[open]")) return;
+    e.preventDefault();
+    openTerminal();
+  });
+}
+
 // The 404 page mounts the game straight away.
 const notFoundGame = document.getElementById("notFoundGame");
 if (notFoundGame) {
   loadGame("/game.js").then((KtRunner) => KtRunner.mount(notFoundGame));
+}
+
+// ============ Card spotlight: track the pointer inside cards (mouse only) ============
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const spotCards = document.querySelectorAll(
+    ".project-card, .skill-group, .cert-card, .edu-card, .decision, .flow-step, .stat-strip > div, .showcase"
+  );
+  spotCards.forEach((el) => el.classList.add("spot"));
+
+  let spotTarget = null;
+  let spotEvent = null;
+  let spotQueued = false;
+  document.addEventListener(
+    "pointermove",
+    (e) => {
+      spotTarget = e.target.closest && e.target.closest(".spot");
+      spotEvent = e;
+      if (spotTarget && !spotQueued) {
+        spotQueued = true;
+        requestAnimationFrame(() => {
+          spotQueued = false;
+          if (!spotTarget) return;
+          const r = spotTarget.getBoundingClientRect();
+          spotTarget.style.setProperty("--mx", spotEvent.clientX - r.left + "px");
+          spotTarget.style.setProperty("--my", spotEvent.clientY - r.top + "px");
+        });
+      }
+    },
+    { passive: true }
+  );
+}
+
+// ============ Experience timeline: draw the line with scroll and light up dots ============
+const timeline = document.querySelector(".timeline");
+
+if (timeline) {
+  const items = [...timeline.querySelectorAll(".timeline-item")];
+  const line = document.createElement("div");
+  line.className = "timeline-progress";
+  line.setAttribute("aria-hidden", "true");
+  // First child, so the last timeline item stays :last-child (no connector below it).
+  timeline.prepend(line);
+  timeline.classList.add("timeline-animated");
+
+  const DOT_CENTER = 5 + 8.5; // dot top offset + half its size
+  let dotY = []; // each dot's centre, relative to the timeline top
+
+  // Measured without the reveal translate, so the line lines up with the dots.
+  const measure = () => {
+    const top = timeline.getBoundingClientRect().top;
+    dotY = items.map((el) => {
+      const ty = new DOMMatrixReadOnly(getComputedStyle(el).transform).m42 || 0;
+      return el.getBoundingClientRect().top - top - ty + DOT_CENTER;
+    });
+    const first = dotY[0];
+    const last = dotY[dotY.length - 1];
+    line.style.top = first + "px";
+    line.style.height = Math.max(last - first, 0) + "px";
+  };
+
+  const draw = () => {
+    if (!dotY.length) return;
+    // The "pen" sits 60% down the viewport.
+    const reach = window.innerHeight * 0.6 - timeline.getBoundingClientRect().top;
+    const first = dotY[0];
+    const span = Math.max(dotY[dotY.length - 1] - first, 1);
+    const progress = Math.min(Math.max((reach - first) / span, 0), 1);
+    line.style.transform = `scaleY(${progress})`;
+    items.forEach((item, i) => item.classList.toggle("is-lit", reach >= dotY[i] - 2));
+  };
+
+  const remeasure = () => {
+    measure();
+    draw();
+  };
+
+  let queued = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        draw();
+      });
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", remeasure);
+  // Reveal animations and late fonts move things for a moment; settle afterwards.
+  window.addEventListener("load", remeasure);
+  setTimeout(remeasure, 900);
+  remeasure();
+}
+
+// ============ Contact: copy the email address ============
+const copyBtn = document.getElementById("copyEmail");
+const copyToast = document.getElementById("copyToast");
+
+if (copyBtn) {
+  let copyTimer = 0;
+  copyBtn.addEventListener("click", async () => {
+    const value = copyBtn.dataset.copy;
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(value);
+      ok = true;
+    } catch (e) {
+      // Older browsers or blocked clipboard: fall back to a hidden textarea.
+      const ta = document.createElement("textarea");
+      ta.value = value;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        ok = document.execCommand("copy");
+      } catch (err) {
+        ok = false;
+      }
+      ta.remove();
+    }
+    copyBtn.classList.toggle("is-copied", ok);
+    copyBtn.querySelector(".copy-label").textContent = ok ? "Copied" : "Copy";
+    copyToast.textContent = ok ? "Email copied to clipboard" : "Couldn't copy. Select the address instead.";
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => {
+      copyBtn.classList.remove("is-copied");
+      copyBtn.querySelector(".copy-label").textContent = "Copy";
+      copyToast.textContent = "";
+    }, 2200);
+  });
+}
+
+// ============ Mobile menu: tapping outside closes it ============
+if (hamburger && navList) {
+  document.addEventListener("pointerdown", (e) => {
+    if (!navList.classList.contains("active")) return;
+    if (e.target.closest("#navList, #hamburger")) return;
+    setMenu(false);
+  });
+}
+
+// ============ Case study image zoom ============
+const lightbox = document.getElementById("lightbox");
+
+if (lightbox && typeof lightbox.showModal === "function") {
+  const lbImg = lightbox.querySelector(".lightbox-img");
+  const lbCaption = lightbox.querySelector(".lightbox-caption");
+  let opener = null;
+
+  document.querySelectorAll(".case-cover img, .story-inline, .showcase img").forEach((img) => {
+    img.dataset.zoom = "";
+    img.tabIndex = 0;
+    img.setAttribute("role", "button");
+    img.setAttribute("aria-label", "Enlarge image: " + img.alt);
+  });
+
+  const open = (img) => {
+    opener = img;
+    lbImg.src = img.currentSrc || img.src; // the full-resolution source the browser already chose
+    lbImg.alt = img.alt;
+    lbCaption.textContent = img.alt;
+    lightbox.showModal();
+  };
+
+  document.addEventListener("click", (e) => {
+    const img = e.target.closest && e.target.closest("[data-zoom]");
+    if (img) open(img);
+  });
+  document.addEventListener("keydown", (e) => {
+    const img = e.target.closest && e.target.closest("[data-zoom]");
+    if (img && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      open(img);
+    }
+  });
+  // Any click closes it: on the image, the backdrop, or the ✕ button.
+  lightbox.addEventListener("click", () => lightbox.close());
+  lightbox.addEventListener("close", () => {
+    if (opener) opener.focus({ preventScroll: true });
+  });
 }
 
 // ============ Footer year ============
